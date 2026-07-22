@@ -222,6 +222,25 @@ textarea.form-control{resize:vertical}
 .dot-hist-table td{padding:7px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 .dot-hist-table tbody tr:nth-child(even){background:rgba(0,0,0,.02)}
 .dot-hist-empty{text-align:center;padding:48px;color:var(--text-muted)}
+/* ── HISTORICO ANALYTICS ── */
+.dot-analytics-wrap{padding:16px;display:flex;flex-direction:column;gap:16px}
+.dot-analytics-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dot-tarifa-bar{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;flex-wrap:wrap}
+.dot-tarifa-field{display:flex;align-items:center;gap:6px;font-size:13px}
+.dot-tarifa-input{width:90px;border:1.5px solid #185FA5;border-radius:4px;padding:4px 6px;font-size:13px;font-family:inherit;font-weight:700;color:#185FA5;background:#E6F1FB;outline:none;text-align:right}
+.dot-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.dot-kpi-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;text-align:center;box-shadow:var(--shadow)}
+.dot-kpi-box-num{font-size:24px;font-weight:800;line-height:1.1;margin-bottom:3px}
+.dot-kpi-box-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.dot-charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.dot-chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.dot-chart-title{font-size:13px;font-weight:700;margin-bottom:2px}
+.dot-chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
+.dot-analysis-table{width:100%;border-collapse:collapse;font-size:12px}
+.dot-analysis-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.dot-analysis-table td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+.dot-analysis-table tbody tr:nth-child(even){background:rgba(0,0,0,.02)}
+
 </style>
 </head>
 <body>
@@ -351,6 +370,87 @@ function DeleteConfirm(props){return h('div',{className:'confirm-overlay'},h('di
 
 function AnalyticsView(props){var entries=props.entries;var pilarRef=_useRef();var pilarChart=_useRef();var respRef=_useRef();var respChart=_useRef();var estadoRef=_useRef();var estadoChart=_useRef();var progRef=_useRef();var progChart=_useRef();_useEffect(function(){if(!window.Chart)return;var Chart=window.Chart;var pilarCounts={};var pilarResueltas={};PILLARS.forEach(function(p){pilarCounts[p.id]=0;pilarResueltas[p.id]=0;});entries.forEach(function(e){pilarCounts[e.pilar]=(pilarCounts[e.pilar]||0)+1;if(e.resuelto)pilarResueltas[e.pilar]=(pilarResueltas[e.pilar]||0)+1;});var pilarLabels=PILLARS.map(function(p){return p.id;});if(pilarChart.current)pilarChart.current.destroy();pilarChart.current=new Chart(pilarRef.current,{type:'bar',data:{labels:pilarLabels,datasets:[{label:'Total',data:pilarLabels.map(function(l){return pilarCounts[l]||0;}),backgroundColor:'rgba(26,31,46,0.7)',borderRadius:4},{label:'Resueltas',data:pilarLabels.map(function(l){return pilarResueltas[l]||0;}),backgroundColor:'#10b981',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{ticks:{font:{size:10}}},y:{beginAtZero:true,ticks:{stepSize:1}}}}});var respMap={};entries.forEach(function(e){var resps=(e.responsables||'').split(',').map(function(r){return r.trim();}).filter(Boolean);resps.forEach(function(r){if(!respMap[r])respMap[r]={total:0,resueltas:0};respMap[r].total++;if(e.resuelto)respMap[r].resueltas++;});});var respLabels=Object.keys(respMap).sort(function(a,b){return respMap[b].total-respMap[a].total;});if(respChart.current)respChart.current.destroy();respChart.current=new Chart(respRef.current,{type:'bar',data:{labels:respLabels,datasets:[{label:'Pendientes',data:respLabels.map(function(r){return respMap[r].total-respMap[r].resueltas;}),backgroundColor:'#f59e0b',borderRadius:4},{label:'Resueltas',data:respLabels.map(function(r){return respMap[r].resueltas;}),backgroundColor:'#10b981',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,indexAxis:'y',plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{stacked:true,beginAtZero:true,ticks:{stepSize:1}},y:{stacked:true,ticks:{font:{size:11}}}}}});var resueltas=entries.filter(function(e){return e.resuelto;}).length;var vencidas=entries.filter(function(e){return!e.resuelto&&e.fechaLimite&&e.fechaLimite<TODAY;}).length;var pendientes=entries.length-resueltas-vencidas;if(estadoChart.current)estadoChart.current.destroy();estadoChart.current=new Chart(estadoRef.current,{type:'doughnut',data:{labels:['Resueltas','Pendientes','Vencidas'],datasets:[{data:[resueltas,pendientes,vencidas],backgroundColor:['#10b981','#f59e0b','#ef4444'],borderWidth:2,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{size:12},padding:16}}},cutout:'65%'}});var pilarProg={};PILLARS.forEach(function(p){pilarProg[p.id]=[];});entries.forEach(function(e){if(pilarProg[e.pilar])pilarProg[e.pilar].push(e.progreso);});var pilarAvg=pilarLabels.map(function(l){var arr=pilarProg[l];return arr.length?Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length):0;});if(progChart.current)progChart.current.destroy();progChart.current=new Chart(progRef.current,{type:'bar',data:{labels:pilarLabels,datasets:[{label:'Progreso promedio %',data:pilarAvg,backgroundColor:pilarAvg.map(function(v){return v>=100?'#10b981':v>=60?'#f59e0b':'#3b82f6';}),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{beginAtZero:true,max:100,ticks:{callback:function(v){return v+'%';}}}}}}); return function(){if(pilarChart.current)pilarChart.current.destroy();if(respChart.current)respChart.current.destroy();if(estadoChart.current)estadoChart.current.destroy();if(progChart.current)progChart.current.destroy();};},[entries]);var resueltas=entries.filter(function(e){return e.resuelto;}).length;var vencidas=entries.filter(function(e){return!e.resuelto&&e.fechaLimite&&e.fechaLimite<TODAY;}).length;var pct=entries.length?Math.round(resueltas/entries.length*100):0;var resolved=entries.filter(function(e){return e.resuelto&&e.createdAt&&e.fechaLimite;});var avgDays=0;if(resolved.length){var totalDays=resolved.reduce(function(acc,e){var d1=new Date(e.createdAt);var d2=new Date(e.fechaLimite);return acc+Math.max(0,Math.round((d2-d1)/(1000*60*60*24)));},0);avgDays=Math.round(totalDays/resolved.length);}return h('div',{className:'main'},h('div',{className:'kpi-grid'},h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#1a1f2e'}},entries.length),h('div',{className:'kpi-label'},'Total Acciones')),h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#10b981'}},pct+'%'),h('div',{className:'kpi-label'},'Completado')),h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#ef4444'}},vencidas),h('div',{className:'kpi-label'},'Vencidas')),h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#3b82f6'}},avgDays+'d'),h('div',{className:'kpi-label'},'Plazo promedio'))),h('div',{className:'analytics-grid'},h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Acciones por Pilar'),h('div',{className:'chart-sub'},'Total vs resueltas por cada pilar'),h('canvas',{ref:pilarRef,height:220})),h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Estado General'),h('div',{className:'chart-sub'},'Distribución de acciones por estado'),h('canvas',{ref:estadoRef,height:220})),h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Carga por Responsable'),h('div',{className:'chart-sub'},'Cantidad de acciones asignadas por persona'),h('canvas',{ref:respRef,height:260})),h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Progreso Promedio por Pilar'),h('div',{className:'chart-sub'},'Avance promedio de acciones en cada pilar'),h('canvas',{ref:progRef,height:220}))));}
 
+
+// ── Chart components for Dotacion analytics ──
+function GgpChart(props) {
+  var hist = props.hist;
+  var canvasRef = _useRef();
+  var chartRef = _useRef();
+  _useEffect(function() {
+    if (!window.Chart || !canvasRef.current) return;
+    var valid = hist.filter(function(r) { return r.ggpFcst || r.ggpReal; });
+    var labels = valid.map(function(r) { return r.fecha; });
+    if (chartRef.current) chartRef.current.destroy();
+    chartRef.current = new window.Chart(canvasRef.current, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'GGP FCST', data: valid.map(function(r){return r.ggpFcst||null;}),
+            borderColor: '#4B3A8A', backgroundColor: 'rgba(75,58,138,.1)',
+            tension: 0.3, fill: false, pointRadius: 4 },
+          { label: 'GGP Real', data: valid.map(function(r){return r.ggpReal||null;}),
+            borderColor: '#1D7A4A', backgroundColor: 'rgba(29,122,74,.1)',
+            tension: 0.3, fill: false, pointRadius: 4, borderDash: [4,3] }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } },
+        scales: { y: { beginAtZero: false, ticks: { font: { size: 10 } } },
+                  x: { ticks: { font: { size: 10 }, maxRotation: 45 } } } }
+    });
+    return function() { if (chartRef.current) chartRef.current.destroy(); };
+  }, [hist]);
+  return h('canvas', { ref: canvasRef, height: 200 });
+}
+
+function CostoChart(props) {
+  var hist = props.hist;
+  var canvasRef = _useRef();
+  var chartRef = _useRef();
+  _useEffect(function() {
+    if (!window.Chart || !canvasRef.current) return;
+    var valid = hist.filter(function(r) { return r.tarifFijo || r.tarifEv; });
+    var labels = valid.map(function(r) { return r.fecha; });
+    // Accumulate for line
+    var cumFijo = 0, cumEv = 0;
+    var cumData = valid.map(function(r) {
+      cumFijo += (r.dotFija||0) * 7.33 * (r.tarifFijo||0);
+      cumEv   += (r.dotEventual||0) * 8 * (r.tarifEv||0);
+      return { cumFijo: cumFijo, cumEv: cumEv };
+    });
+    if (chartRef.current) chartRef.current.destroy();
+    chartRef.current = new window.Chart(canvasRef.current, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'Costo Fijos', data: valid.map(function(r){return Math.round((r.dotFija||0)*7.33*(r.tarifFijo||0));}),
+            backgroundColor: '#185FA5', borderRadius: 3, stack: 'stack' },
+          { label: 'Costo Eventuales', data: valid.map(function(r){return Math.round((r.dotEventual||0)*8*(r.tarifEv||0));}),
+            backgroundColor: '#854F0B', borderRadius: 3, stack: 'stack' },
+          { label: 'Costo acum.', data: cumData.map(function(d){return Math.round(d.cumFijo+d.cumEv);}),
+            type: 'line', borderColor: '#4B3A8A', backgroundColor: 'transparent',
+            tension: 0.3, pointRadius: 3, yAxisID: 'y2' }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } },
+        scales: {
+          x: { stacked: true, ticks: { font: { size: 10 }, maxRotation: 45 } },
+          y: { stacked: true, beginAtZero: true, ticks: { font: { size: 10 },
+                callback: function(v) { return '$' + (v/1000).toFixed(0) + 'K'; } } },
+          y2: { position: 'right', beginAtZero: true, grid: { drawOnChartArea: false },
+                ticks: { font: { size: 10 },
+                  callback: function(v) { return '$' + (v/1000).toFixed(0) + 'K'; } } }
+        }
+      }
+    });
+    return function() { if (chartRef.current) chartRef.current.destroy(); };
+  }, [hist]);
+  return h('canvas', { ref: canvasRef, height: 200 });
+}
+
 // ══════════════════════════════════════════════════════
 // DOTACION VIEW
 // ══════════════════════════════════════════════════════
@@ -375,6 +475,9 @@ function DotacionView() {
   var horaAmS=_useState('8:30hs'); var horaAm=horaAmS[0],setHoraAm=horaAmS[1];
   var horaPmS=_useState('15:45hs');var horaPm=horaPmS[0],setHoraPm=horaPmS[1];
   var histS=_useState([]);        var hist=histS[0],setHist=histS[1];
+  var tarifFijoS=_useState(0);   var tarifFijo=tarifFijoS[0],setTarifFijo=tarifFijoS[1];
+  var tarifEvS=_useState(0);     var tarifEv=tarifEvS[0],setTarifEv=tarifEvS[1];
+  var histTabS=_useState('tabla'); var histTab=histTabS[0],setHistTab=histTabS[1];
   var subTabS=_useState('calc');  var subTab=subTabS[0],setSubTab=subTabS[1];
   var copiedS=_useState(false);   var copied=copiedS[0],setCopied=copiedS[1];
   var savedS=_useState(false);    var saved=savedS[0],setSaved=savedS[1];
@@ -416,7 +519,7 @@ function DotacionView() {
 
   function guardar(){
     var hoy=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
-    var rec={id:genId(),fecha:hoy,volFcst:c.volFcstAm+scz1Pm,dotFija:c.fijosAm+c.fijosPm,dotEventual:Math.max(0,c.evFcstAm)+Math.max(0,c.evFcstPm),ggpFcst:parseFloat(c.ggpF.toFixed(1)),volReal:c.volRT,ggpReal:parseFloat(c.ggpR.toFixed(1))};
+    var rec={id:genId(),fecha:hoy,volFcst:c.volFcstAm+scz1Pm,dotFija:c.fijosAm+c.fijosPm,dotEventual:Math.max(0,c.evFcstAm)+Math.max(0,c.evFcstPm),ggpFcst:parseFloat(c.ggpF.toFixed(1)),volReal:c.volRT,ggpReal:parseFloat(c.ggpR.toFixed(1)),tarifFijo:parseFloat(tarifFijo)||0,tarifEv:parseFloat(tarifEv)||0,ausAm:ausAm,ausPm:ausPm,presAm:presAm,presPm:presPm};
     var updated=hist.concat([rec]);
     setHist(updated);
     try{localStorage.setItem(DOT_KEY,JSON.stringify(updated));}catch(e){}
@@ -601,35 +704,208 @@ function DotacionView() {
   );
 
   // ── Hist tab ──
-  var histView=hist.length===0
-    ?h('div',{className:'dot-hist-empty'},h('div',{style:{fontSize:40,marginBottom:12}},'📋'),h('div',{style:{fontSize:16,fontWeight:600,marginBottom:6}},'Sin registros aún'),h('div',{style:{fontSize:13}},'Guardá el primer registro desde la calculadora'))
-    :h('div',{style:{overflowX:'auto'}},
-        h('div',{style:{display:'flex',justifyContent:'flex-end',padding:'10px 14px',borderBottom:'1px solid var(--border)'}},
-          h('button',{onClick:function(){if(window.confirm('¿Eliminar todo el histórico?')){setHist([]);try{localStorage.removeItem(DOT_KEY);}catch(e){}}},style:{padding:'5px 12px',borderRadius:5,border:'1px solid var(--border)',background:'var(--surface)',cursor:'pointer',fontSize:12,color:'#ef4444',fontFamily:'inherit'}},'Limpiar todo')
+  // ── compute analytics from hist ──
+  function computeAnalytics() {
+    if (!hist.length) return null;
+    var totalCostFijo = 0, totalCostEv = 0, totalDias = 0;
+    hist.forEach(function(r) {
+      var hFijo = r.dotFija * 7.33;
+      var hEv   = (r.dotEventual || 0) * 8;
+      var tf = r.tarifFijo || 0;
+      var te = r.tarifEv || 0;
+      totalCostFijo += hFijo * tf;
+      totalCostEv   += hEv * te;
+      if (tf || te) totalDias++;
+    });
+    var ggpVals = hist.filter(function(r){return r.ggpReal>0;}).map(function(r){return r.ggpReal;});
+    var ggpAvg  = ggpVals.length ? (ggpVals.reduce(function(a,b){return a+b;},0)/ggpVals.length) : 0;
+    return { totalCostFijo: totalCostFijo, totalCostEv: totalCostEv,
+             totalCosto: totalCostFijo + totalCostEv, ggpAvg: ggpAvg };
+  }
+
+  var analytics = computeAnalytics();
+
+  var histView = hist.length === 0
+    ? h('div', { className: 'dot-hist-empty' },
+        h('div', { style: { fontSize: 40, marginBottom: 12 } }, '📋'),
+        h('div', { style: { fontSize: 16, fontWeight: 600, marginBottom: 6 } }, 'Sin registros aún'),
+        h('div', { style: { fontSize: 13 } }, 'Guardá el primer registro desde la calculadora')
+      )
+    : h('div', { className: 'dot-analytics-wrap' },
+
+        // ── Tarifa inputs ──
+        h('div', { className: 'dot-tarifa-bar' },
+          h('span', { style: { fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.05em' } }, 'Tarifas por hora:'),
+          h('div', { className: 'dot-tarifa-field' },
+            h('span', null, 'Dotación fija:'),
+            h('input', { type: 'number', value: tarifFijo, min: 0, step: 100,
+              onChange: function(e) { setTarifFijo(parseFloat(e.target.value)||0); },
+              className: 'dot-tarifa-input' }),
+            h('span', { style: { fontSize: 12, color: 'var(--text-muted)' } }, '$/hr')
+          ),
+          h('div', { className: 'dot-tarifa-field' },
+            h('span', null, 'Eventuales:'),
+            h('input', { type: 'number', value: tarifEv, min: 0, step: 100,
+              onChange: function(e) { setTarifEv(parseFloat(e.target.value)||0); },
+              className: 'dot-tarifa-input', style: { borderColor: '#854F0B', color: '#854F0B', background: '#FAEEDA' } }),
+            h('span', { style: { fontSize: 12, color: 'var(--text-muted)' } }, '$/hr')
+          ),
+          h('span', { style: { fontSize: 11, color: 'var(--text-muted)', fontStyle: 'italic' } },
+            '* La tarifa se guarda con cada registro al presionar "Guardar en histórico"')
         ),
-        h('table',{className:'dot-hist-table'},
-          h('thead',null,h('tr',null,
-            ['Fecha','Vol FCST','Dot. Fija','Dot. Eventual','GGP FCST','Vol Real','GGP Real','Var% GGP',''].map(function(l,i){return h('th',{key:i},l);})
-          )),
-          h('tbody',null,[...hist].reverse().map(function(r,i){
-            var varPct=(r.ggpReal&&r.ggpFcst)?((r.ggpReal-r.ggpFcst)/r.ggpFcst*100):null;
-            var vcol=varPct===null?'var(--text-muted)':varPct>5?'#1D7A4A':varPct<-5?'#ef4444':'#f59e0b';
-            var vbg=varPct===null?'':varPct>5?'#E6F4EA':varPct<-5?'#FDECEA':'#FFF3CD';
-            return h('tr',{key:r.id,style:{background:i%2===0?'var(--surface)':'var(--bg)'}},
-              h('td',{style:{fontWeight:600}},r.fecha),
-              h('td',{style:{textAlign:'center'}},fmtN(r.volFcst)),
-              h('td',{style:{textAlign:'center'}},r.dotFija),
-              h('td',{style:{textAlign:'center'}},r.dotEventual),
-              h('td',{style:{textAlign:'center',fontWeight:700,color:'#4B3A8A'}},r.ggpFcst||'—'),
-              h('td',{style:{textAlign:'center'}},r.volReal>0?fmtN(r.volReal):'—'),
-              h('td',{style:{textAlign:'center',fontWeight:700,color:'#4B3A8A'}},r.ggpReal>0?r.ggpReal:'—'),
-              h('td',{style:{textAlign:'center',background:vbg}},h('span',{style:{color:vcol,fontWeight:700}},varPct!==null?(varPct>0?'+':'')+varPct.toFixed(1)+'%':'—')),
-              h('td',{style:{textAlign:'center'}},h('button',{onClick:function(){delHist(r.id);},style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:14,padding:'2px 6px',fontFamily:'inherit'}},'✕'))
-            );
-          }))
+
+        // ── Sub-tabs: tabla / análisis ──
+        h('div', { style: { display: 'flex', gap: 0, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '8px 8px 0 0', overflow: 'hidden' } },
+          [['tabla', '📋 Registros'], ['analytics', '📊 Análisis GGP & Costos']].map(function(t) {
+            return h('button', { key: t[0], onClick: function() { setHistTab(t[0]); },
+              style: { flex: 1, padding: '9px 16px', border: 'none', cursor: 'pointer', fontWeight: 700,
+                fontSize: 13, fontFamily: 'inherit',
+                background: histTab === t[0] ? 'var(--navy)' : 'var(--bg)',
+                color: histTab === t[0] ? '#ffe600' : 'var(--text-muted)',
+                borderBottom: histTab === t[0] ? '3px solid #ffe600' : '3px solid transparent',
+                transition: 'all .15s' } }, t[1]);
+          })
+        ),
+
+        // ── TABLA ──
+        histTab === 'tabla' && h('div', { style: { overflowX: 'auto', background: 'var(--surface)', border: '1px solid var(--border)', borderTop: 'none', borderRadius: '0 0 8px 8px' } },
+          h('div', { style: { display: 'flex', justifyContent: 'flex-end', padding: '10px 14px', borderBottom: '1px solid var(--border)' } },
+            h('button', {
+              onClick: function() { if (window.confirm('¿Eliminar todo el histórico?')) { setHist([]); try { localStorage.removeItem(DOT_KEY); } catch(e) {} } },
+              style: { padding: '5px 12px', borderRadius: 5, border: '1px solid var(--border)', background: 'var(--surface)', cursor: 'pointer', fontSize: 12, color: '#ef4444', fontFamily: 'inherit' }
+            }, 'Limpiar todo')
+          ),
+          h('table', { className: 'dot-hist-table' },
+            h('thead', null, h('tr', null,
+              ['Fecha','Vol FCST','Vol Real','Dot. Fija','Dot. Ev.','GGP FCST','GGP Real','Var% GGP','Aus AM','Aus PM','Tarifa Fijo','Tarifa Ev.','Costo Día',''].map(function(l, i) {
+                return h('th', { key: i }, l);
+              })
+            )),
+            h('tbody', null, [...hist].reverse().map(function(r, i) {
+              var varPct = (r.ggpReal && r.ggpFcst) ? ((r.ggpReal - r.ggpFcst) / r.ggpFcst * 100) : null;
+              var vcol = varPct === null ? 'var(--text-muted)' : varPct > 5 ? '#1D7A4A' : varPct < -5 ? '#ef4444' : '#f59e0b';
+              var vbg  = varPct === null ? '' : varPct > 5 ? '#E6F4EA' : varPct < -5 ? '#FDECEA' : '#FFF3CD';
+              var tf = r.tarifFijo || 0;
+              var te = r.tarifEv || 0;
+              var costoDia = (r.dotFija || 0) * 7.33 * tf + (r.dotEventual || 0) * 8 * te;
+              return h('tr', { key: r.id, style: { background: i % 2 === 0 ? 'var(--surface)' : 'var(--bg)' } },
+                h('td', { style: { fontWeight: 600 } }, r.fecha),
+                h('td', { style: { textAlign: 'center' } }, fmtN(r.volFcst)),
+                h('td', { style: { textAlign: 'center' } }, r.volReal > 0 ? fmtN(r.volReal) : '—'),
+                h('td', { style: { textAlign: 'center' } }, r.dotFija),
+                h('td', { style: { textAlign: 'center' } }, r.dotEventual),
+                h('td', { style: { textAlign: 'center', fontWeight: 700, color: '#4B3A8A' } }, r.ggpFcst || '—'),
+                h('td', { style: { textAlign: 'center', fontWeight: 700, color: '#4B3A8A' } }, r.ggpReal > 0 ? r.ggpReal : '—'),
+                h('td', { style: { textAlign: 'center', background: vbg } },
+                  h('span', { style: { color: vcol, fontWeight: 700 } },
+                    varPct !== null ? (varPct > 0 ? '+' : '') + varPct.toFixed(1) + '%' : '—')
+                ),
+                h('td', { style: { textAlign: 'center' } }, r.ausAm !== undefined ? r.ausAm : '—'),
+                h('td', { style: { textAlign: 'center' } }, r.ausPm !== undefined ? r.ausPm : '—'),
+                h('td', { style: { textAlign: 'center', color: '#185FA5', fontWeight: 600 } }, tf ? '$' + fmtN(tf) : '—'),
+                h('td', { style: { textAlign: 'center', color: '#854F0B', fontWeight: 600 } }, te ? '$' + fmtN(te) : '—'),
+                h('td', { style: { textAlign: 'center', fontWeight: 700, color: costoDia > 0 ? '#1D7A4A' : 'var(--text-muted)' } },
+                  costoDia > 0 ? '$' + fmtN(costoDia) : '—'),
+                h('td', { style: { textAlign: 'center' } },
+                  h('button', { onClick: function() { delHist(r.id); },
+                    style: { background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 14, padding: '2px 6px', fontFamily: 'inherit' } }, '✕')
+                )
+              );
+            }))
+          )
+        ),
+
+        // ── ANALYTICS ──
+        histTab === 'analytics' && h('div', { style: { background: 'var(--surface)', border: '1px solid var(--border)', borderTop: 'none', borderRadius: '0 0 8px 8px', padding: 16 } },
+
+          // KPIs
+          analytics && h('div', { className: 'dot-kpi-row', style: { marginBottom: 16 } },
+            h('div', { className: 'dot-kpi-box' },
+              h('div', { className: 'dot-kpi-box-num', style: { color: '#1D7A4A' } }, analytics.ggpAvg > 0 ? analytics.ggpAvg.toFixed(1) : '—'),
+              h('div', { className: 'dot-kpi-box-lbl' }, 'GGP Real promedio')
+            ),
+            h('div', { className: 'dot-kpi-box' },
+              h('div', { className: 'dot-kpi-box-num', style: { color: '#185FA5' } }, analytics.totalCostFijo > 0 ? '$' + fmtN(analytics.totalCostFijo) : '—'),
+              h('div', { className: 'dot-kpi-box-lbl' }, 'Costo acum. fijos')
+            ),
+            h('div', { className: 'dot-kpi-box' },
+              h('div', { className: 'dot-kpi-box-num', style: { color: '#854F0B' } }, analytics.totalCostEv > 0 ? '$' + fmtN(analytics.totalCostEv) : '—'),
+              h('div', { className: 'dot-kpi-box-lbl' }, 'Costo acum. eventuales')
+            ),
+            h('div', { className: 'dot-kpi-box' },
+              h('div', { className: 'dot-kpi-box-num', style: { color: '#4B3A8A' } }, analytics.totalCosto > 0 ? '$' + fmtN(analytics.totalCosto) : '—'),
+              h('div', { className: 'dot-kpi-box-lbl' }, 'Costo total acumulado')
+            )
+          ),
+
+          // Análisis de variación GGP (tabla)
+          h('div', { className: 'dot-chart-card', style: { marginBottom: 16 } },
+            h('div', { className: 'dot-chart-title' }, 'Análisis de variación GGP'),
+            h('div', { className: 'dot-chart-sub' }, 'Desglose de por qué la GGP Real difiere de la FCST'),
+            h('div', { style: { overflowX: 'auto' } },
+              h('table', { className: 'dot-analysis-table' },
+                h('thead', null, h('tr', null,
+                  ['Fecha', 'GGP FCST', 'GGP Real', 'Var%', 'Aus AM', 'Aus PM', 'Ev. reales vs FCST', 'Diagnóstico'].map(function(l,i){return h('th',{key:i},l);})
+                )),
+                h('tbody', null, [...hist].filter(function(r){return r.ggpReal > 0;}).reverse().map(function(r, i) {
+                  var varPct = r.ggpFcst ? ((r.ggpReal - r.ggpFcst) / r.ggpFcst * 100) : 0;
+                  var evDif = (r.presAm !== undefined && r.presAm !== null)
+                    ? (r.presAm + (r.presPm||0)) - r.dotEventual
+                    : null;
+                  var totalAus = (r.ausAm||0) + (r.ausPm||0);
+                  
+                  // Diagnóstico
+                  var diag = [];
+                  if (varPct < -3) {
+                    if (totalAus > 0) diag.push('Ausentismo (' + totalAus + ' pers.)');
+                    if (evDif !== null && evDif < 0) diag.push('Menos eventuales (' + evDif + ')');
+                    if (r.volReal > r.volFcst * 1.05) diag.push('Vol. real > FCST');
+                  } else if (varPct > 3) {
+                    if (evDif !== null && evDif > 0) diag.push('Más eventuales (+' + evDif + ')');
+                    if (r.volReal < r.volFcst * 0.95) diag.push('Vol. real < FCST');
+                  } else {
+                    diag.push('Dentro del rango');
+                  }
+
+                  var vcol = varPct > 3 ? '#1D7A4A' : varPct < -3 ? '#ef4444' : '#f59e0b';
+                  var vbg  = varPct > 3 ? '#E6F4EA' : varPct < -3 ? '#FDECEA' : '#FFF3CD';
+
+                  return h('tr', { key: r.id, style: { background: i % 2 === 0 ? 'var(--surface)' : 'var(--bg)' } },
+                    h('td', { style: { fontWeight: 600 } }, r.fecha),
+                    h('td', { style: { textAlign: 'center', color: '#4B3A8A', fontWeight: 700 } }, r.ggpFcst),
+                    h('td', { style: { textAlign: 'center', color: '#4B3A8A', fontWeight: 700 } }, r.ggpReal),
+                    h('td', { style: { textAlign: 'center', background: vbg } },
+                      h('span', { style: { color: vcol, fontWeight: 700 } }, (varPct > 0 ? '+' : '') + varPct.toFixed(1) + '%')
+                    ),
+                    h('td', { style: { textAlign: 'center' } }, r.ausAm !== undefined ? r.ausAm : '—'),
+                    h('td', { style: { textAlign: 'center' } }, r.ausPm !== undefined ? r.ausPm : '—'),
+                    h('td', { style: { textAlign: 'center', color: evDif === null ? 'var(--text-muted)' : evDif < 0 ? '#ef4444' : evDif > 0 ? '#1D7A4A' : 'var(--text-muted)' } },
+                      evDif !== null ? (evDif > 0 ? '+' : '') + evDif : '—'
+                    ),
+                    h('td', null, h('span', { style: { fontSize: 11, color: vcol } }, diag.join(' · ')))
+                  );
+                }))
+              )
+            )
+          ),
+
+          // Gráficos
+          h('div', { className: 'dot-charts-grid' },
+            // GGP FCST vs Real
+            h('div', { className: 'dot-chart-card' },
+              h('div', { className: 'dot-chart-title' }, 'GGP FCST vs Real'),
+              h('div', { className: 'dot-chart-sub' }, 'Evolución de productividad por día'),
+              h(GgpChart, { hist: hist })
+            ),
+            // Costo diario
+            h('div', { className: 'dot-chart-card' },
+              h('div', { className: 'dot-chart-title' }, 'Costo por día'),
+              h('div', { className: 'dot-chart-sub' }, 'Costo fijos vs eventuales ($ por día)'),
+              h(CostoChart, { hist: hist })
+            )
+          )
         )
       );
-
   return h('div',{className:'dot-wrap'},
     // FCST bar
     h('div',{className:'dot-fcst-bar'},

@@ -273,7 +273,77 @@ function LoginScreen(props){var sel=_useState(null);var user=sel[0],setUser=sel[
 
 function EvolvoTab(props){var entry=props.entry,onUpdate=props.onUpdate;var ts=_useState('');var texto=ts[0],setTexto=ts[1];function addEvo(){if(!texto.trim())return;var newEvo={id:genId(),texto:texto.trim(),fecha:new Date().toISOString(),autor:props.currentUser};onUpdate(Object.assign({},entry,{evolutivo:[newEvo].concat(entry.evolutivo||[])}));setTexto('');}var evoList=entry.evolutivo||[];return h('div',null,h('div',{className:'evo-progress-bar-wrap'},h('div',{className:'evo-progress-label'},h('span',null,'Progreso actual'),h('span',{style:{fontWeight:700,color:progColor(entry.progreso)}},entry.progreso+'%')),h('div',{className:'evo-progress-track'},h('div',{className:'evo-progress-fill',style:{width:entry.progreso+'%',background:progColor(entry.progreso)}}))),h('div',{className:'evo-list'},evoList.length===0?h('div',{className:'evo-empty'},'No hay actualizaciones aun.'):evoList.map(function(evo){return h('div',{key:evo.id,className:'evo-entry'},h('div',{className:'evo-entry-header'},h('span',{className:'evo-entry-meta'},fmtDateTime(evo.fecha)),h('span',{className:'evo-entry-meta',style:{fontStyle:'italic'}},evo.autor||'-')),h('div',{className:'evo-entry-text'},evo.texto));})),h('div',{className:'evo-add-form'},h('span',{className:'evo-add-label'},'Agregar actualizacion'),h('textarea',{className:'form-control',rows:3,placeholder:'Describe el avance...',value:texto,onChange:function(e){setTexto(e.target.value);},style:{marginBottom:8}}),h('button',{className:'btn btn-primary',onClick:addEvo,disabled:!texto.trim()},'Guardar actualizacion')));}
 
-function FotosTab(props){var entry=props.entry,onUpdate=props.onUpdate,showToast=props.showToast;var fileRef=_useRef();var lbs=_useState(null);var lightbox=lbs[0],setLightbox=lbs[1];function handleFiles(files){var arr=Array.from(files);var results=[];var pending=arr.length;if(!pending)return;arr.forEach(function(file){if(file.size>5*1024*1024){showToast('"'+file.name+'" supera 5MB','error');pending--;return;}var reader=new FileReader();reader.onload=function(ev){results.push({id:genId(),nombre:file.name,dataUrl:ev.target.result,fecha:new Date().toISOString()});pending--;if(pending===0)onUpdate(Object.assign({},entry,{fotos:(entry.fotos||[]).concat(results)}));};reader.readAsDataURL(file);});}var fotos=entry.fotos||[];return h('div',null,h('div',{className:'photo-upload-area',onClick:function(){fileRef.current&&fileRef.current.click();},onDrop:function(e){e.preventDefault();handleFiles(e.dataTransfer.files);},onDragOver:function(e){e.preventDefault();}},h('div',{className:'photo-upload-icon'},'📷'),h('div',{className:'photo-upload-text'},'Hace clic o arrastra imagenes aqui'),h('div',{className:'photo-upload-sub'},'PNG, JPG, GIF - max. 5MB'),h('input',{ref:fileRef,type:'file',accept:'image/*',multiple:true,style:{display:'none'},onChange:function(e){handleFiles(e.target.files);e.target.value='';}})),fotos.length===0?h('div',{className:'photo-empty'},'No hay fotos de evidencia.'):h('div',{className:'photo-grid'},fotos.map(function(foto){return h('div',{key:foto.id,className:'photo-thumb'},h('img',{src:foto.dataUrl,alt:foto.nombre,className:'photo-thumb-img',onClick:function(){setLightbox(foto.dataUrl);}}),h('div',{className:'photo-info'},h('span',{className:'photo-name',title:foto.nombre},foto.nombre),h('div',{className:'photo-date'},fmtDate(foto.fecha?foto.fecha.slice(0,10):''))),h('button',{className:'photo-del',onClick:function(){onUpdate(Object.assign({},entry,{fotos:fotos.filter(function(f){return f.id!==foto.id;})}));},'✕'));})),lightbox&&h('div',{className:'lightbox',onClick:function(){setLightbox(null);}},h('button',{className:'lightbox-close',onClick:function(e){e.stopPropagation();setLightbox(null);}},'✕'),h('img',{src:lightbox,alt:'foto',className:'lightbox-img',onClick:function(e){e.stopPropagation();}}})));}
+function FotosTab(props) {
+  var entry = props.entry;
+  var onUpdate = props.onUpdate;
+  var showToast = props.showToast;
+  var fileRef = _useRef();
+  var lbs = _useState(null);
+  var lightbox = lbs[0], setLightbox = lbs[1];
+
+  function handleFiles(files) {
+    var arr = Array.from(files);
+    var results = [];
+    var pending = arr.length;
+    if (!pending) return;
+    arr.forEach(function(file) {
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('"' + file.name + '" supera 5MB', 'error');
+        pending--;
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        results.push({ id: genId(), nombre: file.name, dataUrl: ev.target.result, fecha: new Date().toISOString() });
+        pending--;
+        if (pending === 0) onUpdate(Object.assign({}, entry, { fotos: (entry.fotos || []).concat(results) }));
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  var fotos = entry.fotos || [];
+  return h('div', null,
+    h('div', {
+      className: 'photo-upload-area',
+      onClick: function() { fileRef.current && fileRef.current.click(); },
+      onDrop: function(e) { e.preventDefault(); handleFiles(e.dataTransfer.files); },
+      onDragOver: function(e) { e.preventDefault(); }
+    },
+      h('div', { className: 'photo-upload-icon' }, '📷'),
+      h('div', { className: 'photo-upload-text' }, 'Hace clic o arrastra imagenes aqui'),
+      h('div', { className: 'photo-upload-sub' }, 'PNG, JPG, GIF - max. 5MB'),
+      h('input', { ref: fileRef, type: 'file', accept: 'image/*', multiple: true, style: { display: 'none' },
+        onChange: function(e) { handleFiles(e.target.files); e.target.value = ''; } })
+    ),
+    fotos.length === 0
+      ? h('div', { className: 'photo-empty' }, 'No hay fotos de evidencia.')
+      : h('div', { className: 'photo-grid' },
+          fotos.map(function(foto) {
+            return h('div', { key: foto.id, className: 'photo-thumb' },
+              h('img', { src: foto.dataUrl, alt: foto.nombre, className: 'photo-thumb-img',
+                onClick: function() { setLightbox(foto.dataUrl); } }),
+              h('div', { className: 'photo-info' },
+                h('span', { className: 'photo-name', title: foto.nombre }, foto.nombre),
+                h('div', { className: 'photo-date' }, fmtDate(foto.fecha ? foto.fecha.slice(0, 10) : ''))
+              ),
+              h('button', { className: 'photo-del',
+                onClick: function() { onUpdate(Object.assign({}, entry, { fotos: fotos.filter(function(f) { return f.id !== foto.id; }) })); }
+              }, '✕')
+            );
+          })
+        ),
+    lightbox && h('div', { className: 'lightbox', onClick: function() { setLightbox(null); } },
+      h('button', { className: 'lightbox-close',
+        onClick: function(e) { e.stopPropagation(); setLightbox(null); }
+      }, '✕'),
+      h('img', { src: lightbox, alt: 'foto', className: 'lightbox-img',
+        onClick: function(e) { e.stopPropagation(); }
+      })
+    )
+  );
+}
+
 
 function ActionModal(props){var init=props.entry,isNew=props.isNew,onSave=props.onSave,onClose=props.onClose,showToast=props.showToast,currentUser=props.currentUser;var admin=isAdmin(currentUser);var myTask=isMyTask(init,currentUser);var canEdit=admin||myTask;var es=_useState(function(){return Object.assign({},init);});var entry=es[0],setEntry=es[1];var ts=_useState(canEdit&&!admin?'evolutivo':'datos');var tab=ts[0],setTab=ts[1];var overlayRef=_useRef();var mdOnOverlay=_useRef(false);function upd(field,val){setEntry(function(prev){return Object.assign({},prev,{[field]:val});});}function handleSave(){if(!entry.tarea.trim()){showToast('La tarea es obligatoria','error');return;}var finalEntry=Object.assign({},entry,{id:entry.id||genId(),createdAt:entry.createdAt||new Date().toISOString()});onSave(finalEntry);sendNotificationEmail(finalEntry,isNew);}var evoCount=(entry.evolutivo||[]).length;var fotosCount=(entry.fotos||[]).length;var isReadOnly=!admin&&!myTask;return h('div',{className:'modal-overlay',ref:overlayRef,onMouseDown:function(e){mdOnOverlay.current=e.target===overlayRef.current;},onMouseUp:function(e){if(mdOnOverlay.current&&e.target===overlayRef.current)onClose();mdOnOverlay.current=false;}},h('div',{className:'modal-box',onMouseDown:function(e){e.stopPropagation();},onMouseUp:function(e){e.stopPropagation();}},h('div',{className:'modal-header'},h('span',{className:'modal-header-title'},isNew?'Nueva Accion':entry.tarea),h('button',{className:'modal-close',onClick:onClose},'✕')),h('div',{className:'modal-tabs'},h('button',{className:'modal-tab'+(tab==='datos'?' active':''),onClick:function(){setTab('datos');}},'Datos'),h('button',{className:'modal-tab'+(tab==='evolutivo'?' active':''),onClick:function(){setTab('evolutivo');}},'Evolutivo ('+evoCount+')'),h('button',{className:'modal-tab'+(tab==='fotos'?' active':''),onClick:function(){setTab('fotos');}},'Fotos ('+fotosCount+')')),h('div',{className:'modal-body'},tab==='datos'&&h('div',{className:'form-grid'},isReadOnly&&h('div',{className:'form-group full',style:{marginBottom:4}},h('div',{className:'readonly-badge'},'👁 Solo lectura — esta tarea no esta asignada a vos')),h('div',{className:'form-group'},h('label',{className:'form-label'},'Fecha ',admin&&h('span',{className:'req'},'*')),admin?h('input',{type:'date',className:'form-control',value:entry.fecha,onChange:function(e){upd('fecha',e.target.value);}}):h('div',{className:'readonly-badge'},fmtDate(entry.fecha))),h('div',{className:'form-group'},h('label',{className:'form-label'},'Pilar'),admin?h('select',{className:'form-control',value:entry.pilar,onChange:function(e){upd('pilar',e.target.value);}},PILLARS.map(function(p){return h('option',{key:p.id,value:p.id},p.id);})):h('div',null,h(PilarPill,{id:entry.pilar}))),h('div',{className:'form-group full'},h('label',{className:'form-label'},'Tarea ',admin&&h('span',{className:'req'},'*')),admin?h('input',{type:'text',className:'form-control',value:entry.tarea,onChange:function(e){upd('tarea',e.target.value);}}):h('div',{className:'readonly-badge'},entry.tarea)),h('div',{className:'form-group full'},h('label',{className:'form-label'},'Accion'),admin?h('textarea',{className:'form-control',rows:3,value:entry.accion,onChange:function(e){upd('accion',e.target.value);}}):h('div',{className:'readonly-badge'},entry.accion||'-')),h('div',{className:'form-group full'},h('label',{className:'form-label'},'Responsables'),admin?h('input',{type:'text',className:'form-control',placeholder:'Ej: Juan Lopez, Maria Garcia',value:entry.responsables,onChange:function(e){upd('responsables',e.target.value);}}):h('div',{className:'readonly-badge'},entry.responsables||'-')),admin&&h('div',{className:'form-group full'},h('label',{className:'form-label'},'✉ Emails para notificar ',h('span',{style:{color:'var(--text-muted)',fontWeight:400,fontSize:11}},'(opcional)')),h('input',{type:'text',className:'form-control',placeholder:'email1@mercadolibre.com, email2@...',value:entry.emails||'',onChange:function(e){upd('emails',e.target.value);}})),h('div',{className:'form-group'},h('label',{className:'form-label'},'Fecha Limite'),admin?h('input',{type:'date',className:'form-control',value:entry.fechaLimite,onChange:function(e){upd('fechaLimite',e.target.value);}}):h('div',{className:'readonly-badge'},fmtDate(entry.fechaLimite)||'-')),(admin||myTask)&&h('div',{className:'form-group'},h('label',{className:'form-label',style:{opacity:0}},'_'),h('div',{className:'form-inline'},h('input',{type:'checkbox',id:'res-chk',checked:entry.resuelto,onChange:function(e){upd('resuelto',e.target.checked);if(e.target.checked)upd('progreso',100);}}),h('label',{htmlFor:'res-chk'},'Marcar como Resuelto'))),(admin||myTask)&&h('div',{className:'form-group full'},h('label',{className:'form-label'},'Progreso'),h('div',{className:'range-row'},h('input',{type:'range',min:0,max:100,step:5,value:entry.progreso,onChange:function(e){upd('progreso',Number(e.target.value));}}),h('span',{className:'range-val'},entry.progreso+'%')))),tab==='evolutivo'&&h(EvolvoTab,{entry:entry,onUpdate:setEntry,currentUser:currentUser}),tab==='fotos'&&h(FotosTab,{entry:entry,onUpdate:setEntry,showToast:showToast})),h('div',{className:'modal-footer'},h('button',{className:'btn btn-cancel',onClick:onClose},'Cancelar'),(admin||myTask)&&h('button',{className:'btn btn-primary',onClick:handleSave},(entry.emails&&entry.emails.trim()&&admin)?(isNew?'✉ Crear y Notificar':'✉ Guardar y Notificar'):(isNew?'Crear Accion':'Guardar cambios')))));}
 

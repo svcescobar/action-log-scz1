@@ -273,8 +273,8 @@ var GH_API='https://api.github.com/repos/'+CONFIG.GH_REPO+'/contents/'+CONFIG.DA
 var GH_HDRS={'Authorization':'token '+CONFIG.GH_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
 function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(new RegExp('\\n','g'),''))));}
-async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||''};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
-async function saveState(entries,bgImage){var payload={message:'update',content:b64enc(JSON.stringify({entries:entries,bgImage:bgImage||''}))};if(_ghSha)payload.sha=_ghSha;var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}var result=await resp.json();_ghSha=result.content.sha;}
+async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
+async function saveState(entries,bgImage,calcState){var payload={message:'update',content:b64enc(JSON.stringify({entries:entries,bgImage:bgImage||'',calcState:calcState||{}}))};if(_ghSha)payload.sha=_ghSha;var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}var result=await resp.json();_ghSha=result.content.sha;}
 function isAdmin(user){return ADMIN_USERS.indexOf(user)!==-1;}
 function isMyTask(entry,user){if(!entry.responsables)return false;return entry.responsables.toLowerCase().indexOf(user.toLowerCase())!==-1;}
 function fmtDate(iso){if(!iso)return'';var p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
@@ -514,7 +514,8 @@ function SemanaWidget(props) {
 // ══════════════════════════════════════════════════════
 // DOTACION VIEW
 // ══════════════════════════════════════════════════════
-function DotacionView() {
+function DotacionView(props) {
+  var onSaveCalc = props.onSaveCalc || function(){};
   var DOT_KEY = 'dotacion_historico';
   var CALC_KEY = 'dotacion_calc_state';
 
@@ -945,7 +946,16 @@ function DotacionView() {
   return h('div',{className:'dot-wrap'},
     // FCST bar
     h('div',{className:'dot-fcst-bar'},
-      h('div',{className:'dot-sec-hdr'},'Volumen FCST — actualizá estos valores diariamente'),
+      h('div',{style:{background:'var(--navy)',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'7px 12px'}},
+        h('span',{style:{color:'#fff',fontWeight:700,fontSize:11,letterSpacing:'.07em',textTransform:'uppercase'}},'Volumen FCST — actualizá estos valores diariamente'),
+        h('button',{
+          onClick:function(){
+            var state={scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,volRealAm:volRealAm,volRealPm:volRealPm,share:share,rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,presAm:presAm,rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,presPm:presPm,horaAm:horaAm,horaPm:horaPm};
+            onSaveCalc(state);
+          },
+          style:{background:'#FFE600',color:'#1a1f2e',border:'none',borderRadius:5,padding:'4px 12px',fontWeight:700,fontSize:12,cursor:'pointer',fontFamily:'inherit'}
+        },'💾 Sincronizar')
+      ),
       h('div',{className:'dot-fcst-inputs'},
         h('div',{className:'dot-fcst-box dot-fcst-box-scz1'},h('div',{className:'dot-fcst-label',style:{color:'#1a1f2e'}},'SCZ1 AM'),h('input',{type:'number',value:scz1,min:0,step:100,onChange:function(e){setScz1(parseFloat(e.target.value)||0);},className:'dot-fcst-input',style:{color:'#1a1f2e'}}),h('div',{className:'dot-fcst-sub'},'paquetes FCST')),
         h('div',{className:'dot-fcst-box dot-fcst-box-ecz'},h('div',{className:'dot-fcst-label',style:{color:'#185FA5'}},'ECZ1 AM'),h('input',{type:'number',value:ecz1,min:0,step:100,onChange:function(e){setEcz1(parseFloat(e.target.value)||0);},className:'dot-fcst-input',style:{color:'#185FA5'}}),h('div',{className:'dot-fcst-sub'},'paquetes FCST')),
@@ -991,13 +1001,14 @@ function App(props) {
 
   var showToast=_useCallback(function(message,type){var id=genId();setToasts(function(prev){return prev.concat([{id:id,message:message,type:type||'info'}]);});setTimeout(function(){setToasts(function(prev){return prev.filter(function(t){return t.id!==id;});});},3500);},[]);
 
-  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);setLoading(false);});},[]);
+  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setLoading(false);});},[]);
   _useEffect(function(){document.body.classList.toggle('dark',dark);},[dark]);
   _useEffect(function(){if(bgImage){document.body.style.backgroundImage='url('+bgImage+')';document.body.style.backgroundSize='cover';document.body.style.backgroundPosition='center';document.body.style.backgroundAttachment='fixed';document.body.classList.add('has-bg');}else{document.body.style.backgroundImage='';document.body.classList.remove('has-bg');}},[ bgImage]);
 
   if(loading)return h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',background:'#1a1f2e',color:'#ffe600',fontSize:'18px',gap:'12px'}},h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⟳'),'Cargando...');
 
-  function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');});}
+  function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
+  function saveCalcToGH(calcState){return saveState(entries,bgImage,calcState).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function handleNew(){setEditing(emptyEntry());setIsNew(true);setModal(true);}
   function handleEdit(e){setEditing(Object.assign({},e));setIsNew(false);setModal(true);}
   function handleSave(entry){var updated=isNew?entries.concat([entry]):entries.map(function(e){return e.id===entry.id?entry:e;});persist(updated);setModal(false);showToast(isNew?'Accion creada':'Accion actualizada','success');}
@@ -1026,7 +1037,7 @@ function App(props) {
       h('button',{className:'nav-tab'+(page==='dotacion'?' active':''),onClick:function(){setPage('dotacion');}},'📦 Dotación')
     ),
     page==='analytics'?h(AnalyticsView,{entries:entries}):
-    page==='dotacion'?h(DotacionView,null):
+    page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH}):
     h('main',{className:'main'},
       !admin&&myEntries.length>0&&h('div',{className:'collab-banner'},'⭐ Tenés ',h('strong',null,myEntries.length+' accion'+(myEntries.length!==1?'es':'')),  ' asignadas. Podés actualizar el progreso y agregar comentarios.'),
       h('div',{className:'stats-bar'},h('div',{className:'stat-chip total'},h('span',{className:'stat-num'},stats.total),h('span',{style:{color:'var(--text-muted)'}},'Total')),h('div',{className:'stat-chip resueltas'},h('span',{className:'stat-num'},stats.resueltas),h('span',{style:{color:'var(--text-muted)'}},'Resueltas')),h('div',{className:'stat-chip pendientes'},h('span',{className:'stat-num'},stats.pendientes),h('span',{style:{color:'var(--text-muted)'}},'Pendientes')),h('div',{className:'stat-chip vencidas'},h('span',{className:'stat-num'},stats.vencidas),h('span',{style:{color:'var(--text-muted)'}},'Vencidas'))),
@@ -1705,7 +1716,16 @@ function DotacionView() {
   return h('div',{className:'dot-wrap'},
     // FCST bar
     h('div',{className:'dot-fcst-bar'},
-      h('div',{className:'dot-sec-hdr'},'Volumen FCST — actualizá estos valores diariamente'),
+      h('div',{style:{background:'var(--navy)',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'7px 12px'}},
+        h('span',{style:{color:'#fff',fontWeight:700,fontSize:11,letterSpacing:'.07em',textTransform:'uppercase'}},'Volumen FCST — actualizá estos valores diariamente'),
+        h('button',{
+          onClick:function(){
+            var state={scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,volRealAm:volRealAm,volRealPm:volRealPm,share:share,rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,presAm:presAm,rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,presPm:presPm,horaAm:horaAm,horaPm:horaPm};
+            onSaveCalc(state);
+          },
+          style:{background:'#FFE600',color:'#1a1f2e',border:'none',borderRadius:5,padding:'4px 12px',fontWeight:700,fontSize:12,cursor:'pointer',fontFamily:'inherit'}
+        },'💾 Sincronizar')
+      ),
       h('div',{className:'dot-fcst-inputs'},
         h('div',{className:'dot-fcst-box dot-fcst-box-scz1'},h('div',{className:'dot-fcst-label',style:{color:'#1a1f2e'}},'SCZ1 AM'),h('input',{type:'number',value:scz1,min:0,step:100,onChange:function(e){setScz1(parseFloat(e.target.value)||0);},className:'dot-fcst-input',style:{color:'#1a1f2e'}}),h('div',{className:'dot-fcst-sub'},'paquetes FCST')),
         h('div',{className:'dot-fcst-box dot-fcst-box-ecz'},h('div',{className:'dot-fcst-label',style:{color:'#185FA5'}},'ECZ1 AM'),h('input',{type:'number',value:ecz1,min:0,step:100,onChange:function(e){setEcz1(parseFloat(e.target.value)||0);},className:'dot-fcst-input',style:{color:'#185FA5'}}),h('div',{className:'dot-fcst-sub'},'paquetes FCST')),
@@ -1751,13 +1771,14 @@ function App(props) {
 
   var showToast=_useCallback(function(message,type){var id=genId();setToasts(function(prev){return prev.concat([{id:id,message:message,type:type||'info'}]);});setTimeout(function(){setToasts(function(prev){return prev.filter(function(t){return t.id!==id;});});},3500);},[]);
 
-  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);setLoading(false);});},[]);
+  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setLoading(false);});},[]);
   _useEffect(function(){document.body.classList.toggle('dark',dark);},[dark]);
   _useEffect(function(){if(bgImage){document.body.style.backgroundImage='url('+bgImage+')';document.body.style.backgroundSize='cover';document.body.style.backgroundPosition='center';document.body.style.backgroundAttachment='fixed';document.body.classList.add('has-bg');}else{document.body.style.backgroundImage='';document.body.classList.remove('has-bg');}},[ bgImage]);
 
   if(loading)return h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',background:'#1a1f2e',color:'#ffe600',fontSize:'18px',gap:'12px'}},h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⟳'),'Cargando...');
 
-  function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');});}
+  function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
+  function saveCalcToGH(calcState){return saveState(entries,bgImage,calcState).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function handleNew(){setEditing(emptyEntry());setIsNew(true);setModal(true);}
   function handleEdit(e){setEditing(Object.assign({},e));setIsNew(false);setModal(true);}
   function handleSave(entry){var updated=isNew?entries.concat([entry]):entries.map(function(e){return e.id===entry.id?entry:e;});persist(updated);setModal(false);showToast(isNew?'Accion creada':'Accion actualizada','success');}
@@ -1786,7 +1807,7 @@ function App(props) {
       h('button',{className:'nav-tab'+(page==='dotacion'?' active':''),onClick:function(){setPage('dotacion');}},'📦 Dotación')
     ),
     page==='analytics'?h(AnalyticsView,{entries:entries}):
-    page==='dotacion'?h(DotacionView,null):
+    page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH}):
     h('main',{className:'main'},
       !admin&&myEntries.length>0&&h('div',{className:'collab-banner'},'⭐ Tenés ',h('strong',null,myEntries.length+' accion'+(myEntries.length!==1?'es':'')),  ' asignadas. Podés actualizar el progreso y agregar comentarios.'),
       h('div',{className:'stats-bar'},h('div',{className:'stat-chip total'},h('span',{className:'stat-num'},stats.total),h('span',{style:{color:'var(--text-muted)'}},'Total')),h('div',{className:'stat-chip resueltas'},h('span',{className:'stat-num'},stats.resueltas),h('span',{style:{color:'var(--text-muted)'}},'Resueltas')),h('div',{className:'stat-chip pendientes'},h('span',{className:'stat-num'},stats.pendientes),h('span',{style:{color:'var(--text-muted)'}},'Pendientes')),h('div',{className:'stat-chip vencidas'},h('span',{className:'stat-num'},stats.vencidas),h('span',{style:{color:'var(--text-muted)'}},'Vencidas'))),

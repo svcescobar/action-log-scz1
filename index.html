@@ -834,7 +834,15 @@ function DotacionView(props) {
       totalCostFijo+=(r.hfijo||((r.dotFija||0)*7.33))*(r.tarifFijo||0);
       totalCostEv+=(r.hev||((r.dotEventual||0)*8))*(r.tarifEv||0);
     });
-    var ggpVals=hist.filter(function(r){return r.ggpReal>0&&r.turno==='AM';}).map(function(r){return r.ggpReal;});
+    var byDateGgp={};
+    hist.filter(function(r){return r.ggpReal>0;}).forEach(function(r){
+      if(!byDateGgp[r.fecha])byDateGgp[r.fecha]=[];
+      byDateGgp[r.fecha].push(r.ggpReal);
+    });
+    var ggpVals=Object.keys(byDateGgp).map(function(fecha){
+      var vals=byDateGgp[fecha];
+      return vals.reduce(function(a,b){return a+b;},0)/vals.length;
+    });
     var ggpAvg=ggpVals.length?(ggpVals.reduce(function(a,b){return a+b;},0)/ggpVals.length):0;
     return{totalCostFijo:totalCostFijo,totalCostEv:totalCostEv,totalCosto:totalCostFijo+totalCostEv,ggpAvg:ggpAvg};
   }

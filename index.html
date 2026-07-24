@@ -1110,8 +1110,24 @@ var T1_METRICS_PM = [
   {k:'bipeos',     label:'Bipeos OK (Poka Yoke)',                     target:'99,09%', type:'pct', highGood:true, limit:99.09}
 ];
 var T1_DAYS = ['dom','lun','mar','mie','jue','vie','sab'];
-var T1_DAY_LABELS = ['DOM/LUN','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
+var T1_DAY_LABELS = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
 var T1_DAY_KEYS = ['d0','d1','d2','d3','d4','d5'];
+
+
+function isoWeekToDates(week, year){
+  // ISO week 1 = week with year's first Thursday. Monday is day 1.
+  var simple=new Date(year,0,1+(week-1)*7);
+  var dow=simple.getDay();
+  var monday=new Date(simple);
+  if(dow<=4){monday.setDate(simple.getDate()-simple.getDay()+1);}
+  else{monday.setDate(simple.getDate()+8-simple.getDay());}
+  var out=[];
+  for(var i=0;i<6;i++){ // Mon..Sat
+    var d=new Date(monday);d.setDate(monday.getDate()+i);
+    out.push(('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2));
+  }
+  return out;
+}
 
 function isoWeekNow(){
   var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+4-(d.getDay()||7));
@@ -1142,6 +1158,7 @@ function Tier1View(props){
     });
   }
   function updFecha(i,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.fechas[i]=val;return n;});}
+  function updTarget(turno,metricK,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));if(!n.targets)n.targets={am:{},pm:{}};if(!n.targets[turno])n.targets[turno]={};n.targets[turno][metricK]=val;return n;});}
   function updSemana(val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.semana=val;return n;});}
 
   function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});return n;});}
@@ -1188,7 +1205,8 @@ function Tier1View(props){
             h('th',{className:'metric-col'},turno==='am'?'OBLIGATORIOS / OPCIONALES':'OBLIGATORIOS'),
             h('th',null,'TARGET'),
             T1_DAY_LABELS.map(function(dl,i){
-              return h('th',{key:i},h('div',null,dl),h('input',{type:'text',value:(t1.fechas[i]||''),placeholder:'fecha',onChange:function(e){updFecha(i,e.target.value);},style:{width:70,border:'1px solid #B8D4EE',borderRadius:3,fontSize:10,textAlign:'center',fontFamily:'inherit',marginTop:2,padding:'1px 2px'}}));
+              var autoDates=isoWeekToDates(parseInt(t1.semana)||isoWeekNow(),new Date().getFullYear());
+              return h('th',{key:i},h('div',null,dl),h('div',{style:{fontSize:10,fontWeight:600,color:'#0D47A1',marginTop:2}},autoDates[i]||''));
             }),
             h('th',null,'PROM. SEMANAL')
           )
@@ -1197,7 +1215,7 @@ function Tier1View(props){
           metrics.map(function(metric){
             return h('tr',{key:metric.k},
               h('td',{className:'metric-name'},metric.label),
-              h('td',{className:'target-cell'},metric.target),
+              h('td',{className:'target-cell'},h('input',{type:'text',value:(t1.targets&&t1.targets[turno]&&t1.targets[turno][metric.k]!==undefined)?t1.targets[turno][metric.k]:metric.target,onChange:function(e){updTarget(turno,metric.k,e.target.value);},style:{width:'100%',border:'1px solid transparent',background:'transparent',textAlign:'center',fontSize:12,fontFamily:'inherit',fontWeight:700,color:'#854F0B',outline:'none',padding:'2px'}})),
               T1_DAY_KEYS.map(function(dk,di){
                 var val=(t1[turno]&&t1[turno][metric.k]&&t1[turno][metric.k][dk])||'';
                 return h('td',{key:dk},h('input',{type:'text',value:val,className:'t1-cell-input '+cellClass(metric,val),onChange:function(e){updCell(turno,metric.k,dk,e.target.value);}}));

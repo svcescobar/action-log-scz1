@@ -1553,6 +1553,7 @@ function InventarioView(props){
   function addItem(){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));var fechas=getAllFechas(n.items);var last=fechas[fechas.length-1]||new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});n.items.push({id:genId(),tipo:(filter==='Todos'?'Insumo':filter),item:'',minimo:0,conteos:[{fecha:last,valor:0}]});return n;});}
   function delItem(id){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.filter(function(x){return x.id!==id;});return n;});}
   function addConteo(){var fecha=window.prompt('Fecha del nuevo conteo (dd/mm/aaaa):',new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}));if(!fecha)return;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.map(function(x){var nx=JSON.parse(JSON.stringify(x));if(!nx.conteos.some(function(ct){return ct.fecha===fecha;}))nx.conteos.push({fecha:fecha,valor:0});return nx;});return n;});}
+  function delConteoFecha(fecha){if(!window.confirm('¿Borrar el conteo del '+fecha+' de TODOS los items?'))return;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.map(function(x){var nx=JSON.parse(JSON.stringify(x));nx.conteos=nx.conteos.filter(function(ct){return ct.fecha!==fecha;});return nx;});return n;});}
   function getAllFechas(list){var set={};list.forEach(function(x){(x.conteos||[]).forEach(function(ct){set[ct.fecha]=true;});});return Object.keys(set);}
 
   var itemsView=(function(){
@@ -1580,7 +1581,7 @@ function InventarioView(props){
             h('th',null,'Item'),
             h('th',{style:{textAlign:'center'}},'Mínimo'),
             h('th',{style:{textAlign:'center'}},'Estado'),
-            showFechas.map(function(f){return h('th',{key:f,style:{textAlign:'center'}},f===lastFecha?h('span',null,f,h('span',{style:{display:'block',fontSize:9,color:'#1D7A4A',fontWeight:700}},'ÚLTIMO')):f);}),
+            showFechas.map(function(f){return h('th',{key:f,style:{textAlign:'center'}},h('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',gap:1}},h('div',null,f),f===lastFecha?h('span',{style:{fontSize:9,color:'#1D7A4A',fontWeight:700}},'ÚLTIMO'):null,h('button',{onClick:function(){delConteoFecha(f);},title:'Borrar este conteo',style:{background:'none',border:'none',cursor:'pointer',color:'#ef4444',fontSize:10,fontFamily:'inherit',padding:0,marginTop:1}},'🗑 borrar')));}),
             h('th',null,'')
           )),
           h('tbody',null,filtered.map(function(x){

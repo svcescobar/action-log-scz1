@@ -1148,6 +1148,7 @@ function Tier1View(props){
   var histS=_useState(initHist);var hist=histS[0],setHist=histS[1];
   var tabS=_useState('semana');var tab=tabS[0],setTab=tabS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
+  var editWkS=_useState(null);var editWk=editWkS[0],setEditWk=editWkS[1];
 
   function updCell(turno,metricK,dayK,val){
     setT1(function(prev){
@@ -1196,6 +1197,54 @@ function Tier1View(props){
   }
 
   function sincronizar(){ onSave(t1,hist); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
+
+  function updHistCell(wkId,turno,metricK,dayK,val){
+    setHist(function(prev){
+      return prev.map(function(w){
+        if(w.id!==wkId)return w;
+        var nw=JSON.parse(JSON.stringify(w));
+        if(!nw[turno])nw[turno]={};
+        if(!nw[turno][metricK])nw[turno][metricK]={};
+        nw[turno][metricK][dayK]=val;
+        return nw;
+      });
+    });
+  }
+  function updHistTarget(wkId,turno,metricK,val){
+    setHist(function(prev){return prev.map(function(w){if(w.id!==wkId)return w;var nw=JSON.parse(JSON.stringify(w));if(!nw.targets)nw.targets={am:{},pm:{}};if(!nw.targets[turno])nw.targets[turno]={};nw.targets[turno][metricK]=val;return nw;});});
+  }
+  function saveHistEdits(){ onSave(t1,hist); setEditWk(null); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
+
+  function renderHistTable(w,turno,metrics){
+    return h('div',{className:'t1-scroll'},
+      h('table',{className:'t1-table'},
+        h('thead',null,h('tr',null,
+          h('th',{className:'metric-col'},turno==='am'?'OBLIGATORIOS / OPCIONALES':'OBLIGATORIOS'),
+          h('th',null,'TARGET'),
+          T1_DAY_LABELS.map(function(dl,i){
+            var ad=isoWeekToDates(parseInt(w.semana)||isoWeekNow(),new Date().getFullYear());
+            return h('th',{key:i},h('div',null,dl),h('div',{style:{fontSize:10,fontWeight:600,color:'#0D47A1',marginTop:2}},ad[i]||''));
+          }),
+          h('th',null,'PROM. SEMANAL')
+        )),
+        h('tbody',null,metrics.map(function(metric){
+          var mData=(w[turno]&&w[turno][metric.k])||{};
+          var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(mData[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});
+          var avg=vals.length?(vals.reduce(function(a,b){return a+b;},0)/vals.length):null;
+          var avgStr=avg!==null?avg.toFixed(avg%1===0?0:1).replace('.',','):'';
+          return h('tr',{key:metric.k},
+            h('td',{className:'metric-name'},metric.label),
+            h('td',{className:'target-cell'},h('input',{type:'text',value:(w.targets&&w.targets[turno]&&w.targets[turno][metric.k]!==undefined)?w.targets[turno][metric.k]:metric.target,onChange:function(e){updHistTarget(w.id,turno,metric.k,e.target.value);},style:{width:'100%',border:'1px solid transparent',background:'transparent',textAlign:'center',fontSize:12,fontFamily:'inherit',fontWeight:700,color:'#854F0B',outline:'none',padding:'2px'}})),
+            T1_DAY_KEYS.map(function(dk){
+              var val=mData[dk]||'';
+              return h('td',{key:dk},h('input',{type:'text',value:val,className:'t1-cell-input '+cellClass(metric,val),onChange:function(e){updHistCell(w.id,turno,metric.k,dk,e.target.value);}}));
+            }),
+            h('td',{className:'avg-cell'},avgStr)
+          );
+        }))
+      )
+    );
+  }
 
   function renderTable(turno,metrics){
     return h('div',{className:'t1-scroll'},
@@ -1290,12 +1339,25 @@ function Tier1View(props){
                 h('span',{style:{fontSize:16,fontWeight:800,color:'#1565C0'}},'Semana '+w.semana),
                 h('span',{style:{fontSize:12,color:'var(--text-muted)',marginLeft:10}},'Cerrada '+(w.cerradaEl?new Date(w.cerradaEl).toLocaleDateString('es-AR'):''))
               ),
-              h('button',{onClick:function(){if(window.confirm('\u00bfEliminar esta semana del hist\u00f3rico?')){var u=hist.filter(function(x){return x.id!==w.id;});setHist(u);onSave(t1,u);}},style:{background:'none',border:'1px solid var(--border)',borderRadius:5,padding:'4px 10px',cursor:'pointer',fontSize:12,color:'#ef4444',fontFamily:'inherit'}},'Eliminar')
+              h('div',{style:{display:'flex',gap:8}},
+                editWk===w.id
+                  ? h('button',{onClick:saveHistEdits,style:{background:'#1D7A4A',color:'#fff',border:'none',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:'inherit'}},'\u2713 Guardar cambios')
+                  : h('button',{onClick:function(){setEditWk(w.id);},style:{background:'#1565C0',color:'#fff',border:'none',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:'inherit'}},'\u270F Editar'),
+                editWk===w.id&&h('button',{onClick:function(){setEditWk(null);},style:{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontFamily:'inherit'}},'Cancelar'),
+                h('button',{onClick:function(){if(window.confirm('\u00bfEliminar esta semana del hist\u00f3rico?')){var u=hist.filter(function(x){return x.id!==w.id;});setHist(u);onSave(t1,u);}},style:{background:'none',border:'1px solid var(--border)',borderRadius:5,padding:'4px 10px',cursor:'pointer',fontSize:12,color:'#ef4444',fontFamily:'inherit'}},'Eliminar')
+              )
             ),
-            h('div',{style:{fontSize:12,color:'var(--text-muted)'}},
-              'Volumen AM prom: '+(function(){var m=(w.am&&w.am.volumen)||{};var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});return vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length).toLocaleString('es-AR'):'\u2014';})()+
-              ' \u00b7 Acciones AM: '+((w.planAm||[]).length)+' \u00b7 Acciones PM: '+((w.planPm||[]).length)
-            )
+            editWk===w.id
+              ? h('div',{style:{marginTop:12}},
+                  h('div',{className:'t1-turno-hdr'},'\u2600 TURNO AM'),
+                  renderHistTable(w,'am',T1_METRICS_AM),
+                  h('div',{className:'t1-turno-hdr pm',style:{marginTop:16}},'\u263D TURNO PM'),
+                  renderHistTable(w,'pm',T1_METRICS_PM)
+                )
+              : h('div',{style:{fontSize:12,color:'var(--text-muted)'}},
+                  'Volumen AM prom: '+(function(){var m=(w.am&&w.am.volumen)||{};var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});return vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length).toLocaleString('es-AR'):'\u2014';})()+
+                  ' \u00b7 Acciones AM: '+((w.planAm||[]).length)+' \u00b7 Acciones PM: '+((w.planPm||[]).length)
+                )
           );
         })
       );

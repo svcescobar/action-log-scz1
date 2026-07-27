@@ -282,6 +282,7 @@ textarea.form-control{resize:vertical}
 .inv-wrap{padding:16px;max-width:1400px;margin:0 auto}
 .inv-hdr{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .inv-title{font-size:20px;font-weight:800;color:#6d28d9}
+body.dark .inv-title{background:rgba(31,41,55,0.92) !important}
 .inv-subtabs{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:8px 8px 0 0;overflow:hidden}
 .inv-subtab{flex:1;padding:9px 16px;border:none;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text-muted);border-bottom:3px solid transparent;transition:all .15s}
 .inv-subtab.active{background:var(--navy);color:#ffe600;border-bottom:3px solid #ffe600}
@@ -1409,6 +1410,24 @@ function Tier1View(props){
 // ══════════════════════════════════════════════════════
 var INV_SEED = {"activos": [{"id": "af0", "categoria": "IS", "item": "Base de Carga HH", "total": 44, "danados": 0, "operativos": 44, "comentarios": ""}, {"id": "af1", "categoria": "IS", "item": "Base de Carga Scanner", "total": 4, "danados": 0, "operativos": 4, "comentarios": ""}, {"id": "af2", "categoria": "IS", "item": "Equipamiento sala de reunión", "total": 4, "danados": 0, "operativos": 4, "comentarios": ""}, {"id": "af3", "categoria": "IS", "item": "Handheld", "total": 44, "danados": 1, "operativos": 44, "comentarios": ""}, {"id": "af4", "categoria": "IS", "item": "Impresora ZQ", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af5", "categoria": "IS", "item": "Impresora ZT", "total": 11, "danados": 0, "operativos": 11, "comentarios": ""}, {"id": "af6", "categoria": "IS", "item": "Lectoras 2D", "total": 5, "danados": 0, "operativos": 5, "comentarios": ""}, {"id": "af7", "categoria": "IS", "item": "Monitores", "total": 10, "danados": 0, "operativos": 10, "comentarios": ""}, {"id": "af8", "categoria": "IS", "item": "Tablet LMS", "total": 1, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af9", "categoria": "IS", "item": "Televisores", "total": 7, "danados": 1, "operativos": 6, "comentarios": ""}, {"id": "af10", "categoria": "IS", "item": "Cantidad de Baterías HH", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af11", "categoria": "IS", "item": "Gatillos", "total": 8, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af12", "categoria": "IS", "item": "Impresoras inalámbricas", "total": 3, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af13", "categoria": "Oficina", "item": "Cafeteras", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af14", "categoria": "Oficina", "item": "Heladeras Chicas", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af15", "categoria": "Oficina", "item": "Heladeras Grandes", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af16", "categoria": "Oficina", "item": "Hornos Eléctricos", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af17", "categoria": "Oficina", "item": "Licuadoras", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af18", "categoria": "Oficina", "item": "Microondas", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af19", "categoria": "Oficina", "item": "Pava eléctrica", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af20", "categoria": "Oficina", "item": "Soda", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af21", "categoria": "Oficina", "item": "Tostadoras", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af22", "categoria": "Operativo", "item": "Apiladores Eléctricos", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af23", "categoria": "Operativo", "item": "Baker Clasico", "total": 32, "danados": 0, "operativos": 32, "comentarios": ""}, {"id": "af24", "categoria": "Operativo", "item": "Baker Voluminoso", "total": 312, "danados": 0, "operativos": 312, "comentarios": ""}, {"id": "af25", "categoria": "Operativo", "item": "Bines Plásticos", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af26", "categoria": "Operativo", "item": "Carros H&B", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af27", "categoria": "Operativo", "item": "Conveyor", "total": 1, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af28", "categoria": "Operativo", "item": "Mesas móviles", "total": 10, "danados": 0, "operativos": 10, "comentarios": ""}, {"id": "af29", "categoria": "Operativo", "item": "Roll Containers", "total": 45, "danados": 0, "operativos": 45, "comentarios": ""}, {"id": "af30", "categoria": "Operativo", "item": "Sacas", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af31", "categoria": "Operativo", "item": "Telescópicas", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af32", "categoria": "Operativo", "item": "Tolva GM", "total": 3, "danados": 0, "operativos": 3, "comentarios": ""}, {"id": "af33", "categoria": "Operativo", "item": "Tolva Voluminoso", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af34", "categoria": "Operativo", "item": "Zorras Eléctricas", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af35", "categoria": "Operativo", "item": "Zorras Eléctricas (HAB)", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af36", "categoria": "Operativo", "item": "Zorras Manuales", "total": 10, "danados": 2, "operativos": 10, "comentarios": ""}, {"id": "af37", "categoria": "Operativo", "item": "Bakers Over", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af38", "categoria": "Operativo", "item": "Flow Racks", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af39", "categoria": "Operativo", "item": "Metros de Conveyor", "total": 30, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af40", "categoria": "SHE", "item": "Alfombra Ergonómica Etiquetador", "total": 6, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af41", "categoria": "SHE", "item": "Alfombra Ergonómica Pescador", "total": 4, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af42", "categoria": "SHE", "item": "Cadenas", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af43", "categoria": "SHE", "item": "Camilla", "total": 1, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af44", "categoria": "SHE", "item": "Chalecos", "total": 40, "danados": 0, "operativos": 40, "comentarios": ""}, {"id": "af45", "categoria": "SHE", "item": "Conos", "total": 55, "danados": 0, "operativos": 55, "comentarios": ""}, {"id": "af46", "categoria": "SHE", "item": "DEA", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af47", "categoria": "SHE", "item": "Escalera Burro", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af48", "categoria": "SHE", "item": "Punteras", "total": 10, "danados": 0, "operativos": 8, "comentarios": ""}, {"id": "af49", "categoria": "SHE", "item": "Silla de Ruedas", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af50", "categoria": "Zona de descanso", "item": "Lockers", "total": 3, "danados": 0, "operativos": 3, "comentarios": ""}, {"id": "af51", "categoria": "Zona de descanso", "item": "Mesa plástico", "total": 12, "danados": 1, "operativos": 12, "comentarios": ""}, {"id": "af52", "categoria": "Zona de descanso", "item": "Silla plástico", "total": 24, "danados": 0, "operativos": 24, "comentarios": ""}], "items": [{"id": "in0", "tipo": "Insumo", "item": "Bolsa N°1", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 129}]}, {"id": "in1", "tipo": "Insumo", "item": "Bolsa N°2", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 148}]}, {"id": "in2", "tipo": "Insumo", "item": "Bolsa N°3", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 75}]}, {"id": "in3", "tipo": "Insumo", "item": "Bolsa N°3,5", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in4", "tipo": "Insumo", "item": "Bolsa N°4", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 103}]}, {"id": "in5", "tipo": "Insumo", "item": "Bolsa N°5", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 67}]}, {"id": "in6", "tipo": "Insumo", "item": "Bolsa N°6", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 81}]}, {"id": "in7", "tipo": "Insumo", "item": "Caja 4V", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in8", "tipo": "Insumo", "item": "Bolsa N°7", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 75}]}, {"id": "in9", "tipo": "Insumo", "item": "Caja 6V", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 85}]}, {"id": "in10", "tipo": "Insumo", "item": "Caja C1", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 142}]}, {"id": "in11", "tipo": "Insumo", "item": "Caja C10", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 300}]}, {"id": "in12", "tipo": "Insumo", "item": "Caja C11", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in13", "tipo": "Insumo", "item": "Caja C12", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 40}]}, {"id": "in14", "tipo": "Insumo", "item": "Caja C2", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 38}]}, {"id": "in15", "tipo": "Insumo", "item": "Caja C3", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 25}]}, {"id": "in16", "tipo": "Insumo", "item": "Caja C4", "minimo": 4, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in17", "tipo": "Insumo", "item": "Pilas AA", "minimo": 4, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in18", "tipo": "Insumo", "item": "Pila AAA", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "in19", "tipo": "Insumo", "item": "Caja C5", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 74}]}, {"id": "in20", "tipo": "Insumo", "item": "Caja C6", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 181}]}, {"id": "in21", "tipo": "Insumo", "item": "Etiqueta portatil", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 62}]}, {"id": "in22", "tipo": "Insumo", "item": "Caja C7", "minimo": 30, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in23", "tipo": "Insumo", "item": "Cinta adhesiva Meli", "minimo": 30, "conteos": [{"fecha": "25/07/2026", "valor": 144}]}, {"id": "in24", "tipo": "Insumo", "item": "Cinta de embalar", "minimo": 30, "conteos": [{"fecha": "25/07/2026", "valor": 225}]}, {"id": "in25", "tipo": "Insumo", "item": "Cinta de papel", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 48}]}, {"id": "in26", "tipo": "Insumo", "item": "Ribbon x unidad", "minimo": 10, "conteos": [{"fecha": "25/07/2026", "valor": 101}]}, {"id": "in27", "tipo": "Insumo", "item": "Resmas x unidad", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 19}]}, {"id": "in28", "tipo": "Insumo", "item": "Etiqueta fragil x rollo", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in29", "tipo": "Insumo", "item": "Caja C8", "minimo": 150, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in30", "tipo": "Insumo", "item": "Etiquetas de ruta x Rollo", "minimo": 3, "conteos": [{"fecha": "25/07/2026", "valor": 109}]}, {"id": "in31", "tipo": "Insumo", "item": "Etiquetas madre x Rollo", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 13}]}, {"id": "in32", "tipo": "Insumo", "item": "Precintos Amarillos", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 50}]}, {"id": "in33", "tipo": "Insumo", "item": "Precintos Azules", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in34", "tipo": "Insumo", "item": "Film Cristal", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 141}]}, {"id": "in35", "tipo": "Insumo", "item": "Cintas Demarcatorias Rojas", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 3}]}, {"id": "in36", "tipo": "Insumo", "item": "Cintas Demarcatorias Verdes", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 11}]}, {"id": "in37", "tipo": "Insumo", "item": "Cintas Demarcatorias Amarillas", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in38", "tipo": "Insumo", "item": "Cintas Demarcatorias Cebradas", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in39", "tipo": "Insumo", "item": "Cintas Demarcatorias Blancas", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 6}]}, {"id": "in40", "tipo": "Insumo", "item": "Bolsa PLACES", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in41", "tipo": "Insumo", "item": "Caja C9", "minimo": 10, "conteos": [{"fecha": "25/07/2026", "valor": 231}]}, {"id": "in42", "tipo": "Insumo", "item": "Film amarillo", "minimo": 350, "conteos": [{"fecha": "25/07/2026", "valor": 350}]}, {"id": "in43", "tipo": "Insumo", "item": "Caja R12", "minimo": 350, "conteos": [{"fecha": "25/07/2026", "valor": 350}]}, {"id": "lb0", "tipo": "Librería", "item": "Cutter", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb1", "tipo": "Librería", "item": "Repuesto cutter", "minimo": 10, "conteos": [{"fecha": "25/07/2026", "valor": 10}]}, {"id": "lb2", "tipo": "Librería", "item": "Tijera grande", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb3", "tipo": "Librería", "item": "Tijera chica", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb4", "tipo": "Librería", "item": "Lapicera azul", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb5", "tipo": "Librería", "item": "Lapicera negra", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb6", "tipo": "Librería", "item": "Marcador NEGRO", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 2}]}, {"id": "lb7", "tipo": "Librería", "item": "Marcador AZUL", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb8", "tipo": "Librería", "item": "Marcador VERDE", "minimo": 3, "conteos": [{"fecha": "25/07/2026", "valor": 3}]}, {"id": "lb9", "tipo": "Librería", "item": "Marcador ROJO", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb10", "tipo": "Librería", "item": "Folios", "minimo": 400, "conteos": [{"fecha": "25/07/2026", "valor": 400}]}, {"id": "lb11", "tipo": "Librería", "item": "Abrochadora", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 2}]}, {"id": "lb12", "tipo": "Librería", "item": "Repuesto abrochadora", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb13", "tipo": "Librería", "item": "Borrador de pizarra", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb14", "tipo": "Librería", "item": "Taquitos multicolor", "minimo": 4, "conteos": [{"fecha": "25/07/2026", "valor": 4}]}, {"id": "lb15", "tipo": "Librería", "item": "Biblorato", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb16", "tipo": "Librería", "item": "Racionador de cinta", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 2}]}, {"id": "she0", "tipo": "Insumos SHE", "item": "Guante Talle 6", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she1", "tipo": "Insumos SHE", "item": "Guante Talle 7", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she2", "tipo": "Insumos SHE", "item": "Guante Talle 8", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she3", "tipo": "Insumos SHE", "item": "Guante Talle 9", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she4", "tipo": "Insumos SHE", "item": "Guante Talle 10", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she5", "tipo": "Insumos SHE", "item": "Guante Anticorte T7", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she6", "tipo": "Insumos SHE", "item": "Guante Anticorte T8", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she7", "tipo": "Insumos SHE", "item": "Guante Anti corte T9", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she8", "tipo": "Insumos SHE", "item": "Cascos", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she9", "tipo": "Insumos SHE", "item": "Guantes Kit Antiderrame", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she10", "tipo": "Insumos SHE", "item": "Chaleco Naranja", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she11", "tipo": "Insumos SHE", "item": "Chaleco Verde", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she12", "tipo": "Insumos SHE", "item": "Punteras x par", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she13", "tipo": "Insumos SHE", "item": "Anteojos", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she14", "tipo": "Insumos SHE", "item": "Chaleco con cierre", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}]};
 
+
+function InvRankingChart(props){
+  var rows=props.rows;
+  var ref=_useRef(); var chart=_useRef();
+  _useEffect(function(){
+    if(!window.Chart||!ref.current)return;
+    var sorted=rows.slice().sort(function(a,b){return b.total-a.total;}).filter(function(r){return r.total>0;}).slice(0,15);
+    if(chart.current)chart.current.destroy();
+    chart.current=new window.Chart(ref.current,{
+      type:'bar',
+      data:{labels:sorted.map(function(r){return r.item;}),datasets:[{label:'Unidades consumidas',data:sorted.map(function(r){return r.total;}),backgroundColor:'#6d28d9',borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:true,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{font:{size:10}}},y:{ticks:{font:{size:10}}}}}
+    });
+    return function(){if(chart.current)chart.current.destroy();};
+  },[rows]);
+  return h('canvas',{ref:ref,height:Math.max(120,rows.filter(function(r){return r.total>0;}).length*14)});
+}
+
 function InvConsumoChart(props){
   var items=props.items, fechas=props.fechas;
   var ref=_useRef(); var chart=_useRef();
@@ -1437,6 +1456,26 @@ function InvConsumoChart(props){
   return h('canvas',{ref:ref,height:120});
 }
 
+
+function RowMenu(props){
+  var onDelete=props.onDelete;
+  var openS=_useState(false);var open=openS[0],setOpen=openS[1];
+  _useEffect(function(){
+    if(!open)return;
+    function close(){setOpen(false);}
+    document.addEventListener('click',close);
+    return function(){document.removeEventListener('click',close);};
+  },[open]);
+  return h('div',{style:{position:'relative',display:'inline-block'}},
+    h('button',{onClick:function(e){e.stopPropagation();setOpen(!open);},title:'Opciones',
+      style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:18,fontFamily:'inherit',lineHeight:1,padding:'0 6px'}},'\u22EE'),
+    open&&h('div',{style:{position:'absolute',right:0,top:'100%',background:'var(--surface)',border:'1px solid var(--border)',borderRadius:6,boxShadow:'0 4px 12px rgba(0,0,0,.2)',zIndex:50,minWidth:130,overflow:'hidden'}},
+      h('button',{onClick:function(e){e.stopPropagation();setOpen(false);if(window.confirm('\u00bfBorrar este item?'))onDelete();},
+        style:{display:'block',width:'100%',textAlign:'left',padding:'8px 14px',border:'none',background:'none',cursor:'pointer',fontSize:13,color:'#ef4444',fontFamily:'inherit',fontWeight:600}},'🗑 Borrar item')
+    )
+  );
+}
+
 function InventarioView(props){
   var onSave=props.onSaveInv||function(){};
   var init=props.inventory||INV_SEED;
@@ -1454,7 +1493,7 @@ function InventarioView(props){
     return base;
   });
   var inv=invS[0],setInv=invS[1];
-  var tabS=_useState('activos');var tab=tabS[0],setTab=tabS[1];
+  var tabS=_useState('items');var tab=tabS[0],setTab=tabS[1];
   var filterS=_useState('Todos');var filter=filterS[0],setFilter=filterS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
 
@@ -1484,11 +1523,11 @@ function InventarioView(props){
       cats[cat].forEach(function(a){
         rows.push(h('tr',{key:a.id},
           h('td',null,h('input',{className:'inv-txt-input',value:a.item,onChange:function(e){updActivo(a.id,'item',e.target.value);}})),
-          h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.total,onChange:function(e){updActivo(a.id,'total',parseInt(e.target.value)||0);}})),
-          h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.danados,style:a.danados>0?{color:'#ef4444',fontWeight:700}:{},onChange:function(e){updActivo(a.id,'danados',parseInt(e.target.value)||0);}})),
-          h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.operativos,onChange:function(e){updActivo(a.id,'operativos',parseInt(e.target.value)||0);}})),
+          h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.total,onChange:function(e){var tot=parseInt(e.target.value)||0;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.map(function(z){return z.id===a.id?Object.assign({},z,{total:tot,operativos:Math.max(0,tot-(z.danados||0))}):z;});return n;});}})),
+          h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.danados,style:a.danados>0?{color:'#ef4444',fontWeight:700}:{},onChange:function(e){var dan=parseInt(e.target.value)||0;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.map(function(z){return z.id===a.id?Object.assign({},z,{danados:dan,operativos:Math.max(0,(z.total||0)-dan)}):z;});return n;});}})),
+          h('td',{style:{textAlign:'center',fontWeight:700,color:'#1D7A4A'}},a.operativos),
           h('td',null,h('input',{className:'inv-txt-input',value:a.comentarios||'',placeholder:'\u2014',onChange:function(e){updActivo(a.id,'comentarios',e.target.value);}})),
-          h('td',{style:{textAlign:'center'}},h('button',{onClick:function(){delActivo(a.id);},style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:14,fontFamily:'inherit'}},'\u2715'))
+          h('td',{style:{textAlign:'center'}},h(RowMenu,{onDelete:function(){delActivo(a.id);}}))
         ));
       });
       rows.push(h('tr',{key:'add-'+cat},h('td',{colSpan:6},h('button',{onClick:function(){addActivo(cat);},style:{background:'var(--bg)',border:'1px dashed var(--border)',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:11,color:'var(--text-muted)',fontFamily:'inherit',width:'100%'}},'+ Agregar item a '+cat))));
@@ -1519,7 +1558,8 @@ function InventarioView(props){
   var itemsView=(function(){
     var all=inv.items||[];
     var fechas=getAllFechas(all);
-    var showFechas=fechas.slice(-6);
+    var showFechas=fechas.slice(-6).reverse();
+    var lastFecha=fechas[fechas.length-1];
     var filtered=filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;});
     return h('div',null,
       h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:8,marginBottom:10,flexWrap:'wrap'}},
@@ -1539,13 +1579,12 @@ function InventarioView(props){
             h('th',null,'Tipo'),
             h('th',null,'Item'),
             h('th',{style:{textAlign:'center'}},'Mínimo'),
-            showFechas.map(function(f){return h('th',{key:f,style:{textAlign:'center'}},f);}),
             h('th',{style:{textAlign:'center'}},'Estado'),
+            showFechas.map(function(f){return h('th',{key:f,style:{textAlign:'center'}},f===lastFecha?h('span',null,f,h('span',{style:{display:'block',fontSize:9,color:'#1D7A4A',fontWeight:700}},'ÚLTIMO')):f);}),
             h('th',null,'')
           )),
           h('tbody',null,filtered.map(function(x){
             var cm={};(x.conteos||[]).forEach(function(ct){cm[ct.fecha]=ct.valor;});
-            var lastFecha=fechas[fechas.length-1];
             var lastVal=lastFecha!==undefined?parseFloat(cm[lastFecha]):NaN;
             var min=parseFloat(x.minimo)||0;
             var low=!isNaN(lastVal)&&lastVal<min;
@@ -1556,19 +1595,66 @@ function InventarioView(props){
                 h('option',{value:'Insumo'},'Insumo'),h('option',{value:'Librería'},'Librería'),h('option',{value:'Insumos SHE'},'Insumos SHE'))),
               h('td',null,h('input',{className:'inv-txt-input',value:x.item,onChange:function(e){updItemField(x.id,'item',e.target.value);}})),
               h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:x.minimo,style:{fontWeight:700,color:'#854F0B'},onChange:function(e){updItemField(x.id,'minimo',parseInt(e.target.value)||0);}})),
+              h('td',{style:{textAlign:'center'}},low?h('span',{style:{color:'#ef4444',fontWeight:700,fontSize:11}},'\u26A0 REPONER'):h('span',{className:'inv-ok-stock',style:{fontSize:11}},'\u2713 OK')),
               showFechas.map(function(f){
                 var isLast=f===lastFecha;var v=cm[f];
                 return h('td',{key:f,style:{textAlign:'center'}},h('input',{className:'inv-cell-input'+(isLast&&low?' inv-low':''),type:'number',value:v!==undefined?v:'',onChange:function(e){updConteo(x.id,f,parseInt(e.target.value)||0);}}));
               }),
-              h('td',{style:{textAlign:'center'}},low?h('span',{style:{color:'#ef4444',fontWeight:700,fontSize:11}},'\u26A0 REPONER'):h('span',{className:'inv-ok-stock',style:{fontSize:11}},'\u2713 OK')),
-              h('td',{style:{textAlign:'center'}},h('button',{onClick:function(){delItem(x.id);},style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:14,fontFamily:'inherit'}},'\u2715'))
+              h('td',{style:{textAlign:'center'}},h(RowMenu,{onDelete:function(){delItem(x.id);}}))
             );
           }))
         )
       ),
-      h('div',{className:'inv-legend'},'\u26A0 Rojo = último conteo por debajo del mínimo. Se muestran los últimos 6 conteos.')
+      h('div',{className:'inv-legend'},'\u26A0 Rojo = último conteo por debajo del mínimo. El conteo más reciente aparece a la izquierda (ÚLTIMO). Se muestran los últimos 6 conteos.')
     );
   })();
+
+  // consumo helpers
+  function computeConsumo(filterVal){
+    var all=inv.items||[];
+    var fechas=getAllFechas(all);
+    var transitions=[];
+    for(var i=1;i<fechas.length;i++)transitions.push([fechas[i-1],fechas[i]]);
+    var list=filterVal==='Todos'?all:all.filter(function(x){return x.tipo===filterVal;});
+    var rows=list.map(function(x){
+      var cm={};(x.conteos||[]).forEach(function(ct){cm[ct.fecha]=parseFloat(ct.valor);});
+      var total=0;
+      var perPeriod=transitions.map(function(tr){
+        var prev=cm[tr[0]],cur=cm[tr[1]];
+        var diff=(!isNaN(prev)&&!isNaN(cur))?(prev-cur):null;
+        if(diff!==null&&diff>0)total+=diff;
+        return diff;
+      });
+      return {id:x.id,tipo:x.tipo,item:x.item,perPeriod:perPeriod,total:total};
+    });
+    return {fechas:fechas,transitions:transitions,rows:rows};
+  }
+
+  function printReport(){
+    var data=computeConsumo(filter);
+    var sorted=data.rows.slice().sort(function(a,b){return b.total-a.total;});
+    var win=window.open('','_blank');
+    var hoy=new Date().toLocaleDateString('es-AR');
+    var rowsHtml=sorted.map(function(r){
+      return '<tr><td>'+r.tipo+'</td><td>'+r.item+'</td>'+
+        r.perPeriod.map(function(d){return '<td style="text-align:center">'+(d===null?'-':d>0?'-'+d:d<0?'+'+Math.abs(d):'0')+'</td>';}).join('')+
+        '<td style="text-align:center;font-weight:bold">'+r.total+'</td></tr>';
+    }).join('');
+    var transHtml=data.transitions.map(function(tr){return '<th style="text-align:center">'+tr[0]+' &rarr; '+tr[1]+'</th>';}).join('');
+    var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reporte Consumo SCZ1</title>'+
+      '<style>body{font-family:Arial,sans-serif;padding:30px;color:#222}h1{color:#6d28d9;font-size:20px}h2{font-size:14px;color:#666;font-weight:normal;margin-top:4px}'+
+      'table{width:100%;border-collapse:collapse;margin-top:20px;font-size:12px}th{background:#4B3A8A;color:#fff;padding:8px;text-align:left}td{padding:6px 8px;border-bottom:1px solid #ddd}'+
+      'tr:nth-child(even){background:#f7f5fc}.foot{margin-top:24px;font-size:11px;color:#888}</style></head><body>'+
+      '<h1>Reporte de Consumo &mdash; Inventario SCZ1</h1>'+
+      '<h2>Filtro: '+filter+' &middot; Generado el '+hoy+'</h2>'+
+      '<table><thead><tr><th>Tipo</th><th>Item</th>'+transHtml+'<th style="text-align:center">Consumo total</th></tr></thead>'+
+      '<tbody>'+rowsHtml+'</tbody></table>'+
+      '<div class="foot">Consumo = conteo anterior &minus; conteo actual. Valores negativos (con -) indican consumo; positivos (con +) indican reposici&oacute;n de stock.</div>'+
+      '</body></html>';
+    win.document.write(html);
+    win.document.close();
+    setTimeout(function(){win.print();},400);
+  }
 
   // ── CONSUMO ──
   var consumoView=(function(){
@@ -1588,6 +1674,14 @@ function InventarioView(props){
         [['Todos','Todos'],['Insumo','Insumos'],['Librería','Librería'],['Insumos SHE','Insumos SHE']].map(function(t){
           return h('button',{key:t[0],onClick:function(){setFilter(t[0]);},style:{padding:'5px 14px',borderRadius:6,border:'1px solid '+(filter===t[0]?'#6d28d9':'var(--border)'),background:filter===t[0]?'#6d28d9':'var(--surface)',color:filter===t[0]?'#fff':'var(--text)',cursor:'pointer',fontWeight:700,fontSize:12,fontFamily:'inherit'}},t[1]);
         })
+      ),
+      h('div',{style:{display:'flex',justifyContent:'flex-end',marginBottom:12}},
+        h('button',{className:'inv-btn inv-btn-count',onClick:printReport},'🖨 Descargar reporte (PDF)')
+      ),
+      h('div',{className:'inv-chart-card',style:{marginBottom:16}},
+        h('div',{style:{fontSize:13,fontWeight:700,marginBottom:2}},'Ranking de consumo por item'),
+        h('div',{style:{fontSize:11,color:'var(--text-muted)',marginBottom:12}},'Items ordenados por unidades totales consumidas (top 15)'),
+        h(InvRankingChart,{rows:computeConsumo(filter).rows})
       ),
       h('div',{className:'inv-chart-card'},
         h('div',{style:{fontSize:13,fontWeight:700,marginBottom:2}},'Consumo total por período'),
@@ -1634,7 +1728,7 @@ function InventarioView(props){
       h('button',{className:'inv-btn inv-btn-sync',onClick:sync},saved?'\u2713 Guardado':'💾 Sincronizar')
     ),
     h('div',{className:'inv-subtabs'},
-      [['activos','Activos Fijos'],['items','Insumos & Librería'],['consumo','📊 Consumo']].map(function(t){
+      [['items','Insumos, Librería & SHE'],['consumo','📊 Consumo'],['activos','Activos Fijos']].map(function(t){
         return h('button',{key:t[0],className:'inv-subtab'+(tab===t[0]?' active':''),onClick:function(){setTab(t[0]);}},t[1]);
       })
     ),
@@ -1667,6 +1761,7 @@ function App(props) {
   var dtS=_useState(null);var delTarget=dtS[0],setDelTarget=dtS[1];
   var tos=_useState([]);var toasts=tos[0],setToasts=tos[1];
   var pgs=_useState('acciones');var page=pgs[0],setPage=pgs[1];
+  var accTabS=_useState('registro');var accTab=accTabS[0],setAccTab=accTabS[1];
   var t1s=_useState(null);var tier1=t1s[0],setTier1=t1s[1];
   var t1hs=_useState([]);var tier1Hist=t1hs[0],setTier1Hist=t1hs[1];
   var invSt=_useState(null);var inventory=invSt[0],setInventory=invSt[1];
@@ -1707,16 +1802,21 @@ function App(props) {
     ),
     h('div',{className:'nav-tabs'},
       h('button',{className:'nav-tab'+(page==='acciones'?' active':''),onClick:function(){setPage('acciones');}},'📋 Acciones'),
-      h('button',{className:'nav-tab'+(page==='analytics'?' active':''),onClick:function(){setPage('analytics');}},'📊 Analytics'),
       h('button',{className:'nav-tab'+(page==='dotacion'?' active':''),onClick:function(){setPage('dotacion');}},'📦 Dotación'),
       h('button',{className:'nav-tab'+(page==='tier1'?' active':''),onClick:function(){setPage('tier1');}},'📈 TIER 1'),
       h('button',{className:'nav-tab'+(page==='inventario'?' active':''),onClick:function(){setPage('inventario');}},'📦 Inventario')
     ),
-    page==='analytics'?h(AnalyticsView,{entries:entries}):
     page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH}):
     page==='tier1'?h(Tier1View,{tier1:tier1,tier1Hist:tier1Hist,onSaveTier1:saveTier1ToGH}):
     page==='inventario'?h(InventarioView,{inventory:inventory,onSaveInv:saveInvToGH}):
     h('main',{className:'main'},
+      h('div',{style:{display:'flex',gap:0,marginBottom:16,borderBottom:'2px solid var(--border)'}},
+        [['registro','📋 Registro de Acciones'],['analytics','📊 Analytics']].map(function(t){
+          return h('button',{key:t[0],onClick:function(){setAccTab(t[0]);},style:{padding:'8px 18px',border:'none',background:'none',cursor:'pointer',fontWeight:700,fontSize:13,fontFamily:'inherit',color:accTab===t[0]?'var(--navy)':'var(--text-muted)',borderBottom:accTab===t[0]?'3px solid #ffe600':'3px solid transparent',marginBottom:-2}},t[1]);
+        })
+      ),
+      accTab==='analytics'?h(AnalyticsView,{entries:entries}):
+      h('div',null,
       !admin&&myEntries.length>0&&h('div',{className:'collab-banner'},'⭐ Tenés ',h('strong',null,myEntries.length+' accion'+(myEntries.length!==1?'es':'')),  ' asignadas. Podés actualizar el progreso y agregar comentarios.'),
       h('div',{className:'stats-bar'},h('div',{className:'stat-chip total'},h('span',{className:'stat-num'},stats.total),h('span',{style:{color:'var(--text-muted)'}},'Total')),h('div',{className:'stat-chip resueltas'},h('span',{className:'stat-num'},stats.resueltas),h('span',{style:{color:'var(--text-muted)'}},'Resueltas')),h('div',{className:'stat-chip pendientes'},h('span',{className:'stat-num'},stats.pendientes),h('span',{style:{color:'var(--text-muted)'}},'Pendientes')),h('div',{className:'stat-chip vencidas'},h('span',{className:'stat-num'},stats.vencidas),h('span',{style:{color:'var(--text-muted)'}},'Vencidas'))),
       h('div',{className:'filter-bar'},h('div',{className:'filter-search'},h('span',{className:'filter-search-icon'},'🔍'),h('input',{className:'filter-input',type:'text',placeholder:'Buscar tarea, accion, responsable...',value:search,onChange:function(e){setSearch(e.target.value);},style:{paddingLeft:30,width:'100%'}})),h('select',{className:'filter-input',value:filterPilar,onChange:function(e){setFilterPilar(e.target.value);}},h('option',{value:''},'Todos los pilares'),PILLARS.map(function(p){return h('option',{key:p.id,value:p.id},p.id);})),h('select',{className:'filter-input',value:filterEstado,onChange:function(e){setFilterEstado(e.target.value);}},h('option',null,'Todas'),h('option',null,'Pendientes'),h('option',null,'Resueltas')),!admin&&h('label',{style:{display:'flex',alignItems:'center',gap:6,cursor:'pointer',fontSize:13,color:'var(--text)'}},h('input',{type:'checkbox',checked:filterMis,onChange:function(e){setFilterMis(e.target.checked);}}), 'Solo mis tareas'),admin&&h('button',{className:'btn btn-primary',style:{marginLeft:'auto'},onClick:handleNew},'+ Nueva Accion')),
@@ -1729,7 +1829,7 @@ function App(props) {
           )
         ))
       )
-    ),
+    )),
     modal&&h(ActionModal,{entry:editing,isNew:isNew,onSave:handleSave,onClose:function(){setModal(false);},showToast:showToast,currentUser:currentUser}),
     delTarget&&h(DeleteConfirm,{entry:delTarget,onConfirm:confirmDel,onCancel:function(){setDelTarget(null);}}),
     h(Toast,{toasts:toasts})

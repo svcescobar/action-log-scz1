@@ -1088,15 +1088,15 @@ function DotacionView(props) {
 var T1_METRICS_AM = [
   {k:'volumen',    label:'Volumen Procesado',                         target:'-',      type:'num'},
   {k:'busquedas',  label:'Busquedas',                                 target:'< 7',    type:'num', lowGood:true, limit:7},
-  {k:'prodEtiq',   label:'Productividad Etiquetado',                  target:'890,00', type:'num'},
-  {k:'prodSort',   label:'Productividad Sorting',                     target:'330,00', type:'num'},
-  {k:'opsClocks',  label:'% OPS CLOCKS (OOT)',                        target:'85,00%', type:'pct', highGood:true, limit:85},
-  {k:'tmec',       label:'TMEC (Adherencia Carga)',                   target:'85,00%', type:'pct', highGood:true, limit:85},
-  {k:'perdidas',   label:'Perdidas Operativas (BPP) - Ratio',         target:'0,04%',  type:'pct'},
-  {k:'divAduana',  label:'Divergencias en Aduana (despacho)',         target:'3,00%',  type:'pct', lowGood:true, limit:3},
-  {k:'divAudit',   label:'Divergencias de auditorias (contenedores)', target:'10,00%', type:'pct', lowGood:true, limit:10},
-  {k:'bipeos',     label:'Bipeos OK (Poka Yoke)',                     target:'99,09%', type:'pct', highGood:true, limit:99.09},
-  {k:'auditCont',  label:'% Auditoria a contenedores sin cierre auto',target:'>= 40%', type:'pct', highGood:true, limit:40},
+  {k:'prodEtiq',   label:'Productividad Etiquetado',                  target:'890,00', type:'num', link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/TestingLMSXD/SVCPRODFACILITY?:iid=1'},
+  {k:'prodSort',   label:'Productividad Sorting',                     target:'330,00', type:'num', link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/TestingLMSXD/SVCPRODFACILITY?:iid=1'},
+  {k:'opsClocks',  label:'% OPS CLOCKS (OOT)',                        target:'85,00%', type:'pct', highGood:true, limit:85, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/OPSCLOCK/2_2OOT-Adherencia?:iid=1'},
+  {k:'tmec',       label:'TMEC (Adherencia Carga)',                   target:'85,00%', type:'pct', highGood:true, limit:85, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/YMSTMEC-TMED_17722134649840/TMEC2_02?:iid=1'},
+  {k:'perdidas',   label:'Perdidas Operativas (BPP) - Ratio',         target:'0,04%',  type:'pct', link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/LP_TRS_PEL_17490817987760/PEL?:iid=1'},
+  {k:'divAduana',  label:'Divergencias en Aduana (despacho)',         target:'3,00%',  type:'pct', lowGood:true, limit:3, link:'https://lookerstudio.google.com/u/0/reporting/923e35e8-8ff6-4fa3-8b2c-f38fc087f8f1/page/tEnnC?pli=1'},
+  {k:'divAudit',   label:'Divergencias de auditorias (contenedores)', target:'10,00%', type:'pct', lowGood:true, limit:10, link:'https://lookerstudio.google.com/u/0/reporting/923e35e8-8ff6-4fa3-8b2c-f38fc087f8f1/page/tEnnC?pli=1'},
+  {k:'bipeos',     label:'Bipeos OK (Poka Yoke)',                     target:'99,09%', type:'pct', highGood:true, limit:99.09, link:'https://lookerstudio.google.com/reporting/55effec5-1147-4182-87e6-c27cef9dcdfa/page/fkcIE?pli=1'},
+  {k:'auditCont',  label:'% Auditoria a contenedores sin cierre auto',target:'>= 40%', type:'pct', highGood:true, limit:40, link:'https://lookerstudio.google.com/u/0/reporting/a19ad4e3-0f92-48f8-8ef5-20097057b794/page/p_wljg51utnd?pli=1'},
   {k:'accidente',  label:'Accidente / Incidente',                     target:'0',      type:'num', lowGood:true, limit:0},
   {k:'checkOp',    label:'Check Operativo (opcional)',                target:'6',      type:'num'},
   {k:'finalDesp',  label:'Final Despacho (opcional)',                 target:'100%',   type:'pct'}
@@ -1104,10 +1104,10 @@ var T1_METRICS_AM = [
 var T1_METRICS_PM = [
   {k:'volumen',    label:'Volumen Procesado',                         target:'-',      type:'num'},
   {k:'busquedas',  label:'Busquedas',                                 target:'< 7',    type:'num', lowGood:true, limit:7},
-  {k:'opsClocks',  label:'% OPS CLOCKS (OOT)',                        target:'85,00%', type:'pct', highGood:true, limit:85},
-  {k:'divAduana',  label:'Divergencias en Aduana (despacho)',         target:'3,00%',  type:'pct', lowGood:true, limit:3},
-  {k:'divAudit',   label:'Divergencias de auditorias (contenedores)', target:'10,00%', type:'pct', lowGood:true, limit:10},
-  {k:'bipeos',     label:'Bipeos OK (Poka Yoke)',                     target:'99,09%', type:'pct', highGood:true, limit:99.09}
+  {k:'opsClocks',  label:'% OPS CLOCKS (OOT)',                        target:'85,00%', type:'pct', highGood:true, limit:85, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/OPSCLOCK/2_2OOT-Adherencia?:iid=1'},
+  {k:'divAduana',  label:'Divergencias en Aduana (despacho)',         target:'3,00%',  type:'pct', lowGood:true, limit:3, link:'https://lookerstudio.google.com/u/0/reporting/923e35e8-8ff6-4fa3-8b2c-f38fc087f8f1/page/tEnnC?pli=1'},
+  {k:'divAudit',   label:'Divergencias de auditorias (contenedores)', target:'10,00%', type:'pct', lowGood:true, limit:10, link:'https://lookerstudio.google.com/u/0/reporting/923e35e8-8ff6-4fa3-8b2c-f38fc087f8f1/page/tEnnC?pli=1'},
+  {k:'bipeos',     label:'Bipeos OK (Poka Yoke)',                     target:'99,09%', type:'pct', highGood:true, limit:99.09, link:'https://lookerstudio.google.com/reporting/55effec5-1147-4182-87e6-c27cef9dcdfa/page/fkcIE?pli=1'}
 ];
 var T1_DAYS = ['dom','lun','mar','mie','jue','vie','sab'];
 var T1_DAY_LABELS = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
@@ -1233,7 +1233,7 @@ function Tier1View(props){
           var avg=vals.length?(vals.reduce(function(a,b){return a+b;},0)/vals.length):null;
           var avgStr=avg!==null?avg.toFixed(avg%1===0?0:1).replace('.',','):'';
           return h('tr',{key:metric.k},
-            h('td',{className:'metric-name'},metric.label),
+            h('td',{className:'metric-name'},metric.label,metric.link?h('a',{href:metric.link,target:'_blank',rel:'noopener',title:'Ver dashboard',style:{marginLeft:6,textDecoration:'none',fontSize:12,cursor:'pointer'}},'🔗'):null),
             h('td',{className:'target-cell'},h('input',{type:'text',value:(w.targets&&w.targets[turno]&&w.targets[turno][metric.k]!==undefined)?w.targets[turno][metric.k]:metric.target,onChange:function(e){updHistTarget(w.id,turno,metric.k,e.target.value);},style:{width:'100%',border:'1px solid transparent',background:'transparent',textAlign:'center',fontSize:12,fontFamily:'inherit',fontWeight:700,color:'#854F0B',outline:'none',padding:'2px'}})),
             T1_DAY_KEYS.map(function(dk){
               var val=mData[dk]||'';
@@ -1263,7 +1263,7 @@ function Tier1View(props){
         h('tbody',null,
           metrics.map(function(metric){
             return h('tr',{key:metric.k},
-              h('td',{className:'metric-name'},metric.label),
+              h('td',{className:'metric-name'},metric.label,metric.link?h('a',{href:metric.link,target:'_blank',rel:'noopener',title:'Ver dashboard',style:{marginLeft:6,textDecoration:'none',fontSize:12,cursor:'pointer'}},'🔗'):null),
               h('td',{className:'target-cell'},h('input',{type:'text',value:(t1.targets&&t1.targets[turno]&&t1.targets[turno][metric.k]!==undefined)?t1.targets[turno][metric.k]:metric.target,onChange:function(e){updTarget(turno,metric.k,e.target.value);},style:{width:'100%',border:'1px solid transparent',background:'transparent',textAlign:'center',fontSize:12,fontFamily:'inherit',fontWeight:700,color:'#854F0B',outline:'none',padding:'2px'}})),
               T1_DAY_KEYS.map(function(dk,di){
                 var val=(t1[turno]&&t1[turno][metric.k]&&t1[turno][metric.k][dk])||'';

@@ -1636,21 +1636,66 @@ function InventarioView(props){
     var sorted=data.rows.slice().sort(function(a,b){return b.total-a.total;});
     var win=window.open('','_blank');
     var hoy=new Date().toLocaleDateString('es-AR');
+    var all=inv.items||[];
+    var fechas=getAllFechas(all);
+    var lastFecha=fechas[fechas.length-1];
+
+    // Top consumidos (con consumo > 0)
+    var topCons=sorted.filter(function(r){return r.total>0;}).slice(0,5);
+    var topHtml=topCons.length?topCons.map(function(r,i){
+      return '<li><b>'+(i+1)+'. '+r.item+'</b> ('+r.tipo+') &mdash; '+r.total+' unidades</li>';
+    }).join(''):'<li>Sin consumo registrado en el per&iacute;odo</li>';
+
+    // Alertas de reposicion
+    var listFiltered=filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;});
+    var criticos=[], enRiesgo=[];
+    listFiltered.forEach(function(x){
+      var cm={};(x.conteos||[]).forEach(function(ct){cm[ct.fecha]=parseFloat(ct.valor);});
+      var stock=lastFecha!==undefined?cm[lastFecha]:NaN;
+      var min=parseFloat(x.minimo)||0;
+      if(isNaN(stock))return;
+      if(stock<min){criticos.push({item:x.item,tipo:x.tipo,stock:stock,min:min});}
+      else if(min>0 && stock<=min*1.2){enRiesgo.push({item:x.item,tipo:x.tipo,stock:stock,min:min});}
+    });
+    var critHtml=criticos.length?criticos.map(function(a){
+      return '<tr style="background:#fdecea"><td>'+a.tipo+'</td><td>'+a.item+'</td><td style="text-align:center;color:#a32d2d;font-weight:bold">'+a.stock+'</td><td style="text-align:center">'+a.min+'</td><td style="text-align:center;color:#a32d2d;font-weight:bold">CR&Iacute;TICO</td></tr>';
+    }).join(''):'';
+    var riskHtml=enRiesgo.length?enRiesgo.map(function(a){
+      return '<tr style="background:#fff8e6"><td>'+a.tipo+'</td><td>'+a.item+'</td><td style="text-align:center;color:#854f0b;font-weight:bold">'+a.stock+'</td><td style="text-align:center">'+a.min+'</td><td style="text-align:center;color:#854f0b;font-weight:bold">EN RIESGO</td></tr>';
+    }).join(''):'';
+    var alertBody=(critHtml+riskHtml)||'<tr><td colspan="5" style="text-align:center;color:#1d7a4a;padding:12px">Sin alertas &mdash; todos los items sobre el m&iacute;nimo</td></tr>';
+
     var rowsHtml=sorted.map(function(r){
       return '<tr><td>'+r.tipo+'</td><td>'+r.item+'</td>'+
         r.perPeriod.map(function(d){return '<td style="text-align:center">'+(d===null?'-':d>0?'-'+d:d<0?'+'+Math.abs(d):'0')+'</td>';}).join('')+
         '<td style="text-align:center;font-weight:bold">'+r.total+'</td></tr>';
     }).join('');
     var transHtml=data.transitions.map(function(tr){return '<th style="text-align:center">'+tr[0]+' &rarr; '+tr[1]+'</th>';}).join('');
+
     var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reporte Consumo SCZ1</title>'+
-      '<style>body{font-family:Arial,sans-serif;padding:30px;color:#222}h1{color:#6d28d9;font-size:20px}h2{font-size:14px;color:#666;font-weight:normal;margin-top:4px}'+
-      'table{width:100%;border-collapse:collapse;margin-top:20px;font-size:12px}th{background:#4B3A8A;color:#fff;padding:8px;text-align:left}td{padding:6px 8px;border-bottom:1px solid #ddd}'+
-      'tr:nth-child(even){background:#f7f5fc}.foot{margin-top:24px;font-size:11px;color:#888}</style></head><body>'+
+      '<style>body{font-family:Arial,sans-serif;padding:30px;color:#222}h1{color:#6d28d9;font-size:20px;margin-bottom:2px}h2{font-size:13px;color:#666;font-weight:normal;margin-top:2px}'+
+      'h3{font-size:15px;color:#4B3A8A;margin-top:26px;border-bottom:2px solid #EDE9FB;padding-bottom:4px}'+
+      'table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}th{background:#4B3A8A;color:#fff;padding:8px;text-align:left}td{padding:6px 8px;border-bottom:1px solid #ddd}'+
+      'tr:nth-child(even){background:#f7f5fc}.foot{margin-top:24px;font-size:11px;color:#888}'+
+      '.summary-box{background:#F5F3FC;border:1px solid #D6CCF0;border-radius:8px;padding:14px 18px;margin-top:14px}'+
+      '.summary-box ul{margin:6px 0 0;padding-left:20px}.summary-box li{margin:3px 0;font-size:13px}'+
+      '.kpis{display:flex;gap:12px;margin-top:14px}.kpi{flex:1;border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center}.kpi .n{font-size:24px;font-weight:bold}.kpi .l{font-size:11px;color:#666}'+
+      '@media print{h3{page-break-after:avoid}}</style></head><body>'+
       '<h1>Reporte de Consumo &mdash; Inventario SCZ1</h1>'+
       '<h2>Filtro: '+filter+' &middot; Generado el '+hoy+'</h2>'+
+      '<div class="kpis">'+
+        '<div class="kpi"><div class="n" style="color:#6d28d9">'+topCons.length+'</div><div class="l">Items con consumo</div></div>'+
+        '<div class="kpi"><div class="n" style="color:#a32d2d">'+criticos.length+'</div><div class="l">Cr&iacute;ticos (bajo m&iacute;nimo)</div></div>'+
+        '<div class="kpi"><div class="n" style="color:#854f0b">'+enRiesgo.length+'</div><div class="l">En riesgo (cerca del m&iacute;nimo)</div></div>'+
+      '</div>'+
+      '<h3>Resumen &mdash; Top 5 m&aacute;s consumidos</h3>'+
+      '<div class="summary-box"><ul>'+topHtml+'</ul></div>'+
+      '<h3>&#9888; Alertas de reposici&oacute;n</h3>'+
+      '<table><thead><tr><th>Tipo</th><th>Item</th><th style="text-align:center">Stock actual</th><th style="text-align:center">M&iacute;nimo</th><th style="text-align:center">Estado</th></tr></thead><tbody>'+alertBody+'</tbody></table>'+
+      '<h3>Detalle de consumo por item</h3>'+
       '<table><thead><tr><th>Tipo</th><th>Item</th>'+transHtml+'<th style="text-align:center">Consumo total</th></tr></thead>'+
       '<tbody>'+rowsHtml+'</tbody></table>'+
-      '<div class="foot">Consumo = conteo anterior &minus; conteo actual. Valores negativos (con -) indican consumo; positivos (con +) indican reposici&oacute;n de stock.</div>'+
+      '<div class="foot">Consumo = conteo anterior &minus; conteo actual. Valores negativos (con -) indican consumo; positivos (con +) indican reposici&oacute;n de stock.<br>Cr&iacute;tico = stock por debajo del m&iacute;nimo. En riesgo = stock hasta 20% por encima del m&iacute;nimo.</div>'+
       '</body></html>';
     win.document.write(html);
     win.document.close();

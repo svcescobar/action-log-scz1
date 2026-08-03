@@ -344,6 +344,50 @@ function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
 async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
 async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
+  // Helper: fetch current state from GH, merge with our changes, return payload
+  async function buildPayload(){
+    var resp=await fetch(GH_API,{headers:GH_HDRS});
+    if(!resp.ok)throw new Error('read HTTP '+resp.status);
+    var json=await resp.json();
+    _ghSha=json.sha;
+    var srv=JSON.parse(b64dec(json.content));
+    // Merge: caller passes undefined for sections it didn't change → keep server version
+    var merged={
+      entries: entries!==undefined&&entries!==null ? entries : (srv.entries||[]),
+      bgImage: bgImage!==undefined&&bgImage!==null ? bgImage : (srv.bgImage||''),
+      calcState: calcState!==undefined&&calcState!==null ? calcState : (srv.calcState||{}),
+      tier1: tier1!==undefined ? tier1 : (srv.tier1||_lastTier1||null),
+      tier1Hist: tier1Hist!==undefined ? tier1Hist : (srv.tier1Hist||_lastTier1Hist||[]),
+      inventory: inventory!==undefined&&inventory!==null ? inventory : (srv.inventory||_lastInv||null)
+    };
+    _lastTier1=merged.tier1; _lastTier1Hist=merged.tier1Hist; _lastInv=merged.inventory;
+    return {message:'update',sha:_ghSha,content:b64enc(JSON.stringify(merged))};
+  }
+  // Try up to 3 times (handles 409 sha conflicts)
+  var attempts=0;
+  while(attempts<3){
+    attempts++;
+    try{
+      var payload=await buildPayload();
+      var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});
+      if(resp.status===409){
+        // sha conflict: loop will re-read sha in next buildPayload call
+        console.warn('[saveState] 409 conflict, retrying (attempt '+attempts+')');
+        continue;
+      }
+      if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}
+      var result=await resp.json();
+      _ghSha=result.content.sha;
+      return; // success
+    }catch(e){
+      if(attempts>=3)throw e;
+      console.warn('[saveState] attempt '+attempts+' failed:',e.message);
+    }
+  }
+}
+
+async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
+async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
   // Always re-read latest sha + merge before writing to avoid overwriting concurrent changes
   try {
     var latest=await fetch(GH_API,{headers:GH_HDRS});

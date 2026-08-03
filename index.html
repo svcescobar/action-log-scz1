@@ -305,6 +305,14 @@ body.dark .inv-title{background:rgba(31,41,55,0.92) !important}
 .inv-btn-count{background:#1D7A4A;color:#fff}
 .inv-danger-num{color:#ef4444;font-weight:700}
 .inv-legend{font-size:11px;color:var(--text-muted);margin-top:10px;font-style:italic}
+/* ── EQUIPAMIENTO ── */
+.eq-op-badge{display:inline-flex;align-items:center;gap:4px;border-radius:12px;padding:2px 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.eq-op-yes{background:#E6F4EA;color:#1D7A4A}
+.eq-op-no{background:#FDECEA;color:#A32D2D}
+.eq-filter-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.eq-search{flex:1;min-width:180px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);font-family:inherit;outline:none}
+.eq-search:focus{border-color:#6d28d9}
+
 .inv-chart-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:var(--shadow)}
 
 
@@ -338,12 +346,13 @@ var _ghSha=null;
 var _lastTier1=null;
 var _lastTier1Hist=[];
 var _lastInv=null;
+var _lastEquip=null;
 var GH_API='https://api.github.com/repos/'+CONFIG.GH_REPO+'/contents/'+CONFIG.DATA_FILE;
 var GH_HDRS={'Authorization':'token '+CONFIG.GH_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
 function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
-async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
-async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
+async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;_lastEquip=data.equipamiento||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null,equipamiento:data.equipamiento||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
+async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento){
   // Helper: fetch current state from GH, merge with our changes, return payload
   async function buildPayload(){
     var resp=await fetch(GH_API,{headers:GH_HDRS});
@@ -360,7 +369,7 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
       tier1Hist: tier1Hist!==undefined ? tier1Hist : (srv.tier1Hist||_lastTier1Hist||[]),
       inventory: inventory!==undefined&&inventory!==null ? inventory : (srv.inventory||_lastInv||null)
     };
-    _lastTier1=merged.tier1; _lastTier1Hist=merged.tier1Hist; _lastInv=merged.inventory;
+    _lastTier1=merged.tier1; _lastTier1Hist=merged.tier1Hist; _lastInv=merged.inventory; _lastEquip=merged.equipamiento;
     return {message:'update',sha:_ghSha,content:b64enc(JSON.stringify(merged))};
   }
   // Try up to 3 times (handles 409 sha conflicts)
@@ -386,8 +395,8 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
   }
 }
 
-async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
-async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
+async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;_lastEquip=data.equipamiento||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null,equipamiento:data.equipamiento||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
+async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento){
   // Always re-read latest sha + merge before writing to avoid overwriting concurrent changes
   try {
     var latest=await fetch(GH_API,{headers:GH_HDRS});
@@ -1574,11 +1583,36 @@ function RowMenu(props){
   );
 }
 
+
+// ══════════════════════════════════════════════════════
+// DETALLE EQUIPAMIENTO VIEW (inside InventarioView)
+// ══════════════════════════════════════════════════════
+var EQUIP_SEED = [{"id": "eq0", "elemento": "Apilador Elevador", "numero": "1", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq1", "elemento": "Zorra Eléctrica", "numero": "1", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq2", "elemento": "Celular", "numero": "1", "serial": "R8MY102NCRK", "operativo": true, "observaciones": ""}, {"id": "eq3", "elemento": "Celular", "numero": "2", "serial": "R8MY102LP4L", "operativo": true, "observaciones": ""}, {"id": "eq4", "elemento": "Chromebox con Pantalla Táctil", "numero": "1", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq5", "elemento": "Chromebox con Pantalla Táctil", "numero": "2", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq6", "elemento": "Chromebox con Pantalla Táctil", "numero": "3", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq7", "elemento": "Handheld", "numero": "1", "serial": "S25051524701982", "operativo": true, "observaciones": ""}, {"id": "eq8", "elemento": "Handheld", "numero": "2", "serial": "S25051524704422", "operativo": false, "observaciones": "Pantalla en blanco"}, {"id": "eq9", "elemento": "Handheld", "numero": "3", "serial": "S25051524702494", "operativo": true, "observaciones": ""}, {"id": "eq10", "elemento": "Handheld", "numero": "4", "serial": "S25051524701966", "operativo": false, "observaciones": "Lector dañado"}, {"id": "eq11", "elemento": "Handheld", "numero": "5", "serial": "S25051524704926", "operativo": true, "observaciones": ""}, {"id": "eq12", "elemento": "Handheld", "numero": "6", "serial": "S25051524701958", "operativo": false, "observaciones": "Rotura pantalla 9/9/2025"}, {"id": "eq13", "elemento": "Handheld", "numero": "7", "serial": "S25051524703388", "operativo": true, "observaciones": ""}, {"id": "eq14", "elemento": "Handheld", "numero": "8", "serial": "S25051524703392", "operativo": false, "observaciones": "Pantalla en blanco"}, {"id": "eq15", "elemento": "Handheld", "numero": "9", "serial": "S25051524704141", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq16", "elemento": "Handheld", "numero": "10", "serial": "S25051524701694", "operativo": false, "observaciones": "Pantalla dañada (Oficina)"}, {"id": "eq17", "elemento": "Handheld", "numero": "11", "serial": "S25051524703592", "operativo": false, "observaciones": "Laser no funciona"}, {"id": "eq18", "elemento": "Handheld", "numero": "12", "serial": "S25051524701956", "operativo": true, "observaciones": ""}, {"id": "eq19", "elemento": "Handheld", "numero": "13", "serial": "S25051524704430", "operativo": true, "observaciones": ""}, {"id": "eq20", "elemento": "Handheld", "numero": "14", "serial": "S25051524701558", "operativo": true, "observaciones": ""}, {"id": "eq21", "elemento": "Handheld", "numero": "15", "serial": "S25051524704269", "operativo": true, "observaciones": ""}, {"id": "eq22", "elemento": "Handheld", "numero": "16", "serial": "S25051524704515", "operativo": false, "observaciones": "Pantalla dañada"}, {"id": "eq23", "elemento": "Handheld", "numero": "17", "serial": "S25051524703587", "operativo": true, "observaciones": ""}, {"id": "eq24", "elemento": "Handheld", "numero": "18", "serial": "S25051524701869", "operativo": true, "observaciones": ""}, {"id": "eq25", "elemento": "Handheld", "numero": "19", "serial": "S25051524701858", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq26", "elemento": "Handheld", "numero": "20", "serial": "S25051524703582", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq27", "elemento": "Handheld", "numero": "21", "serial": "S25051524703116", "operativo": true, "observaciones": ""}, {"id": "eq28", "elemento": "Handheld", "numero": "22", "serial": "S25051524701620", "operativo": true, "observaciones": ""}, {"id": "eq29", "elemento": "Handheld", "numero": "23", "serial": "S25051524704267", "operativo": true, "observaciones": ""}, {"id": "eq30", "elemento": "Handheld", "numero": "24", "serial": "S25051524701851", "operativo": true, "observaciones": ""}, {"id": "eq31", "elemento": "Handheld", "numero": "25", "serial": "S25051524704468", "operativo": true, "observaciones": ""}, {"id": "eq32", "elemento": "Handheld", "numero": "26", "serial": "S25051524704047", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq33", "elemento": "Handheld", "numero": "27", "serial": "S25051524704050", "operativo": true, "observaciones": ""}, {"id": "eq34", "elemento": "Handheld", "numero": "28", "serial": "S25051524703192", "operativo": true, "observaciones": ""}, {"id": "eq35", "elemento": "Handheld", "numero": "29", "serial": "S25051524704982", "operativo": true, "observaciones": ""}, {"id": "eq36", "elemento": "Handheld", "numero": "30", "serial": "S25052524701215", "operativo": true, "observaciones": ""}, {"id": "eq37", "elemento": "Handheld", "numero": "31", "serial": "S25051524703092", "operativo": true, "observaciones": ""}, {"id": "eq38", "elemento": "Handheld", "numero": "32", "serial": "S25051524703336", "operativo": true, "observaciones": ""}, {"id": "eq39", "elemento": "Handheld", "numero": "33", "serial": "S25051524702340", "operativo": true, "observaciones": ""}, {"id": "eq40", "elemento": "Handheld", "numero": "34", "serial": "S25051524701689", "operativo": true, "observaciones": ""}, {"id": "eq41", "elemento": "Handheld", "numero": "35", "serial": "S25051524704044", "operativo": true, "observaciones": ""}, {"id": "eq42", "elemento": "Handheld", "numero": "36", "serial": "S25051524704918", "operativo": true, "observaciones": ""}, {"id": "eq43", "elemento": "Handheld", "numero": "37", "serial": "S25051524704341", "operativo": true, "observaciones": ""}, {"id": "eq44", "elemento": "Handheld", "numero": "38", "serial": "S25051524701872", "operativo": true, "observaciones": ""}, {"id": "eq45", "elemento": "Handheld", "numero": "39", "serial": "S25051524704054", "operativo": true, "observaciones": ""}, {"id": "eq46", "elemento": "Handheld", "numero": "40", "serial": "S25051524704922", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq47", "elemento": "Handheld", "numero": "41", "serial": "S25051524701746", "operativo": true, "observaciones": ""}, {"id": "eq48", "elemento": "Handheld", "numero": "42", "serial": "S25051524701696", "operativo": true, "observaciones": ""}, {"id": "eq49", "elemento": "Handheld", "numero": "43", "serial": "S25051524704087", "operativo": true, "observaciones": ""}, {"id": "eq50", "elemento": "Handheld", "numero": "44", "serial": "S25051524704266", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq51", "elemento": "Printer Zebra", "numero": "1", "serial": "99J245100219", "operativo": true, "observaciones": ""}, {"id": "eq52", "elemento": "Printer Zebra", "numero": "2", "serial": "99J245100218", "operativo": true, "observaciones": ""}, {"id": "eq53", "elemento": "Printer Zebra", "numero": "3", "serial": "99J245100274", "operativo": true, "observaciones": ""}, {"id": "eq54", "elemento": "Printer Zebra", "numero": "4", "serial": "99J244600518", "operativo": true, "observaciones": ""}, {"id": "eq55", "elemento": "Printer Zebra", "numero": "5", "serial": "99J244705314", "operativo": true, "observaciones": ""}, {"id": "eq56", "elemento": "Printer Zebra", "numero": "6", "serial": "99J245100217", "operativo": true, "observaciones": ""}, {"id": "eq57", "elemento": "Printer Zebra", "numero": "7", "serial": "99J244404404", "operativo": true, "observaciones": ""}, {"id": "eq58", "elemento": "Printer Zebra", "numero": "8", "serial": "99J245100227", "operativo": true, "observaciones": ""}, {"id": "eq59", "elemento": "Printer Zebra", "numero": "9", "serial": "99J245100224", "operativo": true, "observaciones": ""}, {"id": "eq60", "elemento": "Printer Zebra", "numero": "10", "serial": "99N251900998", "operativo": true, "observaciones": "Llegaron el 30/8"}, {"id": "eq61", "elemento": "Printer Zebra", "numero": "11", "serial": "99N251900995", "operativo": true, "observaciones": "Llegaron el 30/8"}, {"id": "eq62", "elemento": "Printer Zebra Portátil", "numero": "1", "serial": "xxrbn245102365", "operativo": true, "observaciones": ""}, {"id": "eq63", "elemento": "Printer Zebra Portátil", "numero": "2", "serial": "xxrbn245003026", "operativo": true, "observaciones": ""}, {"id": "eq64", "elemento": "Base de Carga Batería HH", "numero": "1", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq65", "elemento": "Base de Carga Batería HH", "numero": "2", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq66", "elemento": "Base de Carga Batería HH", "numero": "3", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq67", "elemento": "Base de Carga Batería HH", "numero": "4", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq68", "elemento": "Base de Carga Batería HH", "numero": "5", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq69", "elemento": "Base de Carga Batería HH", "numero": "6", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq70", "elemento": "Base de Carga Batería HH", "numero": "7", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq71", "elemento": "Base de Carga Batería HH", "numero": "8", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq72", "elemento": "Base de Carga Batería HH", "numero": "9", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq73", "elemento": "Base de Carga Batería HH", "numero": "10", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq74", "elemento": "Base de Carga Batería HH", "numero": "11", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq75", "elemento": "Gatillo", "numero": "1", "serial": "25195525500527", "operativo": true, "observaciones": ""}, {"id": "eq76", "elemento": "Gatillo", "numero": "2", "serial": "25195525500517", "operativo": true, "observaciones": ""}, {"id": "eq77", "elemento": "Gatillo", "numero": "3", "serial": "25195525500520", "operativo": true, "observaciones": ""}, {"id": "eq78", "elemento": "Gatillo", "numero": "4", "serial": "25195525500522", "operativo": true, "observaciones": ""}, {"id": "eq79", "elemento": "Gatillo", "numero": "5", "serial": "25195525500513", "operativo": true, "observaciones": ""}, {"id": "eq80", "elemento": "Gatillo", "numero": "6", "serial": "25195525500528", "operativo": true, "observaciones": ""}, {"id": "eq81", "elemento": "Gatillo", "numero": "7", "serial": "25195525500525", "operativo": true, "observaciones": ""}, {"id": "eq82", "elemento": "Gatillo", "numero": "8", "serial": "25195525500521", "operativo": true, "observaciones": ""}];
+
 function InventarioView(props){
   var onSave=props.onSaveInv||function(){};
   var init=props.inventory||INV_SEED;
 
-  var invS=_useState(function(){
+  var eqInitFn = function(){
+    var base = props.equipamiento;
+    if(!base) base = EQUIP_SEED;
+    return JSON.parse(JSON.stringify(base));
+  };
+  var eqSt=_useState(eqInitFn);var equip=eqSt[0],setEquip=eqSt[1];
+  var eqSearchS=_useState('');var eqSearch=eqSearchS[0],setEqSearch=eqSearchS[1];
+  var eqFilterS=_useState('Todos');var eqFilter=eqFilterS[0],setEqFilter=eqFilterS[1];
+
+  // Re-apply equipamiento from GitHub when it arrives
+  _useEffect(function(){
+    if(props.equipamiento)setEquip(JSON.parse(JSON.stringify(props.equipamiento)));
+  },[props.equipamiento]);
+
+  function updEquip(id,field,val){setEquip(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
+  function addEquip(){setEquip(function(prev){return prev.concat([{id:genId(),elemento:'',numero:'',serial:'',operativo:true,observaciones:''}]);});}
+  function delEquip(id){setEquip(function(prev){return prev.filter(function(r){return r.id!==id;});});}
+  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip);}
+
+    var invS=_useState(function(){
     var base=JSON.parse(JSON.stringify(init));
     // migrate old structure {insumos, libreria} -> {items}
     if(!base.items){
@@ -1872,11 +1906,64 @@ function InventarioView(props){
       h('button',{className:'inv-btn inv-btn-sync',onClick:sync},saved?'\u2713 Guardado':'💾 Sincronizar')
     ),
     h('div',{className:'inv-subtabs'},
-      [['items','Insumos, Librería & SHE'],['consumo','📊 Consumo'],['activos','Activos Fijos']].map(function(t){
+      [['items','Insumos, Librería & SHE'],['consumo','📊 Consumo'],['activos','Activos Fijos'],['equip','🔧 Det. Equipamiento']].map(function(t){
         return h('button',{key:t[0],className:'inv-subtab'+(tab===t[0]?' active':''),onClick:function(){setTab(t[0]);}},t[1]);
       })
     ),
     h('div',{className:'inv-body'},
+      tab==='equip'?h('div',null,
+        // KPIs
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(140px,1fr))',gap:12,marginBottom:14}},
+          h('div',{className:'inv-chart-card'},h('div',{style:{textAlign:'center'}},''),h('div',{style:{fontSize:24,fontWeight:800,color:'#6d28d9',textAlign:'center'}},equip.length),h('div',{style:{fontSize:11,color:'var(--text-muted)',textAlign:'center',textTransform:'uppercase'}},'Total equipos')),
+          h('div',{className:'inv-chart-card'},h('div',{style:{fontSize:24,fontWeight:800,color:'#1D7A4A',textAlign:'center'}},equip.filter(function(r){return r.operativo;}).length),h('div',{style:{fontSize:11,color:'var(--text-muted)',textAlign:'center',textTransform:'uppercase'}},'Operativos')),
+          h('div',{className:'inv-chart-card'},h('div',{style:{fontSize:24,fontWeight:800,color:'#ef4444',textAlign:'center'}},equip.filter(function(r){return !r.operativo;}).length),h('div',{style:{fontSize:11,color:'var(--text-muted)',textAlign:'center',textTransform:'uppercase'}},'No operativos'))
+        ),
+        // Toolbar
+        h('div',{className:'eq-filter-bar'},
+          h('input',{className:'eq-search',type:'text',placeholder:'Buscar por elemento, serial u observación...',value:eqSearch,onChange:function(e){setEqSearch(e.target.value);}}),
+          h('div',{style:{display:'flex',gap:6}},
+            [['Todos','Todos'],['op','Solo operativos'],['nop','Solo no operativos']].map(function(t){
+              return h('button',{key:t[0],onClick:function(){setEqFilter(t[0]);},style:{padding:'5px 12px',borderRadius:6,border:'1px solid '+(eqFilter===t[0]?'#6d28d9':'var(--border)'),background:eqFilter===t[0]?'#6d28d9':'var(--surface)',color:eqFilter===t[0]?'#fff':'var(--text)',cursor:'pointer',fontWeight:700,fontSize:12,fontFamily:'inherit'}},t[1]);
+            })
+          ),
+          h('div',{style:{display:'flex',gap:8,marginLeft:'auto'}},
+            h('button',{className:'inv-btn inv-btn-add',onClick:addEquip},'+ Agregar'),
+            h('button',{className:'inv-btn inv-btn-sync',onClick:syncEquip},'💾 Sincronizar')
+          )
+        ),
+        // Table
+        h('div',{className:'inv-scroll'},
+          h('table',{className:'inv-table'},
+            h('thead',null,h('tr',null,
+              h('th',null,'Elemento'),h('th',{style:{textAlign:'center'}},'N°'),
+              h('th',null,'N° Serie'),h('th',{style:{textAlign:'center'}},'Operativo'),
+              h('th',null,'Observaciones'),h('th',null,'')
+            )),
+            h('tbody',null,(function(){
+              var q=eqSearch.toLowerCase();
+              return equip.filter(function(r){
+                if(eqFilter==='op'&&!r.operativo)return false;
+                if(eqFilter==='nop'&&r.operativo)return false;
+                if(q&&!(r.elemento.toLowerCase().includes(q)||r.serial.toLowerCase().includes(q)||(r.observaciones||'').toLowerCase().includes(q)))return false;
+                return true;
+              }).map(function(r){
+                return h('tr',{key:r.id,style:{background:r.operativo?'':'rgba(239,68,68,.04)'}},
+                  h('td',null,h('input',{className:'inv-txt-input',value:r.elemento,onChange:function(e){updEquip(r.id,'elemento',e.target.value);}})),
+                  h('td',{style:{textAlign:'center',width:50}},h('input',{className:'inv-cell-input',value:r.numero,onChange:function(e){updEquip(r.id,'numero',e.target.value);},style:{width:50}})),
+                  h('td',null,h('input',{className:'inv-txt-input',value:r.serial,onChange:function(e){updEquip(r.id,'serial',e.target.value);},style:{fontFamily:'monospace',fontSize:11}})),
+                  h('td',{style:{textAlign:'center'}},
+                    h('button',{onClick:function(){updEquip(r.id,'operativo',!r.operativo);},className:'eq-op-badge '+(r.operativo?'eq-op-yes':'eq-op-no')},
+                      r.operativo?'✓ Operativo':'✗ No operativo'
+                    )
+                  ),
+                  h('td',null,h('input',{className:'inv-txt-input',value:r.observaciones||'',placeholder:'—',onChange:function(e){updEquip(r.id,'observaciones',e.target.value);}})),
+                  h('td',null,h(RowMenu,{onDelete:function(){delEquip(r.id);}}))
+                );
+              });
+            })())
+          )
+        )
+      ):
       tab==='activos'?activosView:
       tab==='items'?itemsView:
       consumoView
@@ -1910,10 +1997,11 @@ function App(props) {
   var t1hs=_useState([]);var tier1Hist=t1hs[0],setTier1Hist=t1hs[1];
   var invSt=_useState(null);var inventory=invSt[0],setInventory=invSt[1];
   var calcSt=_useState(null);var calcState=calcSt[0],setCalcState=calcSt[1];
+  var equipSt=_useState(null);var equipamiento=equipSt[0],setEquipamiento=equipSt[1];
 
   var showToast=_useCallback(function(message,type){var id=genId();setToasts(function(prev){return prev.concat([{id:id,message:message,type:type||'info'}]);});setTimeout(function(){setToasts(function(prev){return prev.filter(function(t){return t.id!==id;});});},3500);},[]);
 
-  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){setCalcState(data.calcState);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setTier1(data.tier1||null);setTier1Hist(data.tier1Hist||[]);setInventory(data.inventory||null);setLoading(false);});},[]);
+  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){setCalcState(data.calcState);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setTier1(data.tier1||null);setTier1Hist(data.tier1Hist||[]);setInventory(data.inventory||null);setEquipamiento(data.equipamiento||null);setLoading(false);});},[]);
   _useEffect(function(){document.body.classList.toggle('dark',dark);},[dark]);
   _useEffect(function(){if(bgImage){document.body.style.backgroundImage='url('+bgImage+')';document.body.style.backgroundSize='cover';document.body.style.backgroundPosition='center';document.body.style.backgroundAttachment='fixed';document.body.classList.add('has-bg');}else{document.body.style.backgroundImage='';document.body.classList.remove('has-bg');}},[ bgImage]);
 
@@ -1923,6 +2011,7 @@ function App(props) {
   function saveCalcToGH(cs){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(undefined,undefined,cs,undefined,undefined,undefined).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveTier1ToGH(t1,t1Hist){setTier1(t1);setTier1Hist(t1Hist);return saveState(undefined,undefined,undefined,t1,t1Hist,undefined).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveInvToGH(invData){setInventory(invData);return saveState(undefined,undefined,undefined,undefined,undefined,invData).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveEquipToGH(eq){setEquipamiento(eq);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,eq).then(function(){showToast('✓ Equipamiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function handleNew(){setEditing(emptyEntry());setIsNew(true);setModal(true);}
   function handleEdit(e){setEditing(Object.assign({},e));setIsNew(false);setModal(true);}
   function handleSave(entry){var updated=isNew?entries.concat([entry]):entries.map(function(e){return e.id===entry.id?entry:e;});persist(updated);setModal(false);showToast(isNew?'Accion creada':'Accion actualizada','success');}
@@ -1953,7 +2042,7 @@ function App(props) {
     ),
     page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH,calcState:calcState}):
     page==='tier1'?h(Tier1View,{tier1:tier1,tier1Hist:tier1Hist,onSaveTier1:saveTier1ToGH}):
-    page==='inventario'?h(InventarioView,{inventory:inventory,onSaveInv:saveInvToGH}):
+    page==='inventario'?h(InventarioView,{inventory:inventory,onSaveInv:saveInvToGH,equipamiento:equipamiento,onSaveEquip:saveEquipToGH}):
     h('main',{className:'main'},
       h('div',{style:{display:'flex',gap:0,marginBottom:16,borderBottom:'2px solid var(--border)'}},
         [['registro','📋 Registro de Acciones'],['analytics','📊 Analytics']].map(function(t){

@@ -343,7 +343,35 @@ var GH_HDRS={'Authorization':'token '+CONFIG.GH_TOKEN,'Accept':'application/vnd.
 function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
 async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
-async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){var payload={message:'update',content:b64enc(JSON.stringify({entries:entries,bgImage:bgImage||'',calcState:calcState||{},tier1:tier1||_lastTier1,tier1Hist:tier1Hist||_lastTier1Hist,inventory:inventory||_lastInv}))};if(_ghSha)payload.sha=_ghSha;var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}var result=await resp.json();_ghSha=result.content.sha;}
+async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory){
+  // Always re-read latest sha + merge before writing to avoid overwriting concurrent changes
+  try {
+    var latest=await fetch(GH_API,{headers:GH_HDRS});
+    if(latest.ok){
+      var latestJson=await latest.json();
+      _ghSha=latestJson.sha;
+      var latestData=JSON.parse(b64dec(latestJson.content));
+      // Each caller passes only what it changed; others come from latest server data
+      if(entries===undefined||entries===null)entries=latestData.entries;
+      if(!bgImage&&bgImage!=='')bgImage=latestData.bgImage||'';
+      if(calcState===undefined||calcState===null)calcState=latestData.calcState||{};
+      if(tier1===undefined)tier1=latestData.tier1||_lastTier1;
+      if(tier1Hist===undefined)tier1Hist=latestData.tier1Hist||_lastTier1Hist;
+      if(inventory===undefined||inventory===null)inventory=latestData.inventory||_lastInv;
+    }
+  } catch(e){ console.warn('[saveState] pre-read failed, using cached sha',e); }
+  _lastTier1=tier1||_lastTier1;
+  _lastTier1Hist=tier1Hist||_lastTier1Hist;
+  _lastInv=inventory||_lastInv;
+  var payload={message:'update',content:b64enc(JSON.stringify({
+    entries:entries||[],bgImage:bgImage||'',calcState:calcState||{},
+    tier1:tier1||_lastTier1,tier1Hist:tier1Hist||_lastTier1Hist,inventory:inventory||_lastInv
+  }))};
+  if(_ghSha)payload.sha=_ghSha;
+  var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});
+  if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}
+  var result=await resp.json();_ghSha=result.content.sha;
+}
 function isAdmin(user){return ADMIN_USERS.indexOf(user)!==-1;}
 function isMyTask(entry,user){if(!entry.responsables)return false;return entry.responsables.toLowerCase().indexOf(user.toLowerCase())!==-1;}
 function fmtDate(iso){if(!iso)return'';var p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
@@ -1847,10 +1875,10 @@ function App(props) {
 
   if(loading)return h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',background:'#1a1f2e',color:'#ffe600',fontSize:'18px',gap:'12px'}},h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⟳'),'Cargando...');
 
-  function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
-  function saveCalcToGH(cs){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(entries,bgImage,cs).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
-  function saveTier1ToGH(t1,t1Hist){setTier1(t1);setTier1Hist(t1Hist);return saveState(entries,bgImage,undefined,t1,t1Hist).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
-  function saveInvToGH(invData){setInventory(invData);return saveState(entries,bgImage,undefined,undefined,undefined,invData).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg,undefined,undefined,undefined,undefined).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
+  function saveCalcToGH(cs){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(undefined,undefined,cs,undefined,undefined,undefined).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveTier1ToGH(t1,t1Hist){setTier1(t1);setTier1Hist(t1Hist);return saveState(undefined,undefined,undefined,t1,t1Hist,undefined).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveInvToGH(invData){setInventory(invData);return saveState(undefined,undefined,undefined,undefined,undefined,invData).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function handleNew(){setEditing(emptyEntry());setIsNew(true);setModal(true);}
   function handleEdit(e){setEditing(Object.assign({},e));setIsNew(false);setModal(true);}
   function handleSave(entry){var updated=isNew?entries.concat([entry]):entries.map(function(e){return e.id===entry.id?entry:e;});persist(updated);setModal(false);showToast(isNew?'Accion creada':'Accion actualizada','success');}

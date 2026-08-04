@@ -1376,11 +1376,26 @@ function Tier1View(props){
               var val=mData[dk]||'';
               return h('td',{key:dk},h('input',{type:'text',value:val,className:'t1-cell-input '+cellClass(metric,val),onChange:function(e){updHistCell(w.id,turno,metric.k,dk,e.target.value);}}));
             }),
-            h('td',{className:'avg-cell'},avgStr)
+            (function(){var col=avgColor(metric,avgStr);var bg=avgBg(metric,avgStr);return h('td',{className:'avg-cell',style:col?{background:bg,color:col,fontWeight:800,borderLeft:'3px solid '+col}:{}},avgStr||'');})()
           );
         }))
       )
     );
+  }
+
+
+  function avgColor(metric, avgStr){
+    if(!avgStr||avgStr===''||metric.limit===undefined)return null;
+    var num=parseFloat(avgStr.replace(',','.').replace('%',''));
+    if(isNaN(num))return null;
+    if(metric.highGood)return num>=metric.limit?'#1D7A4A':'#A32D2D';
+    if(metric.lowGood)return num<=metric.limit?'#1D7A4A':'#A32D2D';
+    return null;
+  }
+  function avgBg(metric, avgStr){
+    var col=avgColor(metric,avgStr);
+    if(!col)return undefined;
+    return col==='#1D7A4A'?'#E6F4EA':'#FDECEA';
   }
 
   function renderTable(turno,metrics){
@@ -1406,7 +1421,7 @@ function Tier1View(props){
                 var val=(t1[turno]&&t1[turno][metric.k]&&t1[turno][metric.k][dk])||'';
                 return h('td',{key:dk},h('input',{type:'text',value:val,className:'t1-cell-input '+cellClass(metric,val),onChange:function(e){updCell(turno,metric.k,dk,e.target.value);}}));
               }),
-              h('td',{className:'avg-cell'},calcAvg(turno,metric.k))
+              (function(){var av=calcAvg(turno,metric.k);var col=avgColor(metric,av);var bg=avgBg(metric,av);return h('td',{className:'avg-cell',style:col?{background:bg,color:col,fontWeight:800,borderLeft:'3px solid '+col}:{} },av||'');})()
             );
           })
         )
@@ -1486,6 +1501,10 @@ function Tier1View(props){
             ),
             editWk===w.id
               ? h('div',{style:{marginTop:12}},
+                  h('div',{style:{display:'flex',alignItems:'center',gap:10,marginBottom:12,padding:'10px 14px',background:'#F0EDFB',borderRadius:8,border:'1px solid #D6CCF0'}},
+                    h('span',{style:{fontWeight:700,fontSize:13,color:'#4B3A8A'}},'Número de semana:'),
+                    h('input',{type:'number',value:w.semana,onChange:function(e){var num=parseInt(e.target.value)||w.semana;setHist(function(prev){return prev.map(function(x){return x.id===w.id?Object.assign({},x,{semana:num}):x;});});},style:{width:80,border:'2px solid #4B3A8A',borderRadius:6,padding:'5px 8px',fontSize:16,fontFamily:'inherit',fontWeight:800,color:'#4B3A8A',textAlign:'center',outline:'none'}})
+                  ),
                   h('div',{className:'t1-turno-hdr'},'\u2600 TURNO AM'),
                   renderHistTable(w,'am',T1_METRICS_AM),
                   h('div',{className:'t1-turno-hdr pm',style:{marginTop:16}},'\u263D TURNO PM'),

@@ -1646,6 +1646,7 @@ function InventarioView(props){
   var inv=invS[0],setInv=invS[1];
   var tabS=_useState('items');var tab=tabS[0],setTab=tabS[1];
   var filterS=_useState('Todos');var filter=filterS[0],setFilter=filterS[1];
+  var sortS=_useState('tipo');var sortBy=sortS[0],setSortBy=sortS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
 
   function sync(){onSave(inv);setSaved(true);setTimeout(function(){setSaved(false);},2500);}
@@ -1712,15 +1713,35 @@ function InventarioView(props){
     var fechas=getAllFechas(all);
     var showFechas=fechas.slice(-6).reverse();
     var lastFecha=fechas[fechas.length-1];
-    var filtered=filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;});
+    var filtered=(filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;})).slice();
+    if(sortBy==='tipo'){filtered.sort(function(a,b){return a.tipo.localeCompare(b.tipo)||a.item.localeCompare(b.item);});}
+    else if(sortBy==='item'){filtered.sort(function(a,b){return a.item.localeCompare(b.item);});}
+    else if(sortBy==='estado'){
+      filtered.sort(function(a,b){
+        var cm={};(a.conteos||[]).forEach(function(ct){cm[ct.fecha]=parseFloat(ct.valor);});
+        var lastA=fechas.length?cm[fechas[fechas.length-1]]:NaN;
+        var cm2={};(b.conteos||[]).forEach(function(ct){cm2[ct.fecha]=parseFloat(ct.valor);});
+        var lastB=fechas.length?cm2[fechas[fechas.length-1]]:NaN;
+        var lowA=!isNaN(lastA)&&lastA<(parseFloat(a.minimo)||0)?0:1;
+        var lowB=!isNaN(lastB)&&lastB<(parseFloat(b.minimo)||0)?0:1;
+        return lowA-lowB;
+      });
+    }
+    // 'ingreso' = no sort, keeps insertion order
     return h('div',null,
       h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:8,marginBottom:10,flexWrap:'wrap'}},
-        h('div',{style:{display:'flex',gap:6}},
+        h('div',{style:{display:'flex',gap:6,flexWrap:'wrap'}},
           [['Todos','Todos'],['Insumo','Insumos'],['Librería','Librería'],['Insumos SHE','Insumos SHE']].map(function(t){
             return h('button',{key:t[0],onClick:function(){setFilter(t[0]);},style:{padding:'5px 14px',borderRadius:6,border:'1px solid '+(filter===t[0]?'#6d28d9':'var(--border)'),background:filter===t[0]?'#6d28d9':'var(--surface)',color:filter===t[0]?'#fff':'var(--text)',cursor:'pointer',fontWeight:700,fontSize:12,fontFamily:'inherit'}},t[1]);
           })
         ),
-        h('div',{style:{display:'flex',gap:8}},
+        h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+          h('select',{value:sortBy,onChange:function(e){setSortBy(e.target.value);},style:{border:'1px solid var(--border)',borderRadius:6,padding:'5px 10px',fontSize:12,fontFamily:'inherit',background:'var(--surface)',color:'var(--text)',cursor:'pointer',outline:'none'}},
+            h('option',{value:'tipo'},'Ordenar: por Tipo'),
+            h('option',{value:'item'},'Ordenar: A-Z'),
+            h('option',{value:'estado'},'Ordenar: REPONER primero'),
+            h('option',{value:'ingreso'},'Ordenar: orden de ingreso')
+          ),
           h('button',{className:'inv-btn inv-btn-count',onClick:addConteo},'📅 Nuevo conteo'),
           h('button',{className:'inv-btn inv-btn-add',onClick:addItem},'+ Agregar item')
         )
@@ -1865,7 +1886,21 @@ function InventarioView(props){
     }
     var transitions=[];
     for(var i=1;i<fechas.length;i++)transitions.push([fechas[i-1],fechas[i]]);
-    var filtered=filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;});
+    var filtered=(filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;})).slice();
+    if(sortBy==='tipo'){filtered.sort(function(a,b){return a.tipo.localeCompare(b.tipo)||a.item.localeCompare(b.item);});}
+    else if(sortBy==='item'){filtered.sort(function(a,b){return a.item.localeCompare(b.item);});}
+    else if(sortBy==='estado'){
+      filtered.sort(function(a,b){
+        var cm={};(a.conteos||[]).forEach(function(ct){cm[ct.fecha]=parseFloat(ct.valor);});
+        var lastA=fechas.length?cm[fechas[fechas.length-1]]:NaN;
+        var cm2={};(b.conteos||[]).forEach(function(ct){cm2[ct.fecha]=parseFloat(ct.valor);});
+        var lastB=fechas.length?cm2[fechas[fechas.length-1]]:NaN;
+        var lowA=!isNaN(lastA)&&lastA<(parseFloat(a.minimo)||0)?0:1;
+        var lowB=!isNaN(lastB)&&lastB<(parseFloat(b.minimo)||0)?0:1;
+        return lowA-lowB;
+      });
+    }
+    // 'ingreso' = no sort, keeps insertion order
     return h('div',null,
       h('div',{style:{display:'flex',gap:6,marginBottom:14}},
         [['Todos','Todos'],['Insumo','Insumos'],['Librería','Librería'],['Insumos SHE','Insumos SHE']].map(function(t){

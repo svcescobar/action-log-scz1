@@ -183,7 +183,6 @@ textarea.form-control{resize:vertical}
 .kpi-num{font-size:28px;font-weight:800;line-height:1.1;margin-bottom:4px}
 .kpi-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px}
 @media(max-width:768px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.analytics-grid{grid-template-columns:1fr}}
-
 /* ── DOTACION STYLES ── */
 .dot-wrap{padding:20px;max-width:1400px;margin:0 auto}
 .dot-fcst-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)}
@@ -312,11 +311,55 @@ body.dark .inv-title{background:rgba(31,41,55,0.92) !important}
 .eq-filter-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 .eq-search{flex:1;min-width:180px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);font-family:inherit;outline:none}
 .eq-search:focus{border-color:#6d28d9}
-
 .inv-chart-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:var(--shadow)}
-
-
-
+/* ── MANTENIMIENTO ── */
+.mant-wrap{padding:16px;max-width:1500px;margin:0 auto}
+body.has-bg .mant-wrap{background:rgba(244,245,248,.9);backdrop-filter:blur(2px);border-radius:10px}
+body.dark.has-bg .mant-wrap{background:rgba(17,24,39,.9)}
+.mant-hdr{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.mant-title{font-size:20px;font-weight:800;color:#0F766E}
+.mant-btn{border:none;border-radius:6px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.mant-btn-sync{background:#FFE600;color:#1a1f2e}
+.mant-btn-add{background:#0F766E;color:#fff}
+.mant-btn-csv{background:#1D7A4A;color:#fff}
+.mant-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.mant-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;text-align:center;box-shadow:var(--shadow)}
+.mant-kpi-num{font-size:26px;font-weight:800;line-height:1.1;margin-bottom:3px}
+.mant-kpi-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.mant-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.mant-search{flex:1;min-width:200px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;background:var(--bg);color:var(--text);font-family:inherit;outline:none}
+.mant-search:focus{border-color:#0F766E}
+.mant-select{border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;font-family:inherit;background:var(--surface);color:var(--text);cursor:pointer;outline:none}
+.mant-chip{padding:5px 13px;border-radius:6px;cursor:pointer;font-weight:700;font-size:12px;font-family:inherit;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+.mant-chip.on{background:#0F766E;border-color:#0F766E;color:#fff}
+.mant-scroll{overflow-x:auto;max-height:72vh;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
+.mant-table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface)}
+.mant-table th{background:#134E4A;color:#fff;padding:8px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;position:sticky;top:0;z-index:2}
+.mant-table td{padding:5px 8px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:top}
+.mant-table tbody tr:nth-child(even){background:rgba(0,0,0,.02)}
+body.dark .mant-table tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+.mant-table tbody tr:hover{background:rgba(15,118,110,.06)}
+.mant-txt{width:100%;min-width:110px;border:1px solid transparent;background:transparent;font-size:12px;font-family:inherit;padding:3px;border-radius:3px;outline:none;color:var(--text);resize:vertical}
+.mant-txt:focus{border-color:#0F766E;background:var(--surface)}
+.mant-date{border:1px solid transparent;background:transparent;font-size:12px;font-family:inherit;padding:3px;border-radius:3px;outline:none;color:var(--text);width:118px}
+.mant-date:focus{border-color:#0F766E;background:var(--surface)}
+.mant-ticket{width:88px;border:1px solid transparent;background:transparent;font-family:monospace;font-size:11px;padding:3px;border-radius:3px;outline:none;color:var(--text)}
+.mant-ticket:focus{border-color:#0F766E;background:var(--surface)}
+.mant-pill-sel{border-radius:20px;padding:3px 9px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;outline:none;border-width:1.5px;border-style:solid}
+.mant-row-urg{border-left:3px solid #A32D2D}
+.mant-row-nec{border-left:3px solid #854F0B}
+.mant-row-des{border-left:3px solid #185FA5}
+.mant-fotos{display:flex;gap:4px;align-items:center;flex-wrap:wrap;min-width:120px}
+.mant-thumb{position:relative;width:44px;height:44px;border-radius:4px;overflow:hidden;border:1px solid var(--border);flex-shrink:0}
+.mant-thumb img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block}
+.mant-thumb-del{position:absolute;top:1px;right:1px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:15px;height:15px;cursor:pointer;font-size:9px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+.mant-thumb-wait{width:44px;height:44px;border-radius:4px;border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text-muted);text-align:center;line-height:1.1;flex-shrink:0}
+.mant-up{width:44px;height:44px;border-radius:4px;border:1px dashed #0F766E;background:rgba(15,118,110,.06);color:#0F766E;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit;padding:0}
+.mant-up:hover{background:rgba(15,118,110,.14)}
+.mant-up:disabled{opacity:.45;cursor:wait}
+.mant-empty{text-align:center;padding:48px;color:var(--text-muted)}
+.mant-legend{font-size:11px;color:var(--text-muted);margin-top:10px;font-style:italic}
+@media(max-width:768px){.mant-kpis{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -327,7 +370,6 @@ var CONFIG = {
   GH_REPO: 'svcescobar/action-log-scz1',
   DATA_FILE: 'data.json',
 };
-
 var ADMIN_USERS = ['Seba Nievas'];
 var COLLAB_USERS = ['Maxi Benitez','Agus Romero','Nico Torres','Lucho Torres','Emi Domingo','Diego Bacaicoa','Noe Guzmán','Santi Curino'];
 var ALL_USERS = ADMIN_USERS.concat(COLLAB_USERS);
@@ -347,83 +389,85 @@ var _lastTier1=null;
 var _lastTier1Hist=[];
 var _lastInv=null;
 var _lastEquip=null;
+var _lastMant=null;
 var GH_API='https://api.github.com/repos/'+CONFIG.GH_REPO+'/contents/'+CONFIG.DATA_FILE;
 var GH_HDRS={'Authorization':'token '+CONFIG.GH_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
 function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
-async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;_lastEquip=data.equipamiento||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null,equipamiento:data.equipamiento||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
-async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento){
-  // Helper: fetch current state from GH, merge with our changes, return payload
+async function loadState(){
+  try{
+    var resp=await fetch(GH_API,{headers:GH_HDRS});
+    if(resp.status===404)return{entries:makeSeed(),bgImage:''};
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    var json=await resp.json();
+    _ghSha=json.sha;
+    var data=JSON.parse(b64dec(json.content));
+    _lastTier1=data.tier1||null; _lastTier1Hist=data.tier1Hist||[];
+    _lastInv=data.inventory||null; _lastEquip=data.equipamiento||null;
+    _lastMant=data.mantenimiento||null;
+    return{
+      entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),
+      bgImage:data.bgImage||'',
+      calcState:data.calcState||null,
+      tier1:data.tier1||null,
+      tier1Hist:data.tier1Hist||[],
+      inventory:data.inventory||null,
+      equipamiento:data.equipamiento||null,
+      mantenimiento:data.mantenimiento||null
+    };
+  }catch(e){
+    console.error('[ActionLog] loadState error:',e);
+    return{entries:makeSeed(),bgImage:''};
+  }
+}
+async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento,mantenimiento){
+  // Cada caller manda solo lo que cambió; el resto se toma del servidor (merge).
+  function pick(mine,srv,fallback){
+    if(mine!==undefined&&mine!==null)return mine;
+    if(srv!==undefined&&srv!==null)return srv;
+    return fallback;
+  }
   async function buildPayload(){
     var resp=await fetch(GH_API,{headers:GH_HDRS});
     if(!resp.ok)throw new Error('read HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;
     var srv=JSON.parse(b64dec(json.content));
-    // Merge: caller passes undefined for sections it didn't change → keep server version
     var merged={
-      entries: entries!==undefined&&entries!==null ? entries : (srv.entries||[]),
-      bgImage: bgImage!==undefined&&bgImage!==null ? bgImage : (srv.bgImage||''),
-      calcState: calcState!==undefined&&calcState!==null ? calcState : (srv.calcState||{}),
-      tier1: tier1!==undefined ? tier1 : (srv.tier1||_lastTier1||null),
-      tier1Hist: tier1Hist!==undefined ? tier1Hist : (srv.tier1Hist||_lastTier1Hist||[]),
-      inventory: inventory!==undefined&&inventory!==null ? inventory : (srv.inventory||_lastInv||null)
+      entries:       pick(entries,       srv.entries,       []),
+      bgImage:       pick(bgImage,       srv.bgImage,       ''),
+      calcState:     pick(calcState,     srv.calcState,     {}),
+      tier1:         pick(tier1,         srv.tier1,         _lastTier1||null),
+      tier1Hist:     pick(tier1Hist,     srv.tier1Hist,     _lastTier1Hist||[]),
+      inventory:     pick(inventory,     srv.inventory,     _lastInv||null),
+      equipamiento:  pick(equipamiento,  srv.equipamiento,  _lastEquip||null),
+      mantenimiento: pick(mantenimiento, srv.mantenimiento, _lastMant||null)
     };
-    _lastTier1=merged.tier1; _lastTier1Hist=merged.tier1Hist; _lastInv=merged.inventory; _lastEquip=merged.equipamiento;
+    _lastTier1=merged.tier1; _lastTier1Hist=merged.tier1Hist; _lastInv=merged.inventory;
+    _lastEquip=merged.equipamiento; _lastMant=merged.mantenimiento;
     return {message:'update',sha:_ghSha,content:b64enc(JSON.stringify(merged))};
   }
-  // Try up to 3 times (handles 409 sha conflicts)
-  var attempts=0;
+  var attempts=0,lastErr=null;
   while(attempts<3){
     attempts++;
     try{
       var payload=await buildPayload();
       var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});
-      if(resp.status===409){
-        // sha conflict: loop will re-read sha in next buildPayload call
-        console.warn('[saveState] 409 conflict, retrying (attempt '+attempts+')');
-        continue;
+      if(resp.status===409){console.warn('[saveState] conflicto 409, reintento '+attempts);continue;}
+      if(!resp.ok){
+        var txt=await resp.text().catch(function(){return'';});
+        throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));
       }
-      if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}
       var result=await resp.json();
       _ghSha=result.content.sha;
-      return; // success
+      return;
     }catch(e){
+      lastErr=e;
       if(attempts>=3)throw e;
-      console.warn('[saveState] attempt '+attempts+' failed:',e.message);
+      console.warn('[saveState] intento '+attempts+' falló:',e.message);
     }
   }
-}
-
-async function loadState(){try{var resp=await fetch(GH_API,{headers:GH_HDRS});if(resp.status===404)return{entries:makeSeed(),bgImage:''};if(!resp.ok)throw new Error('HTTP '+resp.status);var json=await resp.json();_ghSha=json.sha;var data=JSON.parse(b64dec(json.content));_lastTier1=data.tier1||null;_lastTier1Hist=data.tier1Hist||[];_lastInv=data.inventory||null;_lastEquip=data.equipamiento||null;return{entries:Array.isArray(data.entries)&&data.entries.length>0?data.entries:makeSeed(),bgImage:data.bgImage||'',calcState:data.calcState||null,tier1:data.tier1||null,tier1Hist:data.tier1Hist||[],inventory:data.inventory||null,equipamiento:data.equipamiento||null};}catch(e){console.error('[ActionLog] loadState error:',e);return{entries:makeSeed(),bgImage:''};}}
-async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento){
-  // Always re-read latest sha + merge before writing to avoid overwriting concurrent changes
-  try {
-    var latest=await fetch(GH_API,{headers:GH_HDRS});
-    if(latest.ok){
-      var latestJson=await latest.json();
-      _ghSha=latestJson.sha;
-      var latestData=JSON.parse(b64dec(latestJson.content));
-      // Each caller passes only what it changed; others come from latest server data
-      if(entries===undefined||entries===null)entries=latestData.entries;
-      if(!bgImage&&bgImage!=='')bgImage=latestData.bgImage||'';
-      if(calcState===undefined||calcState===null)calcState=latestData.calcState||{};
-      if(tier1===undefined)tier1=latestData.tier1||_lastTier1;
-      if(tier1Hist===undefined)tier1Hist=latestData.tier1Hist||_lastTier1Hist;
-      if(inventory===undefined||inventory===null)inventory=latestData.inventory||_lastInv;
-    }
-  } catch(e){ console.warn('[saveState] pre-read failed, using cached sha',e); }
-  _lastTier1=tier1||_lastTier1;
-  _lastTier1Hist=tier1Hist||_lastTier1Hist;
-  _lastInv=inventory||_lastInv;
-  var payload={message:'update',content:b64enc(JSON.stringify({
-    entries:entries||[],bgImage:bgImage||'',calcState:calcState||{},
-    tier1:tier1||_lastTier1,tier1Hist:tier1Hist||_lastTier1Hist,inventory:inventory||_lastInv
-  }))};
-  if(_ghSha)payload.sha=_ghSha;
-  var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});
-  if(!resp.ok){var txt=await resp.text().catch(function(){return'';});throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));}
-  var result=await resp.json();_ghSha=result.content.sha;
+  throw lastErr||new Error('saveState: 3 intentos fallidos');
 }
 function isAdmin(user){return ADMIN_USERS.indexOf(user)!==-1;}
 function isMyTask(entry,user){if(!entry.responsables)return false;return entry.responsables.toLowerCase().indexOf(user.toLowerCase())!==-1;}
@@ -436,14 +480,10 @@ function getInitials(name){return name.split(' ').slice(0,2).map(function(w){ret
 function makeSeed(){return[{id:genId(),fecha:'2026-05-14',pilar:'5S',tarea:'Demarcacion puesto PS',accion:'Demarcar bakers segun estado del paquete',responsables:'Maxi Benitez, Agus Romero',emails:'',fechaLimite:'2026-05-23',resuelto:true,progreso:100,evolutivo:[],fotos:[],createdAt:new Date().toISOString()},{id:genId(),fecha:'2026-05-14',pilar:'5S',tarea:'Demarcacion sendas peatonales',accion:'Agregar 2 pasos de senda peatonal en calle principal del despacho',responsables:'Maxi Benitez, Agus Romero',emails:'',fechaLimite:'2026-05-23',resuelto:true,progreso:100,evolutivo:[],fotos:[],createdAt:new Date().toISOString()},{id:genId(),fecha:'2026-05-15',pilar:'5S',tarea:'Limpieza de Bakers',accion:'Comenzar limpieza de bakers',responsables:'Nico Torres, Lucho Torres',emails:'',fechaLimite:'2026-06-20',resuelto:true,progreso:100,evolutivo:[],fotos:[],createdAt:new Date().toISOString()},{id:genId(),fecha:'2026-06-11',pilar:'SHE',tarea:'Capacitacion uso de EPP',accion:'Capacitar a operarios sobre uso correcto de elementos de proteccion personal',responsables:'Emi Domingo',emails:'',fechaLimite:'2026-06-30',resuelto:false,progreso:40,evolutivo:[],fotos:[],createdAt:new Date().toISOString()},{id:genId(),fecha:'2026-06-11',pilar:'Despacho',tarea:'Optimizacion tiempo de despacho',accion:'Revisar flujo de despacho e identificar cuellos de botella',responsables:'Diego Bacaicoa',emails:'',fechaLimite:'2026-07-15',resuelto:false,progreso:20,evolutivo:[],fotos:[],createdAt:new Date().toISOString()}];}
 function sendNotificationEmail(entry,isNew){var emails=(entry.emails||'').trim();if(!emails)return;var subject=encodeURIComponent((isNew?'[Nueva Accion] ':'[Actualizacion] ')+entry.tarea+' - SCZ1 Escobar');var body=encodeURIComponent('Hola,\n\n'+(isNew?'Se te asigno una nueva accion:':'Se actualizo una accion:')+'\n\nTarea: '+entry.tarea+'\nPilar: '+entry.pilar+'\nAccion: '+(entry.accion||'-')+'\nResponsable(s): '+(entry.responsables||'-')+'\nFecha limite: '+fmtDate(entry.fechaLimite)+'\nProgreso: '+entry.progreso+'%\nEstado: '+(entry.resuelto?'Resuelto':'Pendiente')+'\n\nVer app: '+window.location.href+'\n\nSaludos,\nAction Log SCZ1 - Escobar');var a=document.createElement('a');a.href='mailto:'+emails+'?subject='+subject+'&body='+body;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(function(){document.body.removeChild(a);},500);}
 var h=React.createElement;
-
 function PilarPill(props){var p=PILLAR_MAP[props.id];if(!p)return h('span',null,props.id);return h('span',{className:'pilar-pill',style:{background:p.color,color:p.text}},p.id);}
 function Toast(props){return h('div',{className:'toast-container'},props.toasts.map(function(t){return h('div',{key:t.id,className:'toast '+(t.type||'info')},t.message);}));}
-
 function LoginScreen(props){var sel=_useState(null);var user=sel[0],setUser=sel[1];return h('div',{className:'login-wrap'},h('div',{className:'login-card'},h('div',{className:'login-logo'},'AL'),h('div',{className:'login-title'},'Action Log SCZ1'),h('div',{className:'login-sub'},'Escobar — MercadoLibre Logistics'),h('div',{className:'login-label'},'Quién sos?'),h('div',{className:'user-grid'},ALL_USERS.map(function(name){var admin=isAdmin(name);return h('div',{key:name,className:'user-card'+(admin?' admin-card':'')+(user===name?' selected':''),onClick:function(){setUser(name);}},h('div',{className:'user-avatar'},getInitials(name)),h('div',null,h('div',{className:'user-card-name'},name),h('div',{className:'user-card-role'},admin?'Administrador':'Colaborador')));})),h('button',{className:'login-btn',disabled:!user,onClick:function(){if(user)props.onLogin(user);}},user?'Ingresar como '+user.split(' ')[0]:'Selecciona tu usuario')));}
-
 function EvolvoTab(props){var entry=props.entry,onUpdate=props.onUpdate;var ts=_useState('');var texto=ts[0],setTexto=ts[1];function addEvo(){if(!texto.trim())return;var newEvo={id:genId(),texto:texto.trim(),fecha:new Date().toISOString(),autor:props.currentUser};onUpdate(Object.assign({},entry,{evolutivo:[newEvo].concat(entry.evolutivo||[])}));setTexto('');}var evoList=entry.evolutivo||[];return h('div',null,h('div',{className:'evo-progress-bar-wrap'},h('div',{className:'evo-progress-label'},h('span',null,'Progreso actual'),h('span',{style:{fontWeight:700,color:progColor(entry.progreso)}},entry.progreso+'%')),h('div',{className:'evo-progress-track'},h('div',{className:'evo-progress-fill',style:{width:entry.progreso+'%',background:progColor(entry.progreso)}}))),h('div',{className:'evo-list'},evoList.length===0?h('div',{className:'evo-empty'},'No hay actualizaciones aun.'):evoList.map(function(evo){return h('div',{key:evo.id,className:'evo-entry'},h('div',{className:'evo-entry-header'},h('span',{className:'evo-entry-meta'},fmtDateTime(evo.fecha)),h('span',{className:'evo-entry-meta',style:{fontStyle:'italic'}},evo.autor||'-')),h('div',{className:'evo-entry-text'},evo.texto));})),h('div',{className:'evo-add-form'},h('span',{className:'evo-add-label'},'Agregar actualizacion'),h('textarea',{className:'form-control',rows:3,placeholder:'Describe el avance...',value:texto,onChange:function(e){setTexto(e.target.value);},style:{marginBottom:8}}),h('button',{className:'btn btn-primary',onClick:addEvo,disabled:!texto.trim()},'Guardar actualizacion')));}
-
 function FotosTab(props) {
   var entry = props.entry;
   var onUpdate = props.onUpdate;
@@ -451,7 +491,6 @@ function FotosTab(props) {
   var fileRef = _useRef();
   var lbs = _useState(null);
   var lightbox = lbs[0], setLightbox = lbs[1];
-
   function handleFiles(files) {
     var arr = Array.from(files);
     var results = [];
@@ -472,7 +511,6 @@ function FotosTab(props) {
       reader.readAsDataURL(file);
     });
   }
-
   var fotos = entry.fotos || [];
   return h('div', null,
     h('div', {
@@ -514,15 +552,9 @@ function FotosTab(props) {
     )
   );
 }
-
-
 function ActionModal(props){var init=props.entry,isNew=props.isNew,onSave=props.onSave,onClose=props.onClose,showToast=props.showToast,currentUser=props.currentUser;var admin=isAdmin(currentUser);var myTask=isMyTask(init,currentUser);var canEdit=admin||myTask;var es=_useState(function(){return Object.assign({},init);});var entry=es[0],setEntry=es[1];var ts=_useState(canEdit&&!admin?'evolutivo':'datos');var tab=ts[0],setTab=ts[1];var overlayRef=_useRef();var mdOnOverlay=_useRef(false);function upd(field,val){setEntry(function(prev){return Object.assign({},prev,{[field]:val});});}function handleSave(){if(!entry.tarea.trim()){showToast('La tarea es obligatoria','error');return;}var finalEntry=Object.assign({},entry,{id:entry.id||genId(),createdAt:entry.createdAt||new Date().toISOString()});onSave(finalEntry);sendNotificationEmail(finalEntry,isNew);}var evoCount=(entry.evolutivo||[]).length;var fotosCount=(entry.fotos||[]).length;var isReadOnly=!admin&&!myTask;return h('div',{className:'modal-overlay',ref:overlayRef,onMouseDown:function(e){mdOnOverlay.current=e.target===overlayRef.current;},onMouseUp:function(e){if(mdOnOverlay.current&&e.target===overlayRef.current)onClose();mdOnOverlay.current=false;}},h('div',{className:'modal-box',onMouseDown:function(e){e.stopPropagation();},onMouseUp:function(e){e.stopPropagation();}},h('div',{className:'modal-header'},h('span',{className:'modal-header-title'},isNew?'Nueva Accion':entry.tarea),h('button',{className:'modal-close',onClick:onClose},'✕')),h('div',{className:'modal-tabs'},h('button',{className:'modal-tab'+(tab==='datos'?' active':''),onClick:function(){setTab('datos');}},'Datos'),h('button',{className:'modal-tab'+(tab==='evolutivo'?' active':''),onClick:function(){setTab('evolutivo');}},'Evolutivo ('+evoCount+')'),h('button',{className:'modal-tab'+(tab==='fotos'?' active':''),onClick:function(){setTab('fotos');}},'Fotos ('+fotosCount+')')),h('div',{className:'modal-body'},tab==='datos'&&h('div',{className:'form-grid'},isReadOnly&&h('div',{className:'form-group full',style:{marginBottom:4}},h('div',{className:'readonly-badge'},'👁 Solo lectura — esta tarea no esta asignada a vos')),h('div',{className:'form-group'},h('label',{className:'form-label'},'Fecha ',admin&&h('span',{className:'req'},'*')),admin?h('input',{type:'date',className:'form-control',value:entry.fecha,onChange:function(e){upd('fecha',e.target.value);}}):h('div',{className:'readonly-badge'},fmtDate(entry.fecha))),h('div',{className:'form-group'},h('label',{className:'form-label'},'Pilar'),admin?h('select',{className:'form-control',value:entry.pilar,onChange:function(e){upd('pilar',e.target.value);}},PILLARS.map(function(p){return h('option',{key:p.id,value:p.id},p.id);})):h('div',null,h(PilarPill,{id:entry.pilar}))),h('div',{className:'form-group full'},h('label',{className:'form-label'},'Tarea ',admin&&h('span',{className:'req'},'*')),admin?h('input',{type:'text',className:'form-control',value:entry.tarea,onChange:function(e){upd('tarea',e.target.value);}}):h('div',{className:'readonly-badge'},entry.tarea)),h('div',{className:'form-group full'},h('label',{className:'form-label'},'Accion'),admin?h('textarea',{className:'form-control',rows:3,value:entry.accion,onChange:function(e){upd('accion',e.target.value);}}):h('div',{className:'readonly-badge'},entry.accion||'-')),h('div',{className:'form-group full'},h('label',{className:'form-label'},'Responsables'),admin?h('input',{type:'text',className:'form-control',placeholder:'Ej: Juan Lopez, Maria Garcia',value:entry.responsables,onChange:function(e){upd('responsables',e.target.value);}}):h('div',{className:'readonly-badge'},entry.responsables||'-')),admin&&h('div',{className:'form-group full'},h('label',{className:'form-label'},'✉ Emails para notificar ',h('span',{style:{color:'var(--text-muted)',fontWeight:400,fontSize:11}},'(opcional)')),h('input',{type:'text',className:'form-control',placeholder:'email1@mercadolibre.com, email2@...',value:entry.emails||'',onChange:function(e){upd('emails',e.target.value);}})),h('div',{className:'form-group'},h('label',{className:'form-label'},'Fecha Limite'),admin?h('input',{type:'date',className:'form-control',value:entry.fechaLimite,onChange:function(e){upd('fechaLimite',e.target.value);}}):h('div',{className:'readonly-badge'},fmtDate(entry.fechaLimite)||'-')),(admin||myTask)&&h('div',{className:'form-group'},h('label',{className:'form-label',style:{opacity:0}},'_'),h('div',{className:'form-inline'},h('input',{type:'checkbox',id:'res-chk',checked:entry.resuelto,onChange:function(e){upd('resuelto',e.target.checked);if(e.target.checked)upd('progreso',100);}}),h('label',{htmlFor:'res-chk'},'Marcar como Resuelto'))),(admin||myTask)&&h('div',{className:'form-group full'},h('label',{className:'form-label'},'Progreso'),h('div',{className:'range-row'},h('input',{type:'range',min:0,max:100,step:5,value:entry.progreso,onChange:function(e){upd('progreso',Number(e.target.value));}}),h('span',{className:'range-val'},entry.progreso+'%')))),tab==='evolutivo'&&h(EvolvoTab,{entry:entry,onUpdate:setEntry,currentUser:currentUser}),tab==='fotos'&&h(FotosTab,{entry:entry,onUpdate:setEntry,showToast:showToast})),h('div',{className:'modal-footer'},h('button',{className:'btn btn-cancel',onClick:onClose},'Cancelar'),(admin||myTask)&&h('button',{className:'btn btn-primary',onClick:handleSave},(entry.emails&&entry.emails.trim()&&admin)?(isNew?'✉ Crear y Notificar':'✉ Guardar y Notificar'):(isNew?'Crear Accion':'Guardar cambios')))));}
-
 function DeleteConfirm(props){return h('div',{className:'confirm-overlay'},h('div',{className:'confirm-box'},h('div',{className:'confirm-title'},'Eliminar accion'),h('div',{className:'confirm-text'},'Estas seguro que queres eliminar ',h('strong',null,'"'+props.entry.tarea+'"'),'? No se puede deshacer.'),h('div',{className:'confirm-btns'},h('button',{className:'btn btn-cancel',onClick:props.onCancel},'Cancelar'),h('button',{className:'btn btn-del-confirm btn',onClick:props.onConfirm},'Eliminar'))));}
-
 function AnalyticsView(props){var entries=props.entries;var pilarRef=_useRef();var pilarChart=_useRef();var respRef=_useRef();var respChart=_useRef();var estadoRef=_useRef();var estadoChart=_useRef();var progRef=_useRef();var progChart=_useRef();_useEffect(function(){if(!window.Chart)return;var Chart=window.Chart;var pilarCounts={};var pilarResueltas={};PILLARS.forEach(function(p){pilarCounts[p.id]=0;pilarResueltas[p.id]=0;});entries.forEach(function(e){pilarCounts[e.pilar]=(pilarCounts[e.pilar]||0)+1;if(e.resuelto)pilarResueltas[e.pilar]=(pilarResueltas[e.pilar]||0)+1;});var pilarLabels=PILLARS.map(function(p){return p.id;});if(pilarChart.current)pilarChart.current.destroy();pilarChart.current=new Chart(pilarRef.current,{type:'bar',data:{labels:pilarLabels,datasets:[{label:'Total',data:pilarLabels.map(function(l){return pilarCounts[l]||0;}),backgroundColor:'rgba(26,31,46,0.7)',borderRadius:4},{label:'Resueltas',data:pilarLabels.map(function(l){return pilarResueltas[l]||0;}),backgroundColor:'#10b981',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{ticks:{font:{size:10}}},y:{beginAtZero:true,ticks:{stepSize:1}}}}});var respMap={};entries.forEach(function(e){var resps=(e.responsables||'').split(',').map(function(r){return r.trim();}).filter(Boolean);resps.forEach(function(r){if(!respMap[r])respMap[r]={total:0,resueltas:0};respMap[r].total++;if(e.resuelto)respMap[r].resueltas++;});});var respLabels=Object.keys(respMap).sort(function(a,b){return respMap[b].total-respMap[a].total;});if(respChart.current)respChart.current.destroy();respChart.current=new Chart(respRef.current,{type:'bar',data:{labels:respLabels,datasets:[{label:'Pendientes',data:respLabels.map(function(r){return respMap[r].total-respMap[r].resueltas;}),backgroundColor:'#f59e0b',borderRadius:4},{label:'Resueltas',data:respLabels.map(function(r){return respMap[r].resueltas;}),backgroundColor:'#10b981',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,indexAxis:'y',plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},scales:{x:{stacked:true,beginAtZero:true,ticks:{stepSize:1}},y:{stacked:true,ticks:{font:{size:11}}}}}});var resueltas=entries.filter(function(e){return e.resuelto;}).length;var vencidas=entries.filter(function(e){return!e.resuelto&&e.fechaLimite&&e.fechaLimite<TODAY;}).length;var pendientes=entries.length-resueltas-vencidas;if(estadoChart.current)estadoChart.current.destroy();estadoChart.current=new Chart(estadoRef.current,{type:'doughnut',data:{labels:['Resueltas','Pendientes','Vencidas'],datasets:[{data:[resueltas,pendientes,vencidas],backgroundColor:['#10b981','#f59e0b','#ef4444'],borderWidth:2,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom',labels:{font:{size:12},padding:16}}},cutout:'65%'}});var pilarProg={};PILLARS.forEach(function(p){pilarProg[p.id]=[];});entries.forEach(function(e){if(pilarProg[e.pilar])pilarProg[e.pilar].push(e.progreso);});var pilarAvg=pilarLabels.map(function(l){var arr=pilarProg[l];return arr.length?Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length):0;});if(progChart.current)progChart.current.destroy();progChart.current=new Chart(progRef.current,{type:'bar',data:{labels:pilarLabels,datasets:[{label:'Progreso promedio %',data:pilarAvg,backgroundColor:pilarAvg.map(function(v){return v>=100?'#10b981':v>=60?'#f59e0b':'#3b82f6';}),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:10}}},y:{beginAtZero:true,max:100,ticks:{callback:function(v){return v+'%';}}}}}}); return function(){if(pilarChart.current)pilarChart.current.destroy();if(respChart.current)respChart.current.destroy();if(estadoChart.current)estadoChart.current.destroy();if(progChart.current)progChart.current.destroy();};},[entries]);var resueltas=entries.filter(function(e){return e.resuelto;}).length;var vencidas=entries.filter(function(e){return!e.resuelto&&e.fechaLimite&&e.fechaLimite<TODAY;}).length;var pct=entries.length?Math.round(resueltas/entries.length*100):0;var resolved=entries.filter(function(e){return e.resuelto&&e.createdAt&&e.fechaLimite;});var avgDays=0;if(resolved.length){var totalDays=resolved.reduce(function(acc,e){var d1=new Date(e.createdAt);var d2=new Date(e.fechaLimite);return acc+Math.max(0,Math.round((d2-d1)/(1000*60*60*24)));},0);avgDays=Math.round(totalDays/resolved.length);}return h('div',{className:'main'},h('div',{className:'kpi-grid'},h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#1a1f2e'}},entries.length),h('div',{className:'kpi-label'},'Total Acciones')),h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#10b981'}},pct+'%'),h('div',{className:'kpi-label'},'Completado')),h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#ef4444'}},vencidas),h('div',{className:'kpi-label'},'Vencidas')),h('div',{className:'kpi-card'},h('div',{className:'kpi-num',style:{color:'#3b82f6'}},avgDays+'d'),h('div',{className:'kpi-label'},'Plazo promedio'))),h('div',{className:'analytics-grid'},h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Acciones por Pilar'),h('div',{className:'chart-sub'},'Total vs resueltas por cada pilar'),h('canvas',{ref:pilarRef,height:220})),h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Estado General'),h('div',{className:'chart-sub'},'Distribución de acciones por estado'),h('canvas',{ref:estadoRef,height:220})),h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Carga por Responsable'),h('div',{className:'chart-sub'},'Cantidad de acciones asignadas por persona'),h('canvas',{ref:respRef,height:260})),h('div',{className:'chart-card'},h('div',{className:'chart-title'},'Progreso Promedio por Pilar'),h('div',{className:'chart-sub'},'Avance promedio de acciones en cada pilar'),h('canvas',{ref:progRef,height:220}))));}
-
-
 function GgpChart(props) {
   var hist = props.hist;
   var ref = _useRef(); var chart = _useRef();
@@ -544,7 +576,6 @@ function GgpChart(props) {
   },[hist]);
   return h('canvas',{ref:ref,height:200});
 }
-
 function CostoChart(props) {
   var hist = props.hist;
   var ref = _useRef(); var chart = _useRef();
@@ -578,11 +609,9 @@ function CostoChart(props) {
   },[hist]);
   return h('canvas',{ref:ref,height:200});
 }
-
 function SemanaWidget(props) {
   var hist = props.hist;
   var targetGgp = props.targetGgp;
-
   // Get current ISO week number
   function getWeek(date) {
     var d = new Date(date);
@@ -591,11 +620,9 @@ function SemanaWidget(props) {
     var yearStart = new Date(d.getFullYear(),0,1);
     return Math.ceil((((d-yearStart)/86400000)+1)/7);
   }
-
   var now = new Date();
   var currentWeek = getWeek(now);
   var currentYear = now.getFullYear();
-
   // Filter hist records belonging to current week
   // Records have fecha in dd/mm/yyyy format
   var allWeekRecs = hist.filter(function(r) {
@@ -613,24 +640,20 @@ function SemanaWidget(props) {
     var vals=byDateW[fecha];
     return { fecha:fecha, ggpReal:parseFloat((vals.reduce(function(a,b){return a+b;},0)/vals.length).toFixed(1)) };
   });
-
   var diasConDato = weekRecords.length;
   var ggpAvgReal = diasConDato > 0
     ? weekRecords.reduce(function(s,r){return s+r.ggpReal;},0) / diasConDato
     : 0;
-
   // Assume 5-day week (Mon-Fri), estimate days remaining
   var dayOfWeek = now.getDay(); // 0=sun,1=mon,...5=fri,6=sat
   var diasRestantes = Math.max(0, 5 - (dayOfWeek === 0 ? 5 : dayOfWeek === 6 ? 5 : dayOfWeek));
   var diasTotal = 5;
-
   var desvio = ggpAvgReal > 0 ? ggpAvgReal - targetGgp : null;
   var pct = ggpAvgReal > 0 ? Math.min(100, Math.round(ggpAvgReal / targetGgp * 100)) : 0;
   
   var statusColor = desvio === null ? '#888780' : desvio >= 0 ? '#1D7A4A' : '#ef4444';
   var statusBg = desvio === null ? '#EFEFEB' : desvio >= 0 ? '#E6F4EA' : '#FDECEA';
   var barColor = desvio === null ? '#D3D1C7' : desvio >= 0 ? '#1D7A4A' : '#ef4444';
-
   // GGP needed in remaining days to hit target
   var ggpNecesaria = null;
   if (diasConDato > 0 && diasRestantes > 0) {
@@ -639,7 +662,6 @@ function SemanaWidget(props) {
     var sumReal = weekRecords.reduce(function(s,r){return s+r.ggpReal;},0);
     ggpNecesaria = (targetGgp * diasTotal - sumReal) / diasRestantes;
   }
-
   return h('div', {className:'dot-semana-widget'},
     h('div', {style:{display:'flex',flexDirection:'column',gap:4,minWidth:140}},
       h('div', {style:{fontSize:11,fontWeight:700,color:'#4B3A8A',textTransform:'uppercase',letterSpacing:'.05em'}}, 'Semana ' + currentWeek),
@@ -669,7 +691,6 @@ function SemanaWidget(props) {
     )
   );
 }
-
 // ══════════════════════════════════════════════════════
 // DOTACION VIEW
 // ══════════════════════════════════════════════════════
@@ -677,7 +698,6 @@ function DotacionView(props) {
   var onSaveCalc = props.onSaveCalc || function(){};
   var DOT_KEY = 'dotacion_historico';
   var CALC_KEY = 'dotacion_calc_state';
-
   // Load persisted calc state or use defaults
   function loadCalc() {
     try {
@@ -686,7 +706,6 @@ function DotacionView(props) {
     } catch(e) { return null; }
   }
   var _saved = props.calcState || loadCalc() || {};
-
   var scz1S=_useState(_saved.scz1!==undefined?_saved.scz1:6551);     var scz1=scz1S[0],setScz1=scz1S[1];
   var ecz1S=_useState(_saved.ecz1!==undefined?_saved.ecz1:1758);     var ecz1=ecz1S[0],setEcz1=ecz1S[1];
   var ecz2S=_useState(_saved.ecz2!==undefined?_saved.ecz2:1708);     var ecz2=ecz2S[0],setEcz2=ecz2S[1];
@@ -712,11 +731,9 @@ function DotacionView(props) {
   var targetGgpS=_useState(_saved.targetGgp||0);   var targetGgp=targetGgpS[0],setTargetGgp=targetGgpS[1];
   var copiedS=_useState(false);   var copied=copiedS[0],setCopied=copiedS[1];
   var savedS=_useState(false);    var saved=savedS[0],setSaved=savedS[1];
-
   _useEffect(function(){
     try{var raw=localStorage.getItem(DOT_KEY);if(raw)setHist(JSON.parse(raw));}catch(e){}
   },[]);
-
   // Re-apply calc state when it arrives from GitHub (async load)
   _useEffect(function(){
     var s=props.calcState;
@@ -742,7 +759,6 @@ function DotacionView(props) {
     if(s.tarifEv!==undefined)setTarifEv(s.tarifEv);
     if(s.targetGgp!==undefined)setTargetGgp(s.targetGgp);
   },[props.calcState]);
-
   // Persist calc state whenever any input changes
   _useEffect(function(){
     try{
@@ -756,7 +772,6 @@ function DotacionView(props) {
       }));
     }catch(e){}
   },[scz1,ecz1,ecz2,scz1Pm,volRealAm,volRealPm,share,rfAm,vacAm,ausAm,presAm,rfPm,vacPm,ausPm,presPm,horaAm,horaPm,tarifFijo,tarifEv,targetGgp]);
-
   var c = _useMemo(function(){
     var gross=360-(share/100-0.05)*200;
     var volFcstAm=scz1+ecz1+ecz2;
@@ -780,28 +795,21 @@ function DotacionView(props) {
     var ggpR=htR>0&&volRT>0?volRT/htR:0;
     return{gross:gross,volFcstAm:volFcstAm,fijosAm:fijosAm,fijosPm:fijosPm,evFcstAm:evFcstAm,evFcstPm:evFcstPm,evRealAm:evRealAm,evRealPm:evRealPm,difAm:difAm,difPm:difPm,totalNec:totalNec,hfF:hfF,heF:heF,htF:htF,ggpF:ggpF,hfR:hfR,heR:heR,htR:htR,ggpR:ggpR,volRT:volRT};
   },[scz1,ecz1,ecz2,scz1Pm,volRealAm,volRealPm,share,rfAm,vacAm,ausAm,presAm,rfPm,vacPm,ausPm,presPm]);
-
   function fmtN(n){return Math.round(n).toLocaleString('es-AR');}
   function fmtD(n,d){d=d||1;return(isNaN(n)||!isFinite(n)||n===0)?'—':n.toFixed(d);}
-
   var mensaje='Buenas equipo, les comparto el volumen estimado para mañana:\n\n*AM*\nSCZ1     '+fmtN(scz1)+'\nECZ1     '+fmtN(ecz1)+'\nECZ2     '+fmtN(ecz2)+'\nTOTAL AM     '+fmtN(c.volFcstAm)+'\n\n'+c.evFcstAm+' eventuales | Apertura '+horaAm+'\n\n*PM*\nSCZ1     '+fmtN(scz1Pm)+'\n\n'+c.evFcstPm+' eventual'+(c.evFcstPm===1?'':'es')+' | Apertura '+horaPm;
-
   function copiar(){navigator.clipboard.writeText(mensaje).then(function(){setCopied(true);setTimeout(function(){setCopied(false);},2000);});}
-
   function guardar(){
     var hoy=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
     var tf=parseFloat(tarifFijo)||0, te=parseFloat(tarifEv)||0;
-
     // Horas AM
     var hfAm=c.fijosAm*7.33, heAm=Math.max(0,c.evFcstAm)*8, htAm=hfAm+heAm;
     var ggpFcstAm=htAm>0?parseFloat(((c.volFcstAm)/htAm).toFixed(1)):0;
     var ggpRealAm=volRealAm>0&&htAm>0?parseFloat((volRealAm/htAm).toFixed(1)):0;
-
     // Horas PM
     var hfPm=c.fijosPm*7.33, hePm=Math.max(0,c.evFcstPm)*8, htPm=hfPm+hePm;
     var ggpFcstPm=htPm>0?parseFloat((scz1Pm/htPm).toFixed(1)):0;
     var ggpRealPm=volRealPm>0&&htPm>0?parseFloat((volRealPm/htPm).toFixed(1)):0;
-
     var recAm={id:genId(),fecha:hoy,turno:'AM',
       volFcst:c.volFcstAm, volReal:volRealAm,
       dotFija:c.fijosAm, dotEventual:Math.max(0,c.evFcstAm),
@@ -809,7 +817,6 @@ function DotacionView(props) {
       ggpFcst:ggpFcstAm, ggpReal:ggpRealAm,
       tarifFijo:tf, tarifEv:te,
       hfijo:parseFloat(hfAm.toFixed(2)), hev:parseFloat(heAm.toFixed(2)), htotal:parseFloat(htAm.toFixed(2))};
-
     var recPm={id:genId(),fecha:hoy,turno:'PM',
       volFcst:scz1Pm, volReal:volRealPm,
       dotFija:c.fijosPm, dotEventual:Math.max(0,c.evFcstPm),
@@ -817,19 +824,15 @@ function DotacionView(props) {
       ggpFcst:ggpFcstPm, ggpReal:ggpRealPm,
       tarifFijo:tf, tarifEv:te,
       hfijo:parseFloat(hfPm.toFixed(2)), hev:parseFloat(hePm.toFixed(2)), htotal:parseFloat(htPm.toFixed(2))};
-
     var updated=hist.concat([recAm,recPm]);
     setHist(updated);
     try{localStorage.setItem(DOT_KEY,JSON.stringify(updated));}catch(e){}
     setSaved(true);setTimeout(function(){setSaved(false);},2500);
   }
-
   function delHist(id){var updated=hist.filter(function(r){return r.id!==id;});setHist(updated);try{localStorage.setItem(DOT_KEY,JSON.stringify(updated));}catch(e){}}
-
   function numInput(val,setter,bgColor,borderColor,w){
     return h('input',{type:'number',value:val,min:0,className:'dot-num-input',style:{background:bgColor,borderColor:borderColor,color:borderColor,width:w||58},onChange:function(e){setter(parseFloat(e.target.value)||0);}});
   }
-
   function diffBadge(v){
     if(v===null||v===undefined||isNaN(v))return h('span',{style:{color:'var(--text-muted)',fontSize:12}},'—');
     var vv=Math.round(v);
@@ -838,7 +841,6 @@ function DotacionView(props) {
     var txt=vv>0?'+'+vv+' faltan':vv<0?vv+' sobran':'justo';
     return h('span',{className:'dot-diff-badge',style:{background:bg,color:col}},(vv>0?'▲':vv<0?'▼':'●')+' '+txt);
   }
-
   function turnoSection(cfg){
     var orangeLight='#FAEEDA',blueLight='#E6F1FB',orange='#854F0B',blue='#185FA5';
     var isAm=cfg.label==='TURNO AM';
@@ -892,9 +894,7 @@ function DotacionView(props) {
       )
     );
   }
-
   var tablaRows=[];for(var v=7500;v<=20000;v+=500)tablaRows.push({vol:v,nec:Math.ceil(v/c.gross)});
-
   // ── Calc tab ──
   var calcView=h('div',{className:'dot-grid'},
     // COL 1
@@ -1000,7 +1000,6 @@ function DotacionView(props) {
       h('button',{onClick:guardar,className:'dot-save-btn',style:{background:saved?'#E6F4EA':'#1D7A4A',color:saved?'#1D7A4A':'#fff'}},saved?'✓ Guardado en histórico':'💾 Guardar en histórico')
     )
   );
-
   // ── Hist tab ──
   // analytics helpers
   function computeAnalytics() {
@@ -1023,7 +1022,6 @@ function DotacionView(props) {
     return{totalCostFijo:totalCostFijo,totalCostEv:totalCostEv,totalCosto:totalCostFijo+totalCostEv,ggpAvg:ggpAvg};
   }
   var analytics=computeAnalytics();
-
   var histView=hist.length===0
     ?h('div',{className:'dot-hist-empty'},
        h('div',{style:{fontSize:40,marginBottom:12}},'📋'),
@@ -1031,7 +1029,6 @@ function DotacionView(props) {
        h('div',{style:{fontSize:13}},'Guardá el primer registro desde la calculadora')
       )
     :h('div',{className:'dot-analytics-wrap'},
-
       // tarifa bar
       h('div',{className:'dot-tarifa-bar'},
         h('span',{style:{fontSize:12,fontWeight:700,color:'var(--text-muted)',textTransform:'uppercase',letterSpacing:'.05em'}},'Tarifas por hora:'),
@@ -1051,7 +1048,6 @@ function DotacionView(props) {
         ),
         h('span',{style:{fontSize:11,color:'var(--text-muted)',fontStyle:'italic'}},'* Se guarda con cada registro')
       ),
-
       // target GGP semanal
       h('div',{style:{background:'#F0EDFB',border:'2px solid #4B3A8A',borderRadius:8,padding:'12px 16px',display:'flex',alignItems:'center',gap:16,flexWrap:'wrap'}},
         h('div',null,
@@ -1068,7 +1064,6 @@ function DotacionView(props) {
         ),
         targetGgp>0&&h(SemanaWidget,{hist:hist,targetGgp:targetGgp})
       ),
-
       // sub-tabs tabla / analytics
       h('div',{style:{display:'flex',gap:0,background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'8px 8px 0 0',overflow:'hidden'}},
         [['tabla','📋 Registros'],['analytics','📊 Análisis GGP & Costos']].map(function(t){
@@ -1081,7 +1076,6 @@ function DotacionView(props) {
               transition:'all .15s'}},t[1]);
         })
       ),
-
       // TABLA
       histTab==='tabla'&&h('div',{style:{overflowX:'auto',background:'var(--surface)',border:'1px solid var(--border)',borderTop:'none',borderRadius:'0 0 8px 8px'}},
         h('div',{style:{display:'flex',justifyContent:'flex-end',padding:'10px 14px',borderBottom:'1px solid var(--border)'}},
@@ -1123,7 +1117,6 @@ function DotacionView(props) {
           }))
         )
       ),
-
       // ANALYTICS
       histTab==='analytics'&&h('div',{style:{background:'var(--surface)',border:'1px solid var(--border)',borderTop:'none',borderRadius:'0 0 8px 8px',padding:16}},
         analytics&&h('div',{className:'dot-kpi-row',style:{marginBottom:16}},
@@ -1217,8 +1210,6 @@ function DotacionView(props) {
     )
   );
 }
-
-
 // ══════════════════════════════════════════════════════
 // TIER 1 VIEW
 // ══════════════════════════════════════════════════════
@@ -1249,8 +1240,6 @@ var T1_METRICS_PM = [
 var T1_DAYS = ['dom','lun','mar','mie','jue','vie','sab'];
 var T1_DAY_LABELS = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
 var T1_DAY_KEYS = ['d0','d1','d2','d3','d4','d5'];
-
-
 function isoWeekToDates(week, year){
   // ISO week 1 = week with year's first Thursday. Monday is day 1.
   var simple=new Date(year,0,1+(week-1)*7);
@@ -1265,28 +1254,23 @@ function isoWeekToDates(week, year){
   }
   return out;
 }
-
 function isoWeekNow(){
   var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+4-(d.getDay()||7));
   var ys=new Date(d.getFullYear(),0,1);return Math.ceil((((d-ys)/86400000)+1)/7);
 }
-
 function emptyTier1(){
   return { semana:isoWeekNow(), fechas:['','','','','',''], am:{}, pm:{}, planAm:[], planPm:[] };
 }
-
 function Tier1View(props){
   var onSave=props.onSaveTier1||function(){};
   var initT1=props.tier1||emptyTier1();
   var initHist=props.tier1Hist||[];
-
   var t1S=_useState(function(){return JSON.parse(JSON.stringify(initT1));});
   var t1=t1S[0],setT1=t1S[1];
   var histS=_useState(initHist);var hist=histS[0],setHist=histS[1];
   var tabS=_useState('semana');var tab=tabS[0],setTab=tabS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
   var editWkS=_useState(null);var editWk=editWkS[0],setEditWk=editWkS[1];
-
   function updCell(turno,metricK,dayK,val){
     setT1(function(prev){
       var next=JSON.parse(JSON.stringify(prev));
@@ -1298,11 +1282,9 @@ function Tier1View(props){
   function updFecha(i,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.fechas[i]=val;return n;});}
   function updTarget(turno,metricK,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));if(!n.targets)n.targets={am:{},pm:{}};if(!n.targets[turno])n.targets[turno]={};n.targets[turno][metricK]=val;return n;});}
   function updSemana(val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.semana=val;return n;});}
-
   function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});return n;});}
   function updPlan(turno,id,field,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].map(function(p){return p.id===id?Object.assign({},p,{[field]:val}):p;});return n;});}
   function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});return n;});}
-
   function calcAvg(turno,metricK){
     var m=(t1[turno]&&t1[turno][metricK])||{};
     var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});
@@ -1310,7 +1292,6 @@ function Tier1View(props){
     var avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
     return avg.toFixed(avg%1===0?0:1).replace('.',',');
   }
-
   function cellClass(metric,val){
     if(val===undefined||val===''||val===null)return '';
     var num=parseFloat(String(val).replace(',','.').replace('%',''));
@@ -1319,7 +1300,6 @@ function Tier1View(props){
     if(metric.lowGood)return num<=metric.limit?'ok':'bad';
     return '';
   }
-
   function guardarSemana(){
     var rec=JSON.parse(JSON.stringify(t1));
     rec.id=genId();
@@ -1332,9 +1312,7 @@ function Tier1View(props){
     onSave(fresh,updated);
     setSaved(true);setTimeout(function(){setSaved(false);},2500);
   }
-
   function sincronizar(){ onSave(t1,hist); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
-
   function updHistCell(wkId,turno,metricK,dayK,val){
     setHist(function(prev){
       return prev.map(function(w){
@@ -1351,7 +1329,6 @@ function Tier1View(props){
     setHist(function(prev){return prev.map(function(w){if(w.id!==wkId)return w;var nw=JSON.parse(JSON.stringify(w));if(!nw.targets)nw.targets={am:{},pm:{}};if(!nw.targets[turno])nw.targets[turno]={};nw.targets[turno][metricK]=val;return nw;});});
   }
   function saveHistEdits(){ onSave(t1,hist); setEditWk(null); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
-
   function renderHistTable(w,turno,metrics){
     return h('div',{className:'t1-scroll'},
       h('table',{className:'t1-table'},
@@ -1382,8 +1359,6 @@ function Tier1View(props){
       )
     );
   }
-
-
   function avgColor(metric, avgStr){
     if(!avgStr||avgStr===''||metric.limit===undefined)return null;
     var num=parseFloat(avgStr.replace(',','.').replace('%',''));
@@ -1397,7 +1372,6 @@ function Tier1View(props){
     if(!col)return undefined;
     return col==='#1D7A4A'?'#E6F4EA':'#FDECEA';
   }
-
   function renderTable(turno,metrics){
     return h('div',{className:'t1-scroll'},
       h('table',{className:'t1-table'},
@@ -1428,7 +1402,6 @@ function Tier1View(props){
       )
     );
   }
-
   function renderPlan(turno){
     var key=turno==='am'?'planAm':'planPm';
     var rows=(t1[key]||[]);
@@ -1446,7 +1419,7 @@ function Tier1View(props){
                     ['oportunidad','fecha','plan','detalle','objetivo','dirigido','responsable'].map(function(f){
                       return h('td',{key:f},h('textarea',{className:'t1-plan-input',rows:2,value:p[f]||'',onChange:function(e){updPlan(turno,p.id,f,e.target.value);}}));
                     }),
-                    h('td',{style:{textAlign:'center'}},h('button',{onClick:function(){delPlan(turno,p.id);},style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:14,fontFamily:'inherit'}},'\u2715'))
+                    h('td',{style:{textAlign:'center'}},h('button',{onClick:function(){delPlan(turno,p.id);},style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:14,fontFamily:'inherit'}},'✕'))
                   );
                 })
           )
@@ -1455,29 +1428,27 @@ function Tier1View(props){
       h('button',{className:'t1-btn t1-btn-add',onClick:function(){addPlan(turno);}},'+ Agregar acción')
     );
   }
-
   var semanaView=h('div',null,
     h('div',{className:'t1-header'},
       h('div',{className:'t1-title-box'},
-        h('span',{className:'t1-title'},'TIER 1 \u2014 Escobar'),
+        h('span',{className:'t1-title'},'TIER 1 — Escobar'),
         h('span',{style:{fontSize:13,color:'var(--text-muted)'}},'Semana'),
         h('input',{type:'number',className:'t1-week-input',value:t1.semana,onChange:function(e){updSemana(parseInt(e.target.value)||0);}})
       ),
       h('div',{style:{display:'flex',gap:8}},
-        h('button',{className:'t1-btn t1-btn-sync',onClick:sincronizar},saved?'\u2713 Guardado':'💾 Sincronizar'),
-        h('button',{className:'t1-btn t1-btn-close',onClick:function(){if(window.confirm('\u00bfCerrar la semana '+t1.semana+' y guardarla en el hist\u00f3rico? Se iniciar\u00e1 la semana siguiente.'))guardarSemana();}},'📅 Cerrar semana')
+        h('button',{className:'t1-btn t1-btn-sync',onClick:sincronizar},saved?'✓ Guardado':'💾 Sincronizar'),
+        h('button',{className:'t1-btn t1-btn-close',onClick:function(){if(window.confirm('¿Cerrar la semana '+t1.semana+' y guardarla en el histórico? Se iniciará la semana siguiente.'))guardarSemana();}},'📅 Cerrar semana')
       )
     ),
-    h('div',{className:'t1-turno-hdr'},'\u2600 TURNO AM'),
+    h('div',{className:'t1-turno-hdr'},'☀ TURNO AM'),
     renderTable('am',T1_METRICS_AM),
     h('div',{className:'t1-section-lbl'},'Plan de acción AM'),
     renderPlan('am'),
-    h('div',{className:'t1-turno-hdr pm',style:{marginTop:24}},'\u263D TURNO PM'),
+    h('div',{className:'t1-turno-hdr pm',style:{marginTop:24}},'☽ TURNO PM'),
     renderTable('pm',T1_METRICS_PM),
     h('div',{className:'t1-section-lbl'},'Plan de acción PM'),
     renderPlan('pm')
   );
-
   var histView=hist.length===0
     ? h('div',{style:{textAlign:'center',padding:48,color:'var(--text-muted)'}},
         h('div',{style:{fontSize:40,marginBottom:12}},'📋'),
@@ -1493,10 +1464,10 @@ function Tier1View(props){
               ),
               h('div',{style:{display:'flex',gap:8}},
                 editWk===w.id
-                  ? h('button',{onClick:saveHistEdits,style:{background:'#1D7A4A',color:'#fff',border:'none',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:'inherit'}},'\u2713 Guardar cambios')
-                  : h('button',{onClick:function(){setEditWk(w.id);},style:{background:'#1565C0',color:'#fff',border:'none',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:'inherit'}},'\u270F Editar'),
+                  ? h('button',{onClick:saveHistEdits,style:{background:'#1D7A4A',color:'#fff',border:'none',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:'inherit'}},'✓ Guardar cambios')
+                  : h('button',{onClick:function(){setEditWk(w.id);},style:{background:'#1565C0',color:'#fff',border:'none',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:'inherit'}},'✏ Editar'),
                 editWk===w.id&&h('button',{onClick:function(){setEditWk(null);},style:{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:5,padding:'4px 12px',cursor:'pointer',fontSize:12,fontFamily:'inherit'}},'Cancelar'),
-                h('button',{onClick:function(){if(window.confirm('\u00bfEliminar esta semana del hist\u00f3rico?')){var u=hist.filter(function(x){return x.id!==w.id;});setHist(u);onSave(t1,u);}},style:{background:'none',border:'1px solid var(--border)',borderRadius:5,padding:'4px 10px',cursor:'pointer',fontSize:12,color:'#ef4444',fontFamily:'inherit'}},'Eliminar')
+                h('button',{onClick:function(){if(window.confirm('¿Eliminar esta semana del histórico?')){var u=hist.filter(function(x){return x.id!==w.id;});setHist(u);onSave(t1,u);}},style:{background:'none',border:'1px solid var(--border)',borderRadius:5,padding:'4px 10px',cursor:'pointer',fontSize:12,color:'#ef4444',fontFamily:'inherit'}},'Eliminar')
               )
             ),
             editWk===w.id
@@ -1505,19 +1476,18 @@ function Tier1View(props){
                     h('span',{style:{fontWeight:700,fontSize:13,color:'#4B3A8A'}},'Número de semana:'),
                     h('input',{type:'number',value:w.semana,onChange:function(e){var num=parseInt(e.target.value)||w.semana;setHist(function(prev){return prev.map(function(x){return x.id===w.id?Object.assign({},x,{semana:num}):x;});});},style:{width:80,border:'2px solid #4B3A8A',borderRadius:6,padding:'5px 8px',fontSize:16,fontFamily:'inherit',fontWeight:800,color:'#4B3A8A',textAlign:'center',outline:'none'}})
                   ),
-                  h('div',{className:'t1-turno-hdr'},'\u2600 TURNO AM'),
+                  h('div',{className:'t1-turno-hdr'},'☀ TURNO AM'),
                   renderHistTable(w,'am',T1_METRICS_AM),
-                  h('div',{className:'t1-turno-hdr pm',style:{marginTop:16}},'\u263D TURNO PM'),
+                  h('div',{className:'t1-turno-hdr pm',style:{marginTop:16}},'☽ TURNO PM'),
                   renderHistTable(w,'pm',T1_METRICS_PM)
                 )
               : h('div',{style:{fontSize:12,color:'var(--text-muted)'}},
-                  'Volumen AM prom: '+(function(){var m=(w.am&&w.am.volumen)||{};var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});return vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length).toLocaleString('es-AR'):'\u2014';})()+
-                  ' \u00b7 Acciones AM: '+((w.planAm||[]).length)+' \u00b7 Acciones PM: '+((w.planPm||[]).length)
+                  'Volumen AM prom: '+(function(){var m=(w.am&&w.am.volumen)||{};var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});return vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length).toLocaleString('es-AR'):'—';})()+
+                  ' · Acciones AM: '+((w.planAm||[]).length)+' · Acciones PM: '+((w.planPm||[]).length)
                 )
           );
         })
       );
-
   return h('div',{className:'t1-wrap'},
     h('div',{className:'t1-subtabs'},
       [['semana','📊 Semana en curso'],['hist','📁 Historial ('+hist.length+')']].map(function(t){
@@ -1529,14 +1499,10 @@ function Tier1View(props){
     )
   );
 }
-
-
 // ══════════════════════════════════════════════════════
 // INVENTARIO VIEW
 // ══════════════════════════════════════════════════════
 var INV_SEED = {"activos": [{"id": "af0", "categoria": "IS", "item": "Base de Carga HH", "total": 44, "danados": 0, "operativos": 44, "comentarios": ""}, {"id": "af1", "categoria": "IS", "item": "Base de Carga Scanner", "total": 4, "danados": 0, "operativos": 4, "comentarios": ""}, {"id": "af2", "categoria": "IS", "item": "Equipamiento sala de reunión", "total": 4, "danados": 0, "operativos": 4, "comentarios": ""}, {"id": "af3", "categoria": "IS", "item": "Handheld", "total": 44, "danados": 1, "operativos": 44, "comentarios": ""}, {"id": "af4", "categoria": "IS", "item": "Impresora ZQ", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af5", "categoria": "IS", "item": "Impresora ZT", "total": 11, "danados": 0, "operativos": 11, "comentarios": ""}, {"id": "af6", "categoria": "IS", "item": "Lectoras 2D", "total": 5, "danados": 0, "operativos": 5, "comentarios": ""}, {"id": "af7", "categoria": "IS", "item": "Monitores", "total": 10, "danados": 0, "operativos": 10, "comentarios": ""}, {"id": "af8", "categoria": "IS", "item": "Tablet LMS", "total": 1, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af9", "categoria": "IS", "item": "Televisores", "total": 7, "danados": 1, "operativos": 6, "comentarios": ""}, {"id": "af10", "categoria": "IS", "item": "Cantidad de Baterías HH", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af11", "categoria": "IS", "item": "Gatillos", "total": 8, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af12", "categoria": "IS", "item": "Impresoras inalámbricas", "total": 3, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af13", "categoria": "Oficina", "item": "Cafeteras", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af14", "categoria": "Oficina", "item": "Heladeras Chicas", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af15", "categoria": "Oficina", "item": "Heladeras Grandes", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af16", "categoria": "Oficina", "item": "Hornos Eléctricos", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af17", "categoria": "Oficina", "item": "Licuadoras", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af18", "categoria": "Oficina", "item": "Microondas", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af19", "categoria": "Oficina", "item": "Pava eléctrica", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af20", "categoria": "Oficina", "item": "Soda", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af21", "categoria": "Oficina", "item": "Tostadoras", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af22", "categoria": "Operativo", "item": "Apiladores Eléctricos", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af23", "categoria": "Operativo", "item": "Baker Clasico", "total": 32, "danados": 0, "operativos": 32, "comentarios": ""}, {"id": "af24", "categoria": "Operativo", "item": "Baker Voluminoso", "total": 312, "danados": 0, "operativos": 312, "comentarios": ""}, {"id": "af25", "categoria": "Operativo", "item": "Bines Plásticos", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af26", "categoria": "Operativo", "item": "Carros H&B", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af27", "categoria": "Operativo", "item": "Conveyor", "total": 1, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af28", "categoria": "Operativo", "item": "Mesas móviles", "total": 10, "danados": 0, "operativos": 10, "comentarios": ""}, {"id": "af29", "categoria": "Operativo", "item": "Roll Containers", "total": 45, "danados": 0, "operativos": 45, "comentarios": ""}, {"id": "af30", "categoria": "Operativo", "item": "Sacas", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af31", "categoria": "Operativo", "item": "Telescópicas", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af32", "categoria": "Operativo", "item": "Tolva GM", "total": 3, "danados": 0, "operativos": 3, "comentarios": ""}, {"id": "af33", "categoria": "Operativo", "item": "Tolva Voluminoso", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af34", "categoria": "Operativo", "item": "Zorras Eléctricas", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af35", "categoria": "Operativo", "item": "Zorras Eléctricas (HAB)", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af36", "categoria": "Operativo", "item": "Zorras Manuales", "total": 10, "danados": 2, "operativos": 10, "comentarios": ""}, {"id": "af37", "categoria": "Operativo", "item": "Bakers Over", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af38", "categoria": "Operativo", "item": "Flow Racks", "total": 0, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af39", "categoria": "Operativo", "item": "Metros de Conveyor", "total": 30, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af40", "categoria": "SHE", "item": "Alfombra Ergonómica Etiquetador", "total": 6, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af41", "categoria": "SHE", "item": "Alfombra Ergonómica Pescador", "total": 4, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af42", "categoria": "SHE", "item": "Cadenas", "total": 2, "danados": 0, "operativos": 2, "comentarios": ""}, {"id": "af43", "categoria": "SHE", "item": "Camilla", "total": 1, "danados": 0, "operativos": 0, "comentarios": ""}, {"id": "af44", "categoria": "SHE", "item": "Chalecos", "total": 40, "danados": 0, "operativos": 40, "comentarios": ""}, {"id": "af45", "categoria": "SHE", "item": "Conos", "total": 55, "danados": 0, "operativos": 55, "comentarios": ""}, {"id": "af46", "categoria": "SHE", "item": "DEA", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af47", "categoria": "SHE", "item": "Escalera Burro", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af48", "categoria": "SHE", "item": "Punteras", "total": 10, "danados": 0, "operativos": 8, "comentarios": ""}, {"id": "af49", "categoria": "SHE", "item": "Silla de Ruedas", "total": 1, "danados": 0, "operativos": 1, "comentarios": ""}, {"id": "af50", "categoria": "Zona de descanso", "item": "Lockers", "total": 3, "danados": 0, "operativos": 3, "comentarios": ""}, {"id": "af51", "categoria": "Zona de descanso", "item": "Mesa plástico", "total": 12, "danados": 1, "operativos": 12, "comentarios": ""}, {"id": "af52", "categoria": "Zona de descanso", "item": "Silla plástico", "total": 24, "danados": 0, "operativos": 24, "comentarios": ""}], "items": [{"id": "in0", "tipo": "Insumo", "item": "Bolsa N°1", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 129}]}, {"id": "in1", "tipo": "Insumo", "item": "Bolsa N°2", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 148}]}, {"id": "in2", "tipo": "Insumo", "item": "Bolsa N°3", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 75}]}, {"id": "in3", "tipo": "Insumo", "item": "Bolsa N°3,5", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in4", "tipo": "Insumo", "item": "Bolsa N°4", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 103}]}, {"id": "in5", "tipo": "Insumo", "item": "Bolsa N°5", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 67}]}, {"id": "in6", "tipo": "Insumo", "item": "Bolsa N°6", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 81}]}, {"id": "in7", "tipo": "Insumo", "item": "Caja 4V", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in8", "tipo": "Insumo", "item": "Bolsa N°7", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 75}]}, {"id": "in9", "tipo": "Insumo", "item": "Caja 6V", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 85}]}, {"id": "in10", "tipo": "Insumo", "item": "Caja C1", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 142}]}, {"id": "in11", "tipo": "Insumo", "item": "Caja C10", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 300}]}, {"id": "in12", "tipo": "Insumo", "item": "Caja C11", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in13", "tipo": "Insumo", "item": "Caja C12", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 40}]}, {"id": "in14", "tipo": "Insumo", "item": "Caja C2", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 38}]}, {"id": "in15", "tipo": "Insumo", "item": "Caja C3", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 25}]}, {"id": "in16", "tipo": "Insumo", "item": "Caja C4", "minimo": 4, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in17", "tipo": "Insumo", "item": "Pilas AA", "minimo": 4, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in18", "tipo": "Insumo", "item": "Pila AAA", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "in19", "tipo": "Insumo", "item": "Caja C5", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 74}]}, {"id": "in20", "tipo": "Insumo", "item": "Caja C6", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 181}]}, {"id": "in21", "tipo": "Insumo", "item": "Etiqueta portatil", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 62}]}, {"id": "in22", "tipo": "Insumo", "item": "Caja C7", "minimo": 30, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in23", "tipo": "Insumo", "item": "Cinta adhesiva Meli", "minimo": 30, "conteos": [{"fecha": "25/07/2026", "valor": 144}]}, {"id": "in24", "tipo": "Insumo", "item": "Cinta de embalar", "minimo": 30, "conteos": [{"fecha": "25/07/2026", "valor": 225}]}, {"id": "in25", "tipo": "Insumo", "item": "Cinta de papel", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 48}]}, {"id": "in26", "tipo": "Insumo", "item": "Ribbon x unidad", "minimo": 10, "conteos": [{"fecha": "25/07/2026", "valor": 101}]}, {"id": "in27", "tipo": "Insumo", "item": "Resmas x unidad", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 19}]}, {"id": "in28", "tipo": "Insumo", "item": "Etiqueta fragil x rollo", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in29", "tipo": "Insumo", "item": "Caja C8", "minimo": 150, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in30", "tipo": "Insumo", "item": "Etiquetas de ruta x Rollo", "minimo": 3, "conteos": [{"fecha": "25/07/2026", "valor": 109}]}, {"id": "in31", "tipo": "Insumo", "item": "Etiquetas madre x Rollo", "minimo": 100, "conteos": [{"fecha": "25/07/2026", "valor": 13}]}, {"id": "in32", "tipo": "Insumo", "item": "Precintos Amarillos", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 50}]}, {"id": "in33", "tipo": "Insumo", "item": "Precintos Azules", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in34", "tipo": "Insumo", "item": "Film Cristal", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 141}]}, {"id": "in35", "tipo": "Insumo", "item": "Cintas Demarcatorias Rojas", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 3}]}, {"id": "in36", "tipo": "Insumo", "item": "Cintas Demarcatorias Verdes", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 11}]}, {"id": "in37", "tipo": "Insumo", "item": "Cintas Demarcatorias Amarillas", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in38", "tipo": "Insumo", "item": "Cintas Demarcatorias Cebradas", "minimo": 5, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in39", "tipo": "Insumo", "item": "Cintas Demarcatorias Blancas", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 6}]}, {"id": "in40", "tipo": "Insumo", "item": "Bolsa PLACES", "minimo": 50, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "in41", "tipo": "Insumo", "item": "Caja C9", "minimo": 10, "conteos": [{"fecha": "25/07/2026", "valor": 231}]}, {"id": "in42", "tipo": "Insumo", "item": "Film amarillo", "minimo": 350, "conteos": [{"fecha": "25/07/2026", "valor": 350}]}, {"id": "in43", "tipo": "Insumo", "item": "Caja R12", "minimo": 350, "conteos": [{"fecha": "25/07/2026", "valor": 350}]}, {"id": "lb0", "tipo": "Librería", "item": "Cutter", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb1", "tipo": "Librería", "item": "Repuesto cutter", "minimo": 10, "conteos": [{"fecha": "25/07/2026", "valor": 10}]}, {"id": "lb2", "tipo": "Librería", "item": "Tijera grande", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb3", "tipo": "Librería", "item": "Tijera chica", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb4", "tipo": "Librería", "item": "Lapicera azul", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb5", "tipo": "Librería", "item": "Lapicera negra", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb6", "tipo": "Librería", "item": "Marcador NEGRO", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 2}]}, {"id": "lb7", "tipo": "Librería", "item": "Marcador AZUL", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb8", "tipo": "Librería", "item": "Marcador VERDE", "minimo": 3, "conteos": [{"fecha": "25/07/2026", "valor": 3}]}, {"id": "lb9", "tipo": "Librería", "item": "Marcador ROJO", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "lb10", "tipo": "Librería", "item": "Folios", "minimo": 400, "conteos": [{"fecha": "25/07/2026", "valor": 400}]}, {"id": "lb11", "tipo": "Librería", "item": "Abrochadora", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 2}]}, {"id": "lb12", "tipo": "Librería", "item": "Repuesto abrochadora", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb13", "tipo": "Librería", "item": "Borrador de pizarra", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb14", "tipo": "Librería", "item": "Taquitos multicolor", "minimo": 4, "conteos": [{"fecha": "25/07/2026", "valor": 4}]}, {"id": "lb15", "tipo": "Librería", "item": "Biblorato", "minimo": 1, "conteos": [{"fecha": "25/07/2026", "valor": 1}]}, {"id": "lb16", "tipo": "Librería", "item": "Racionador de cinta", "minimo": 2, "conteos": [{"fecha": "25/07/2026", "valor": 2}]}, {"id": "she0", "tipo": "Insumos SHE", "item": "Guante Talle 6", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she1", "tipo": "Insumos SHE", "item": "Guante Talle 7", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she2", "tipo": "Insumos SHE", "item": "Guante Talle 8", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she3", "tipo": "Insumos SHE", "item": "Guante Talle 9", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she4", "tipo": "Insumos SHE", "item": "Guante Talle 10", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she5", "tipo": "Insumos SHE", "item": "Guante Anticorte T7", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she6", "tipo": "Insumos SHE", "item": "Guante Anticorte T8", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she7", "tipo": "Insumos SHE", "item": "Guante Anti corte T9", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she8", "tipo": "Insumos SHE", "item": "Cascos", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she9", "tipo": "Insumos SHE", "item": "Guantes Kit Antiderrame", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she10", "tipo": "Insumos SHE", "item": "Chaleco Naranja", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she11", "tipo": "Insumos SHE", "item": "Chaleco Verde", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she12", "tipo": "Insumos SHE", "item": "Punteras x par", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she13", "tipo": "Insumos SHE", "item": "Anteojos", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}, {"id": "she14", "tipo": "Insumos SHE", "item": "Chaleco con cierre", "minimo": 0, "conteos": [{"fecha": "25/07/2026", "valor": 0}]}]};
-
-
 function InvRankingChart(props){
   var rows=props.rows;
   var ref=_useRef(); var chart=_useRef();
@@ -1553,7 +1519,6 @@ function InvRankingChart(props){
   },[rows]);
   return h('canvas',{ref:ref,height:Math.max(120,rows.filter(function(r){return r.total>0;}).length*14)});
 }
-
 function InvConsumoChart(props){
   var items=props.items, fechas=props.fechas;
   var ref=_useRef(); var chart=_useRef();
@@ -1561,7 +1526,7 @@ function InvConsumoChart(props){
     if(!window.Chart||!ref.current)return;
     // total consumo per fecha transition across all items
     var labels=[];
-    for(var i=1;i<fechas.length;i++){labels.push(fechas[i-1]+' \u2192 '+fechas[i]);}
+    for(var i=1;i<fechas.length;i++){labels.push(fechas[i-1]+' → '+fechas[i]);}
     var data=labels.map(function(_,idx){
       var total=0;
       items.forEach(function(it){
@@ -1581,8 +1546,6 @@ function InvConsumoChart(props){
   },[items,fechas]);
   return h('canvas',{ref:ref,height:120});
 }
-
-
 function RowMenu(props){
   var onDelete=props.onDelete;
   var openS=_useState(false);var open=openS[0],setOpen=openS[1];
@@ -1594,24 +1557,20 @@ function RowMenu(props){
   },[open]);
   return h('div',{style:{position:'relative',display:'inline-block'}},
     h('button',{onClick:function(e){e.stopPropagation();setOpen(!open);},title:'Opciones',
-      style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:18,fontFamily:'inherit',lineHeight:1,padding:'0 6px'}},'\u22EE'),
+      style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:18,fontFamily:'inherit',lineHeight:1,padding:'0 6px'}},'⋮'),
     open&&h('div',{style:{position:'absolute',right:0,top:'100%',background:'var(--surface)',border:'1px solid var(--border)',borderRadius:6,boxShadow:'0 4px 12px rgba(0,0,0,.2)',zIndex:50,minWidth:130,overflow:'hidden'}},
-      h('button',{onClick:function(e){e.stopPropagation();setOpen(false);if(window.confirm('\u00bfBorrar este item?'))onDelete();},
+      h('button',{onClick:function(e){e.stopPropagation();setOpen(false);if(window.confirm('¿Borrar este item?'))onDelete();},
         style:{display:'block',width:'100%',textAlign:'left',padding:'8px 14px',border:'none',background:'none',cursor:'pointer',fontSize:13,color:'#ef4444',fontFamily:'inherit',fontWeight:600}},'🗑 Borrar item')
     )
   );
 }
-
-
 // ══════════════════════════════════════════════════════
 // DETALLE EQUIPAMIENTO VIEW (inside InventarioView)
 // ══════════════════════════════════════════════════════
 var EQUIP_SEED = [{"id": "eq0", "elemento": "Apilador Elevador", "numero": "1", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq1", "elemento": "Zorra Eléctrica", "numero": "1", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq2", "elemento": "Celular", "numero": "1", "serial": "R8MY102NCRK", "operativo": true, "observaciones": ""}, {"id": "eq3", "elemento": "Celular", "numero": "2", "serial": "R8MY102LP4L", "operativo": true, "observaciones": ""}, {"id": "eq4", "elemento": "Chromebox con Pantalla Táctil", "numero": "1", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq5", "elemento": "Chromebox con Pantalla Táctil", "numero": "2", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq6", "elemento": "Chromebox con Pantalla Táctil", "numero": "3", "serial": "", "operativo": true, "observaciones": ""}, {"id": "eq7", "elemento": "Handheld", "numero": "1", "serial": "S25051524701982", "operativo": true, "observaciones": ""}, {"id": "eq8", "elemento": "Handheld", "numero": "2", "serial": "S25051524704422", "operativo": false, "observaciones": "Pantalla en blanco"}, {"id": "eq9", "elemento": "Handheld", "numero": "3", "serial": "S25051524702494", "operativo": true, "observaciones": ""}, {"id": "eq10", "elemento": "Handheld", "numero": "4", "serial": "S25051524701966", "operativo": false, "observaciones": "Lector dañado"}, {"id": "eq11", "elemento": "Handheld", "numero": "5", "serial": "S25051524704926", "operativo": true, "observaciones": ""}, {"id": "eq12", "elemento": "Handheld", "numero": "6", "serial": "S25051524701958", "operativo": false, "observaciones": "Rotura pantalla 9/9/2025"}, {"id": "eq13", "elemento": "Handheld", "numero": "7", "serial": "S25051524703388", "operativo": true, "observaciones": ""}, {"id": "eq14", "elemento": "Handheld", "numero": "8", "serial": "S25051524703392", "operativo": false, "observaciones": "Pantalla en blanco"}, {"id": "eq15", "elemento": "Handheld", "numero": "9", "serial": "S25051524704141", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq16", "elemento": "Handheld", "numero": "10", "serial": "S25051524701694", "operativo": false, "observaciones": "Pantalla dañada (Oficina)"}, {"id": "eq17", "elemento": "Handheld", "numero": "11", "serial": "S25051524703592", "operativo": false, "observaciones": "Laser no funciona"}, {"id": "eq18", "elemento": "Handheld", "numero": "12", "serial": "S25051524701956", "operativo": true, "observaciones": ""}, {"id": "eq19", "elemento": "Handheld", "numero": "13", "serial": "S25051524704430", "operativo": true, "observaciones": ""}, {"id": "eq20", "elemento": "Handheld", "numero": "14", "serial": "S25051524701558", "operativo": true, "observaciones": ""}, {"id": "eq21", "elemento": "Handheld", "numero": "15", "serial": "S25051524704269", "operativo": true, "observaciones": ""}, {"id": "eq22", "elemento": "Handheld", "numero": "16", "serial": "S25051524704515", "operativo": false, "observaciones": "Pantalla dañada"}, {"id": "eq23", "elemento": "Handheld", "numero": "17", "serial": "S25051524703587", "operativo": true, "observaciones": ""}, {"id": "eq24", "elemento": "Handheld", "numero": "18", "serial": "S25051524701869", "operativo": true, "observaciones": ""}, {"id": "eq25", "elemento": "Handheld", "numero": "19", "serial": "S25051524701858", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq26", "elemento": "Handheld", "numero": "20", "serial": "S25051524703582", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq27", "elemento": "Handheld", "numero": "21", "serial": "S25051524703116", "operativo": true, "observaciones": ""}, {"id": "eq28", "elemento": "Handheld", "numero": "22", "serial": "S25051524701620", "operativo": true, "observaciones": ""}, {"id": "eq29", "elemento": "Handheld", "numero": "23", "serial": "S25051524704267", "operativo": true, "observaciones": ""}, {"id": "eq30", "elemento": "Handheld", "numero": "24", "serial": "S25051524701851", "operativo": true, "observaciones": ""}, {"id": "eq31", "elemento": "Handheld", "numero": "25", "serial": "S25051524704468", "operativo": true, "observaciones": ""}, {"id": "eq32", "elemento": "Handheld", "numero": "26", "serial": "S25051524704047", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq33", "elemento": "Handheld", "numero": "27", "serial": "S25051524704050", "operativo": true, "observaciones": ""}, {"id": "eq34", "elemento": "Handheld", "numero": "28", "serial": "S25051524703192", "operativo": true, "observaciones": ""}, {"id": "eq35", "elemento": "Handheld", "numero": "29", "serial": "S25051524704982", "operativo": true, "observaciones": ""}, {"id": "eq36", "elemento": "Handheld", "numero": "30", "serial": "S25052524701215", "operativo": true, "observaciones": ""}, {"id": "eq37", "elemento": "Handheld", "numero": "31", "serial": "S25051524703092", "operativo": true, "observaciones": ""}, {"id": "eq38", "elemento": "Handheld", "numero": "32", "serial": "S25051524703336", "operativo": true, "observaciones": ""}, {"id": "eq39", "elemento": "Handheld", "numero": "33", "serial": "S25051524702340", "operativo": true, "observaciones": ""}, {"id": "eq40", "elemento": "Handheld", "numero": "34", "serial": "S25051524701689", "operativo": true, "observaciones": ""}, {"id": "eq41", "elemento": "Handheld", "numero": "35", "serial": "S25051524704044", "operativo": true, "observaciones": ""}, {"id": "eq42", "elemento": "Handheld", "numero": "36", "serial": "S25051524704918", "operativo": true, "observaciones": ""}, {"id": "eq43", "elemento": "Handheld", "numero": "37", "serial": "S25051524704341", "operativo": true, "observaciones": ""}, {"id": "eq44", "elemento": "Handheld", "numero": "38", "serial": "S25051524701872", "operativo": true, "observaciones": ""}, {"id": "eq45", "elemento": "Handheld", "numero": "39", "serial": "S25051524704054", "operativo": true, "observaciones": ""}, {"id": "eq46", "elemento": "Handheld", "numero": "40", "serial": "S25051524704922", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq47", "elemento": "Handheld", "numero": "41", "serial": "S25051524701746", "operativo": true, "observaciones": ""}, {"id": "eq48", "elemento": "Handheld", "numero": "42", "serial": "S25051524701696", "operativo": true, "observaciones": ""}, {"id": "eq49", "elemento": "Handheld", "numero": "43", "serial": "S25051524704087", "operativo": true, "observaciones": ""}, {"id": "eq50", "elemento": "Handheld", "numero": "44", "serial": "S25051524704266", "operativo": true, "observaciones": "Se le coloca vidrio templado 27-11"}, {"id": "eq51", "elemento": "Printer Zebra", "numero": "1", "serial": "99J245100219", "operativo": true, "observaciones": ""}, {"id": "eq52", "elemento": "Printer Zebra", "numero": "2", "serial": "99J245100218", "operativo": true, "observaciones": ""}, {"id": "eq53", "elemento": "Printer Zebra", "numero": "3", "serial": "99J245100274", "operativo": true, "observaciones": ""}, {"id": "eq54", "elemento": "Printer Zebra", "numero": "4", "serial": "99J244600518", "operativo": true, "observaciones": ""}, {"id": "eq55", "elemento": "Printer Zebra", "numero": "5", "serial": "99J244705314", "operativo": true, "observaciones": ""}, {"id": "eq56", "elemento": "Printer Zebra", "numero": "6", "serial": "99J245100217", "operativo": true, "observaciones": ""}, {"id": "eq57", "elemento": "Printer Zebra", "numero": "7", "serial": "99J244404404", "operativo": true, "observaciones": ""}, {"id": "eq58", "elemento": "Printer Zebra", "numero": "8", "serial": "99J245100227", "operativo": true, "observaciones": ""}, {"id": "eq59", "elemento": "Printer Zebra", "numero": "9", "serial": "99J245100224", "operativo": true, "observaciones": ""}, {"id": "eq60", "elemento": "Printer Zebra", "numero": "10", "serial": "99N251900998", "operativo": true, "observaciones": "Llegaron el 30/8"}, {"id": "eq61", "elemento": "Printer Zebra", "numero": "11", "serial": "99N251900995", "operativo": true, "observaciones": "Llegaron el 30/8"}, {"id": "eq62", "elemento": "Printer Zebra Portátil", "numero": "1", "serial": "xxrbn245102365", "operativo": true, "observaciones": ""}, {"id": "eq63", "elemento": "Printer Zebra Portátil", "numero": "2", "serial": "xxrbn245003026", "operativo": true, "observaciones": ""}, {"id": "eq64", "elemento": "Base de Carga Batería HH", "numero": "1", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq65", "elemento": "Base de Carga Batería HH", "numero": "2", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq66", "elemento": "Base de Carga Batería HH", "numero": "3", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq67", "elemento": "Base de Carga Batería HH", "numero": "4", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq68", "elemento": "Base de Carga Batería HH", "numero": "5", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq69", "elemento": "Base de Carga Batería HH", "numero": "6", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq70", "elemento": "Base de Carga Batería HH", "numero": "7", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq71", "elemento": "Base de Carga Batería HH", "numero": "8", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq72", "elemento": "Base de Carga Batería HH", "numero": "9", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq73", "elemento": "Base de Carga Batería HH", "numero": "10", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq74", "elemento": "Base de Carga Batería HH", "numero": "11", "serial": "AS-000254-08", "operativo": true, "observaciones": ""}, {"id": "eq75", "elemento": "Gatillo", "numero": "1", "serial": "25195525500527", "operativo": true, "observaciones": ""}, {"id": "eq76", "elemento": "Gatillo", "numero": "2", "serial": "25195525500517", "operativo": true, "observaciones": ""}, {"id": "eq77", "elemento": "Gatillo", "numero": "3", "serial": "25195525500520", "operativo": true, "observaciones": ""}, {"id": "eq78", "elemento": "Gatillo", "numero": "4", "serial": "25195525500522", "operativo": true, "observaciones": ""}, {"id": "eq79", "elemento": "Gatillo", "numero": "5", "serial": "25195525500513", "operativo": true, "observaciones": ""}, {"id": "eq80", "elemento": "Gatillo", "numero": "6", "serial": "25195525500528", "operativo": true, "observaciones": ""}, {"id": "eq81", "elemento": "Gatillo", "numero": "7", "serial": "25195525500525", "operativo": true, "observaciones": ""}, {"id": "eq82", "elemento": "Gatillo", "numero": "8", "serial": "25195525500521", "operativo": true, "observaciones": ""}];
-
 function InventarioView(props){
   var onSave=props.onSaveInv||function(){};
   var init=props.inventory||INV_SEED;
-
   var eqInitFn = function(){
     var base = props.equipamiento;
     if(!base) base = EQUIP_SEED;
@@ -1620,17 +1579,14 @@ function InventarioView(props){
   var eqSt=_useState(eqInitFn);var equip=eqSt[0],setEquip=eqSt[1];
   var eqSearchS=_useState('');var eqSearch=eqSearchS[0],setEqSearch=eqSearchS[1];
   var eqFilterS=_useState('Todos');var eqFilter=eqFilterS[0],setEqFilter=eqFilterS[1];
-
   // Re-apply equipamiento from GitHub when it arrives
   _useEffect(function(){
     if(props.equipamiento)setEquip(JSON.parse(JSON.stringify(props.equipamiento)));
   },[props.equipamiento]);
-
   function updEquip(id,field,val){setEquip(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addEquip(){setEquip(function(prev){return prev.concat([{id:genId(),elemento:'',numero:'',serial:'',operativo:true,observaciones:''}]);});}
   function delEquip(id){setEquip(function(prev){return prev.filter(function(r){return r.id!==id;});});}
   function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip);}
-
     var invS=_useState(function(){
     var base=JSON.parse(JSON.stringify(init));
     // migrate old structure {insumos, libreria} -> {items}
@@ -1648,24 +1604,20 @@ function InventarioView(props){
   var filterS=_useState('Todos');var filter=filterS[0],setFilter=filterS[1];
   var sortS=_useState('tipo');var sortBy=sortS[0],setSortBy=sortS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
-
   function sync(){onSave(inv);setSaved(true);setTimeout(function(){setSaved(false);},2500);}
-
   // ── ACTIVOS FIJOS ──
   function updActivo(id,field,val){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.map(function(a){return a.id===id?Object.assign({},a,{[field]:val}):a;});return n;});}
   function addActivo(cat){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos.push({id:genId(),categoria:cat,item:'',total:0,danados:0,operativos:0,comentarios:''});return n;});}
   function delActivo(id){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.filter(function(a){return a.id!==id;});return n;});}
-
   function downloadActivosCSV(){
     var rows=[['Categoria','Item','Total','Dañados','Operativos','Comentarios']];
     inv.activos.forEach(function(a){rows.push([a.categoria,a.item,a.total,a.danados,a.operativos,(a.comentarios||'').replace(/"/g,'""')]);});
     var csv=rows.map(function(r){return r.map(function(cell){return '"'+String(cell)+'"';}).join(',');}).join('\n');
-    var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+    var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
     var url=URL.createObjectURL(blob);
     var a=document.createElement('a');a.href=url;a.download='Inventario_ActivosFijos_SCZ1_'+new Date().toISOString().slice(0,10)+'.csv';
     document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   }
-
   var activosView=(function(){
     var cats={};
     inv.activos.forEach(function(a){if(!cats[a.categoria])cats[a.categoria]=[];cats[a.categoria].push(a);});
@@ -1678,7 +1630,7 @@ function InventarioView(props){
           h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.total,onChange:function(e){var tot=parseInt(e.target.value)||0;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.map(function(z){return z.id===a.id?Object.assign({},z,{total:tot,operativos:Math.max(0,tot-(z.danados||0))}):z;});return n;});}})),
           h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:a.danados,style:a.danados>0?{color:'#ef4444',fontWeight:700}:{},onChange:function(e){var dan=parseInt(e.target.value)||0;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.map(function(z){return z.id===a.id?Object.assign({},z,{danados:dan,operativos:Math.max(0,(z.total||0)-dan)}):z;});return n;});}})),
           h('td',{style:{textAlign:'center',fontWeight:700,color:'#1D7A4A'}},a.operativos),
-          h('td',null,h('input',{className:'inv-txt-input',value:a.comentarios||'',placeholder:'\u2014',onChange:function(e){updActivo(a.id,'comentarios',e.target.value);}})),
+          h('td',null,h('input',{className:'inv-txt-input',value:a.comentarios||'',placeholder:'—',onChange:function(e){updActivo(a.id,'comentarios',e.target.value);}})),
           h('td',{style:{textAlign:'center'}},h(RowMenu,{onDelete:function(){delActivo(a.id);}}))
         ));
       });
@@ -1686,7 +1638,7 @@ function InventarioView(props){
     });
     return h('div',null,
       h('div',{style:{display:'flex',justifyContent:'flex-end',marginBottom:10}},
-        h('button',{className:'inv-btn inv-btn-count',onClick:downloadActivosCSV},'\u2B07 Descargar CSV')
+        h('button',{className:'inv-btn inv-btn-count',onClick:downloadActivosCSV},'⬇ Descargar CSV')
       ),
       h('div',{className:'inv-scroll'},
         h('table',{className:'inv-table'},
@@ -1698,7 +1650,6 @@ function InventarioView(props){
       )
     );
   })();
-
   // ── ITEMS (unified insumos+libreria) ──
   function updItemField(id,field,val){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.map(function(x){return x.id===id?Object.assign({},x,{[field]:val}):x;});return n;});}
   function updConteo(id,fecha,val){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.map(function(x){if(x.id!==id)return x;var nx=JSON.parse(JSON.stringify(x));var found=false;nx.conteos=nx.conteos.map(function(ct){if(ct.fecha===fecha){found=true;return Object.assign({},ct,{valor:val});}return ct;});if(!found)nx.conteos.push({fecha:fecha,valor:val});return nx;});return n;});}
@@ -1707,7 +1658,6 @@ function InventarioView(props){
   function addConteo(){var fecha=window.prompt('Fecha del nuevo conteo (dd/mm/aaaa):',new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}));if(!fecha)return;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.map(function(x){var nx=JSON.parse(JSON.stringify(x));if(!nx.conteos.some(function(ct){return ct.fecha===fecha;}))nx.conteos.push({fecha:fecha,valor:0});return nx;});return n;});}
   function delConteoFecha(fecha){if(!window.confirm('¿Borrar el conteo del '+fecha+' de TODOS los items?'))return;setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.items=n.items.map(function(x){var nx=JSON.parse(JSON.stringify(x));nx.conteos=nx.conteos.filter(function(ct){return ct.fecha!==fecha;});return nx;});return n;});}
   function getAllFechas(list){var set={};list.forEach(function(x){(x.conteos||[]).forEach(function(ct){set[ct.fecha]=true;});});return Object.keys(set);}
-
   var itemsView=(function(){
     var all=inv.items||[];
     var fechas=getAllFechas(all);
@@ -1768,7 +1718,7 @@ function InventarioView(props){
                 h('option',{value:'Insumo'},'Insumo'),h('option',{value:'Librería'},'Librería'),h('option',{value:'Insumos SHE'},'Insumos SHE'))),
               h('td',null,h('input',{className:'inv-txt-input',value:x.item,onChange:function(e){updItemField(x.id,'item',e.target.value);}})),
               h('td',{style:{textAlign:'center'}},h('input',{className:'inv-cell-input',type:'number',value:x.minimo,style:{fontWeight:700,color:'#854F0B'},onChange:function(e){updItemField(x.id,'minimo',parseInt(e.target.value)||0);}})),
-              h('td',{style:{textAlign:'center'}},low?h('span',{style:{color:'#ef4444',fontWeight:700,fontSize:11}},'\u26A0 REPONER'):h('span',{className:'inv-ok-stock',style:{fontSize:11}},'\u2713 OK')),
+              h('td',{style:{textAlign:'center'}},low?h('span',{style:{color:'#ef4444',fontWeight:700,fontSize:11}},'⚠ REPONER'):h('span',{className:'inv-ok-stock',style:{fontSize:11}},'✓ OK')),
               showFechas.map(function(f){
                 var isLast=f===lastFecha;var v=cm[f];
                 return h('td',{key:f,style:{textAlign:'center'}},h('input',{className:'inv-cell-input'+(isLast&&low?' inv-low':''),type:'number',value:v!==undefined?v:'',onChange:function(e){updConteo(x.id,f,parseInt(e.target.value)||0);}}));
@@ -1778,10 +1728,9 @@ function InventarioView(props){
           }))
         )
       ),
-      h('div',{className:'inv-legend'},'\u26A0 Rojo = último conteo por debajo del mínimo. El conteo más reciente aparece a la izquierda (ÚLTIMO). Se muestran los últimos 6 conteos.')
+      h('div',{className:'inv-legend'},'⚠ Rojo = último conteo por debajo del mínimo. El conteo más reciente aparece a la izquierda (ÚLTIMO). Se muestran los últimos 6 conteos.')
     );
   })();
-
   // consumo helpers
   function computeConsumo(filterVal){
     var all=inv.items||[];
@@ -1802,7 +1751,6 @@ function InventarioView(props){
     });
     return {fechas:fechas,transitions:transitions,rows:rows};
   }
-
   function printReport(){
     var data=computeConsumo(filter);
     var sorted=data.rows.slice().sort(function(a,b){return b.total-a.total;});
@@ -1811,13 +1759,11 @@ function InventarioView(props){
     var all=inv.items||[];
     var fechas=getAllFechas(all);
     var lastFecha=fechas[fechas.length-1];
-
     // Top consumidos (con consumo > 0)
     var topCons=sorted.filter(function(r){return r.total>0;}).slice(0,5);
     var topHtml=topCons.length?topCons.map(function(r,i){
       return '<li><b>'+(i+1)+'. '+r.item+'</b> ('+r.tipo+') &mdash; '+r.total+' unidades</li>';
     }).join(''):'<li>Sin consumo registrado en el per&iacute;odo</li>';
-
     // Alertas de reposicion
     var listFiltered=filter==='Todos'?all:all.filter(function(x){return x.tipo===filter;});
     var criticos=[], enRiesgo=[];
@@ -1836,14 +1782,12 @@ function InventarioView(props){
       return '<tr style="background:#fff8e6"><td>'+a.tipo+'</td><td>'+a.item+'</td><td style="text-align:center;color:#854f0b;font-weight:bold">'+a.stock+'</td><td style="text-align:center">'+a.min+'</td><td style="text-align:center;color:#854f0b;font-weight:bold">EN RIESGO</td></tr>';
     }).join(''):'';
     var alertBody=(critHtml+riskHtml)||'<tr><td colspan="5" style="text-align:center;color:#1d7a4a;padding:12px">Sin alertas &mdash; todos los items sobre el m&iacute;nimo</td></tr>';
-
     var rowsHtml=sorted.map(function(r){
       return '<tr><td>'+r.tipo+'</td><td>'+r.item+'</td>'+
         r.perPeriod.map(function(d){return '<td style="text-align:center">'+(d===null?'-':d>0?'-'+d:d<0?'+'+Math.abs(d):'0')+'</td>';}).join('')+
         '<td style="text-align:center;font-weight:bold">'+r.total+'</td></tr>';
     }).join('');
     var transHtml=data.transitions.map(function(tr){return '<th style="text-align:center">'+tr[0]+' &rarr; '+tr[1]+'</th>';}).join('');
-
     var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reporte Consumo SCZ1</title>'+
       '<style>body{font-family:Arial,sans-serif;padding:30px;color:#222}h1{color:#6d28d9;font-size:20px;margin-bottom:2px}h2{font-size:13px;color:#666;font-weight:normal;margin-top:2px}'+
       'h3{font-size:15px;color:#4B3A8A;margin-top:26px;border-bottom:2px solid #EDE9FB;padding-bottom:4px}'+
@@ -1873,7 +1817,6 @@ function InventarioView(props){
     win.document.close();
     setTimeout(function(){win.print();},400);
   }
-
   // ── CONSUMO ──
   var consumoView=(function(){
     var all=inv.items||[];
@@ -1926,7 +1869,7 @@ function InventarioView(props){
           h('table',{className:'inv-table'},
             h('thead',null,h('tr',null,
               h('th',null,'Tipo'),h('th',null,'Item'),
-              transitions.map(function(tr,i){return h('th',{key:i,style:{textAlign:'center'}},tr[0]+' \u2192 '+tr[1]);}),
+              transitions.map(function(tr,i){return h('th',{key:i,style:{textAlign:'center'}},tr[0]+' → '+tr[1]);}),
               h('th',{style:{textAlign:'center'}},'Consumo total')
             )),
             h('tbody',null,filtered.map(function(x){
@@ -1937,7 +1880,7 @@ function InventarioView(props){
                 var diff=(!isNaN(prev)&&!isNaN(cur))?(prev-cur):null;
                 if(diff!==null&&diff>0)totalCons+=diff;
                 var col=diff===null?'var(--text-muted)':diff>0?'#A32D2D':diff<0?'#1D7A4A':'var(--text-muted)';
-                return h('td',{key:i,style:{textAlign:'center',color:col,fontWeight:diff&&diff>0?700:400}},diff===null?'\u2014':diff>0?'-'+diff:diff<0?'+'+Math.abs(diff):'0');
+                return h('td',{key:i,style:{textAlign:'center',color:col,fontWeight:diff&&diff>0?700:400}},diff===null?'—':diff>0?'-'+diff:diff<0?'+'+Math.abs(diff):'0');
               });
               var tipoColor=x.tipo==='Insumo'?'#185FA5':x.tipo==='Insumos SHE'?'#1D7A4A':'#854F0B';
               return h('tr',{key:x.id},
@@ -1949,15 +1892,14 @@ function InventarioView(props){
             }))
           )
         ),
-        h('div',{className:'inv-legend'},'Consumo = conteo anterior \u2212 conteo actual. Rojo (-) = se consumió · Verde (+) = se repuso stock.')
+        h('div',{className:'inv-legend'},'Consumo = conteo anterior − conteo actual. Rojo (-) = se consumió · Verde (+) = se repuso stock.')
       )
     );
   })();
-
   return h('div',{className:'inv-wrap'},
     h('div',{className:'inv-hdr'},
       h('span',{className:'inv-title'},'📦 Inventario SCZ1'),
-      h('button',{className:'inv-btn inv-btn-sync',onClick:sync},saved?'\u2713 Guardado':'💾 Sincronizar')
+      h('button',{className:'inv-btn inv-btn-sync',onClick:sync},saved?'✓ Guardado':'💾 Sincronizar')
     ),
     h('div',{className:'inv-subtabs'},
       [['items','Insumos, Librería & SHE'],['consumo','📊 Consumo'],['activos','Activos Fijos'],['equip','🔧 Det. Equipamiento']].map(function(t){
@@ -2024,7 +1966,349 @@ function InventarioView(props){
     )
   );
 }
-
+// ══════════════════════════════════════════════════════
+// MANTENIMIENTO VIEW
+// ══════════════════════════════════════════════════════
+var MANT_IMG_DIR='img/mant/';
+var MANT_PRIOS=[
+  {id:'Urgente',  bg:'#FDECEA',color:'#A32D2D',cls:'mant-row-urg'},
+  {id:'Necesaria',bg:'#FFF8E6',color:'#854F0B',cls:'mant-row-nec'},
+  {id:'Deseable', bg:'#E6F1FB',color:'#185FA5',cls:'mant-row-des'}
+];
+var MANT_PRIO_MAP={};MANT_PRIOS.forEach(function(p){MANT_PRIO_MAP[p.id]=p;});
+var MANT_ESTADOS=[
+  {id:'',          label:'Sin definir',bg:'#EFEFEB',color:'#888780'},
+  {id:'Pendiente', label:'Pendiente',  bg:'#FDECEA',color:'#A32D2D'},
+  {id:'Finalizado',label:'Finalizado', bg:'#E6F4EA',color:'#1D7A4A'}
+];
+var MANT_ESTADO_MAP={};MANT_ESTADOS.forEach(function(e){MANT_ESTADO_MAP[e.id]=e;});
+function mantSeed(){
+  var raw=[
+  ['2026-04-01','Necesaria','Luz baño de discapacitados','Reparar luz','Reparar luz','5a523d45','CARGADO','Finalizado'],
+  ['2026-04-06','Necesaria','Pared salas 2° piso','Tapar agujeros de pizarron','Tapar agujeros de pizarron','50877415','CARGADO','Finalizado'],
+  ['2026-05-05','Deseable','Soldar bakers','Reparacion de bandejas de bakers','Reparacion de bandejas de bakers','010b1077','CARGADO','Finalizado'],
+  ['2026-05-05','Deseable','Luz doca de descarga','Reparación brazo de luz de doca','Reparación brazo de luz de doca','7dfbcc0a','CARGADO','Finalizado'],
+  ['2026-05-05','Necesaria','Luz sala segundo piso','Tecla de sala de segundo piso hace ruido cuando se acciona','Tecla de sala de segundo piso hace ruido cuando se acciona','186277f6','CARGADO','Finalizado'],
+  ['2026-05-05','Necesaria','Traba de doca','Enderezar traba de doca de descarga','Enderezar traba de doca de descarga','cd9b91a4','CARGADO','Finalizado'],
+  ['2026-06-02','Necesaria','Colocación Insumos SHE','Colgar camilla y silla de ruedas en la nave','Colgar camilla y silla de ruedas en la nave','201103b9','CARGADO','Finalizado'],
+  ['2026-06-04','Necesaria','Instalación television','Instalación de televisión en 1er piso','Instalación de televisión en 1er piso','612e244d','CARGADO','Finalizado'],
+  ['2026-06-04','Urgente','Bacha tapada comedor 2do piso','Solicitamos que la Bacha del comedor del 2do piso sea destapada','Solicitamos que la Bacha del comedor del 2do piso sea destapada','9f57a99a','CARGADO','Finalizado'],
+  ['2026-06-04','Urgente','inodoro suelto baño de hombre','poder apretar los tornillos de la base del inodoro','poder apretar los tornillos de la base del inodoro','963d1529','CARGADO','Finalizado'],
+  ['2026-06-04','Urgente','inodoro pierde el de mujer','pierde el inodoro por la parte de abajo','pierde el inodoro por la parte de abajo','552f401b','CARGADO','Finalizado'],
+  ['2026-06-04','Urgente','Tolva fuera de nivel','vemos que la tolva no esta aliniada con la base y tenemos problema con los paquetes que se traban y podemos llegar a dañar los productos','vemos que la tolva no esta aliniada con la base y tenemos problema con los paquetes que se traban y podemos llegar a dañar los productos','d1d75669','CARGADO','Finalizado'],
+  ['2026-06-05','Urgente','iluminaria de doca 52','se encuentra el reflector dañado','se encuentra el reflector dañado','f68b2c1f','CARGADO','Finalizado'],
+  ['2026-06-06','Urgente','Ver porque se corta la corriente en la mesa de piso','salta la termica cuando enchufamos cosas','salta la termica cuando enchufamos cosas','a5e6cd54','CARGADO','Finalizado'],
+  ['2026-06-08','Deseable','Demarcar zona batea Prensanor','Demarcar la zona donde va la batea de prensanor','Demarcar la zona donde va la batea de prensanor','48ee5143','CARGADO','Finalizado'],
+  ['2026-06-09','Necesaria','Demarcacion de estacionamiento','demarcacion para las motos','demarcacion para las motos','a05a27e1','CARGADO','Finalizado'],
+  ['2026-06-09','Deseable','Cambio de bandejas de beiker','cambier de solucion de probelma y de eliminacion','cambier de solucion de probelma y de eliminacion','a07e06a7','CARGADO','Finalizado'],
+  ['2026-06-09','Urgente','tabla suelta','tolva de voluminoso tiene la tabla de abajo suelta','tolva de voluminoso tiene la tabla de abajo suelta','bb8ce354','CARGADO','Finalizado'],
+  ['2026-06-11','Necesaria','Soporte de las etiquetadoras','no tenemos niveladas las etiquetadoras','no tenemos niveladas las etiquetadoras','d54c111f','CARGADO','Finalizado'],
+  ['2026-06-11','Necesaria','Topes','Sacar los topes del fonde de la maquinas','Sacar los topes del fonde de la maquinas','297494ba','CARGADO','Finalizado'],
+  ['2026-06-25','Urgente','Mesas de etiquetadoras','La mesa de etiquetadora esta fuera de nivel','La mesa de etiquetadora esta fuera de nivel','797348b0','CARGADO',''],
+  ['2026-06-25','Necesaria','Pala','La pala vemos que no bajar corectamente','La pala vemos que no bajar corectamente','de504718','CARGADO','Finalizado'],
+  ['2026-07-01','Necesaria','Pizarra','Mover pizarra de la oficina de FT hacie el sector de PS','Mover pizarra de la oficina de FT hacie el sector de PS','bc12fa9f','CARGADO',''],
+  ['2026-06-29','Necesaria','Cambio de reflector','No tenemos iluminacion del frente del depo','No tenemos iluminacion del frente del depo','','CARGADO',''],
+  ['2026-06-28','Necesaria','control de termica','tenemos algo en corto i salta las termicas','tenemos algo en corto i salta las termicas','254ed0e0','CARGADO',''],
+  ['2026-06-28','Necesaria','limpieza de los aires','limpieza de los aires acondicionado de los motores','limpieza de los aires acondicionado de los motores','9aab6a44','CARGADO',''],
+  ['2026-06-28','Necesaria','tubo de luz','tenemos en el baños de hombre una de los tubos quemados','tenemos en el baños de hombre una de los tubos quemados','0cc91fd1','CARGADO',''],
+  ['2026-07-29','Necesaria','Impermeabilizar ventana 1er piso','Impermeabilizar ventana 1er piso','Impermeabilizar ventana 1er piso','9f20bbc3','CARGADO','Finalizado'],
+  ['2026-07-29','Necesaria','MODIFICAR SUBIDA DE RAMPA','PICAR EL INICIO DE LA RAMPA Y QUE DEJEN DE SER ESCALONES CORTOS','PICAR EL INICIO DE LA RAMPA Y QUE DEJEN DE SER ESCALONES CORTOS','f2f02221','CARGADO','Pendiente'],
+  ['2026-07-30','Necesaria','BANDEJAS DE BIKER','SACAR LAS DAÑADAS','CAMBIAR BANDEJAS DE BIKER DE PESCA DAÑADAS Y PONER NUEVAS','','','Pendiente'],
+  ['2026-07-30','Necesaria','limpieza de los aires','LIMPIEZA DE MOTORES Y REGILLAS','','','','Finalizado'],
+  ['2026-07-30','Necesaria','CAMBIO DE TUBO DE LUZ','TENEMOS DAÑADO UN TUBO DE LUZ DEL BAÑO DE LOS HOMBRES','','','','Pendiente'],
+  ['2026-07-30','Necesaria','TERMICA CON CORTO','TENEMOS UN CORTO EN ALGUN SECTOR DE LOS ENCHUFES POR ESO PROBOCA EL CORTE','','','','Finalizado'],
+  ['2026-08-04','Necesaria','Colacacion de espejos parabolico','Para detectar visual en la entrada de camionetas','','','','Pendiente']
+  ];
+  return raw.map(function(r,i){
+    return {id:'mant'+i,fecha:r[0],prioridad:r[1],titulo:r[2],descripcion:r[3],
+            comentarios:r[4],ticket:r[5],observaciones:r[6],estado:r[7],fotos:[]};
+  });
+}
+function mantCompress(file,maxDim,quality){
+  return new Promise(function(resolve,reject){
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      var img=new Image();
+      img.onload=function(){
+        var w=img.width,hh=img.height;
+        if(w>maxDim||hh>maxDim){
+          if(w>hh){hh=Math.round(hh*maxDim/w);w=maxDim;}
+          else{w=Math.round(w*maxDim/hh);hh=maxDim;}
+        }
+        var cv=document.createElement('canvas');cv.width=w;cv.height=hh;
+        cv.getContext('2d').drawImage(img,0,0,w,hh);
+        resolve(cv.toDataURL('image/jpeg',quality));
+      };
+      img.onerror=function(){reject(new Error('No se pudo leer la imagen'));};
+      img.src=ev.target.result;
+    };
+    reader.onerror=function(){reject(new Error('No se pudo leer el archivo'));};
+    reader.readAsDataURL(file);
+  });
+}
+async function mantUploadFoto(file){
+  var dataUrl=await mantCompress(file,1200,0.7);
+  var b64=dataUrl.split(',')[1];
+  var path=MANT_IMG_DIR+genId()+'.jpg';
+  var resp=await fetch('https://api.github.com/repos/'+CONFIG.GH_REPO+'/contents/'+path,{
+    method:'PUT',headers:GH_HDRS,
+    body:JSON.stringify({message:'foto mantenimiento',content:b64})
+  });
+  if(!resp.ok){
+    var t=await resp.text().catch(function(){return'';});
+    throw new Error('HTTP '+resp.status+(t?': '+t.slice(0,100):''));
+  }
+  return {path:path,dataUrl:dataUrl};
+}
+async function mantDeleteFoto(path){
+  try{
+    var url='https://api.github.com/repos/'+CONFIG.GH_REPO+'/contents/'+path;
+    var g=await fetch(url,{headers:GH_HDRS});
+    if(!g.ok)return;
+    var j=await g.json();
+    await fetch(url,{method:'DELETE',headers:GH_HDRS,
+      body:JSON.stringify({message:'borrar foto mantenimiento',sha:j.sha})});
+  }catch(e){console.warn('[mantDeleteFoto]',e.message);}
+}
+function MantRowMenu(props){
+  var openS=_useState(false);var open=openS[0],setOpen=openS[1];
+  _useEffect(function(){
+    if(!open)return;
+    function close(){setOpen(false);}
+    document.addEventListener('click',close);
+    return function(){document.removeEventListener('click',close);};
+  },[open]);
+  return h('div',{style:{position:'relative',display:'inline-block'}},
+    h('button',{onClick:function(e){e.stopPropagation();setOpen(!open);},title:'Opciones',
+      style:{background:'none',border:'none',cursor:'pointer',color:'var(--text-muted)',fontSize:18,fontFamily:'inherit',lineHeight:1,padding:'0 6px'}},'⋮'),
+    open&&h('div',{style:{position:'absolute',right:0,top:'100%',background:'var(--surface)',border:'1px solid var(--border)',borderRadius:6,boxShadow:'0 4px 12px rgba(0,0,0,.2)',zIndex:60,minWidth:150,overflow:'hidden'}},
+      h('button',{onClick:function(e){e.stopPropagation();setOpen(false);props.onDuplicate&&props.onDuplicate();},
+        style:{display:'block',width:'100%',textAlign:'left',padding:'8px 14px',border:'none',background:'none',cursor:'pointer',fontSize:13,color:'var(--text)',fontFamily:'inherit',fontWeight:600}},'⧉ Duplicar'),
+      h('button',{onClick:function(e){e.stopPropagation();setOpen(false);if(window.confirm('¿Borrar esta solicitud?'))props.onDelete();},
+        style:{display:'block',width:'100%',textAlign:'left',padding:'8px 14px',border:'none',background:'none',cursor:'pointer',fontSize:13,color:'#ef4444',fontFamily:'inherit',fontWeight:600}},'🗑 Borrar')
+    )
+  );
+}
+function MantenimientoView(props){
+  var onSave=props.onSaveMant||function(){};
+  var showToast=props.showToast||function(){};
+  var uploadFoto=props.uploadFoto||mantUploadFoto;
+  var rowsS=_useState(function(){
+    var base=props.mantenimiento;
+    if(!base||!base.length)base=mantSeed();
+    return JSON.parse(JSON.stringify(base));
+  });
+  var rows=rowsS[0],setRows=rowsS[1];
+  var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
+  var searchS=_useState('');var search=searchS[0],setSearch=searchS[1];
+  var fPrioS=_useState('Todos');var fPrio=fPrioS[0],setFPrio=fPrioS[1];
+  var fEstS=_useState('Todos');var fEst=fEstS[0],setFEst=fEstS[1];
+  var sortS=_useState('fecha-desc');var sortBy=sortS[0],setSortBy=sortS[1];
+  var lbS=_useState(null);var lightbox=lbS[0],setLightbox=lbS[1];
+  var upS=_useState({});var uploading=upS[0],setUploading=upS[1];
+  var fileRef=_useRef(null);
+  var targetRow=_useRef(null);
+  _useEffect(function(){
+    if(props.mantenimiento&&props.mantenimiento.length)setRows(JSON.parse(JSON.stringify(props.mantenimiento)));
+  },[props.mantenimiento]);
+  function upd(id,field,val){setRows(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
+  function addRow(){
+    var hoy=new Date().toISOString().slice(0,10);
+    setRows(function(prev){return [{id:genId(),fecha:hoy,prioridad:'Necesaria',titulo:'',descripcion:'',comentarios:'',ticket:'',observaciones:'',estado:'Pendiente',fotos:[]}].concat(prev);});
+  }
+  function dupRow(id){
+    setRows(function(prev){
+      var i=prev.findIndex(function(r){return r.id===id;});
+      if(i<0)return prev;
+      var copy=Object.assign({},JSON.parse(JSON.stringify(prev[i])),{id:genId(),estado:'Pendiente',ticket:'',fotos:[]});
+      var next=prev.slice();next.splice(i+1,0,copy);return next;
+    });
+  }
+  function delRow(id){setRows(function(prev){return prev.filter(function(r){return r.id!==id;});});}
+  function sync(){onSave(rows);setSaved(true);setTimeout(function(){setSaved(false);},2500);}
+  function pickFoto(rowId){targetRow.current=rowId;fileRef.current&&fileRef.current.click();}
+  async function handleFiles(files){
+    var rowId=targetRow.current;
+    var arr=Array.from(files);
+    if(!arr.length||!rowId)return;
+    setUploading(function(p){var n=Object.assign({},p);n[rowId]=true;return n;});
+    for(var i=0;i<arr.length;i++){
+      var file=arr[i];
+      if(!/^image\//.test(file.type)){showToast('"'+file.name+'" no es una imagen','error');continue;}
+      try{
+        var out=await uploadFoto(file);
+        (function(o){
+          setRows(function(prev){return prev.map(function(r){
+            return r.id===rowId?Object.assign({},r,{fotos:(r.fotos||[]).concat([o])}):r;
+          });});
+        })(out);
+      }catch(e){showToast('⚠ Error al subir "'+file.name+'": '+e.message,'error');}
+    }
+    setUploading(function(p){var n=Object.assign({},p);delete n[rowId];return n;});
+    showToast('✓ Foto lista — tocá Sincronizar para guardar','info');
+  }
+  function delFoto(rowId,fotoPath){
+    setRows(function(prev){return prev.map(function(r){
+      return r.id===rowId?Object.assign({},r,{fotos:(r.fotos||[]).filter(function(f){return f.path!==fotoPath;})}):r;
+    });});
+    mantDeleteFoto(fotoPath);
+  }
+  var kpis=_useMemo(function(){
+    var pend=rows.filter(function(r){return r.estado==='Pendiente';}).length;
+    var fin=rows.filter(function(r){return r.estado==='Finalizado';}).length;
+    var urgAbiertas=rows.filter(function(r){return r.prioridad==='Urgente'&&r.estado!=='Finalizado';}).length;
+    var sinTicket=rows.filter(function(r){return !(r.ticket||'').trim()&&r.estado!=='Finalizado';}).length;
+    return {total:rows.length,pend:pend,fin:fin,urgAbiertas:urgAbiertas,sinTicket:sinTicket};
+  },[rows]);
+  var visible=_useMemo(function(){
+    var q=search.toLowerCase();
+    var out=rows.filter(function(r){
+      if(fPrio!=='Todos'&&r.prioridad!==fPrio)return false;
+      if(fEst==='Sin definir'){if(r.estado)return false;}
+      else if(fEst!=='Todos'&&r.estado!==fEst)return false;
+      if(q){
+        var hay=[r.titulo,r.descripcion,r.comentarios,r.ticket,r.observaciones].join(' ').toLowerCase();
+        if(hay.indexOf(q)===-1)return false;
+      }
+      return true;
+    });
+    var prioRank={Urgente:0,Necesaria:1,Deseable:2};
+    out.sort(function(a,b){
+      if(sortBy==='fecha-desc')return (b.fecha||'').localeCompare(a.fecha||'');
+      if(sortBy==='fecha-asc') return (a.fecha||'').localeCompare(b.fecha||'');
+      if(sortBy==='prioridad') return (prioRank[a.prioridad]-prioRank[b.prioridad])||((b.fecha||'').localeCompare(a.fecha||''));
+      if(sortBy==='estado'){
+        var er={Pendiente:0,'':1,Finalizado:2};
+        return (er[a.estado||'']-er[b.estado||''])||((b.fecha||'').localeCompare(a.fecha||''));
+      }
+      return 0;
+    });
+    return out;
+  },[rows,search,fPrio,fEst,sortBy]);
+  function downloadCSV(){
+    var head=['Fecha','Nivel de prioridad','Titulo','Descripcion','Comentarios','N° Ticket','Observaciones','Finalizado','Fotos'];
+    var body=visible.map(function(r){
+      return [fmtDate(r.fecha),r.prioridad,r.titulo,r.descripcion,r.comentarios,r.ticket,r.observaciones,r.estado,(r.fotos||[]).length];
+    });
+    var csv=[head].concat(body).map(function(row){
+      return row.map(function(c){return '"'+String(c===undefined?'':c).replace(/"/g,'""')+'"';}).join(',');
+    }).join('\n');
+    var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');a.href=url;
+    a.download='Mantenimiento_SCZ1_'+new Date().toISOString().slice(0,10)+'.csv';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  }
+  function prioSelect(r){
+    var p=MANT_PRIO_MAP[r.prioridad]||MANT_PRIOS[1];
+    return h('select',{value:r.prioridad,onChange:function(e){upd(r.id,'prioridad',e.target.value);},
+      className:'mant-pill-sel',style:{background:p.bg,color:p.color,borderColor:p.color}},
+      MANT_PRIOS.map(function(o){return h('option',{key:o.id,value:o.id},o.id);}));
+  }
+  function estadoSelect(r){
+    var e2=MANT_ESTADO_MAP[r.estado||'']||MANT_ESTADOS[0];
+    return h('select',{value:r.estado||'',onChange:function(ev){upd(r.id,'estado',ev.target.value);},
+      className:'mant-pill-sel',style:{background:e2.bg,color:e2.color,borderColor:e2.color}},
+      MANT_ESTADOS.map(function(o){return h('option',{key:o.id,value:o.id},o.label);}));
+  }
+  return h('div',{className:'mant-wrap'},
+    h('input',{ref:fileRef,type:'file',accept:'image/*',multiple:true,style:{display:'none'},
+      onChange:function(e){handleFiles(e.target.files);e.target.value='';}}),
+    h('div',{className:'mant-hdr'},
+      h('span',{className:'mant-title'},'🔧 Mantenimiento SCZ1'),
+      h('div',{style:{display:'flex',gap:8,flexWrap:'wrap'}},
+        h('button',{className:'mant-btn mant-btn-csv',onClick:downloadCSV},'⬇ CSV'),
+        h('button',{className:'mant-btn mant-btn-add',onClick:addRow},'+ Nueva solicitud'),
+        h('button',{className:'mant-btn mant-btn-sync',onClick:sync},saved?'✓ Guardado':'💾 Sincronizar')
+      )
+    ),
+    h('div',{className:'mant-kpis'},
+      h('div',{className:'mant-kpi'},h('div',{className:'mant-kpi-num',style:{color:'#0F766E'}},kpis.total),h('div',{className:'mant-kpi-lbl'},'Total solicitudes')),
+      h('div',{className:'mant-kpi'},h('div',{className:'mant-kpi-num',style:{color:'#A32D2D'}},kpis.pend),h('div',{className:'mant-kpi-lbl'},'Pendientes')),
+      h('div',{className:'mant-kpi'},h('div',{className:'mant-kpi-num',style:{color:'#1D7A4A'}},kpis.fin),h('div',{className:'mant-kpi-lbl'},'Finalizadas')),
+      h('div',{className:'mant-kpi'},h('div',{className:'mant-kpi-num',style:{color:'#A32D2D'}},kpis.urgAbiertas),h('div',{className:'mant-kpi-lbl'},'Urgentes abiertas')),
+      h('div',{className:'mant-kpi'},h('div',{className:'mant-kpi-num',style:{color:'#854F0B'}},kpis.sinTicket),h('div',{className:'mant-kpi-lbl'},'Sin ticket cargado'))
+    ),
+    h('div',{className:'mant-filters'},
+      h('input',{className:'mant-search',type:'text',placeholder:'Buscar por título, descripción, comentario o ticket...',
+        value:search,onChange:function(e){setSearch(e.target.value);}}),
+      h('div',{style:{display:'flex',gap:6,flexWrap:'wrap'}},
+        ['Todos','Urgente','Necesaria','Deseable'].map(function(p){
+          return h('button',{key:p,className:'mant-chip'+(fPrio===p?' on':''),onClick:function(){setFPrio(p);}},p);
+        })
+      ),
+      h('select',{className:'mant-select',value:fEst,onChange:function(e){setFEst(e.target.value);}},
+        h('option',{value:'Todos'},'Estado: todos'),
+        h('option',{value:'Pendiente'},'Estado: Pendiente'),
+        h('option',{value:'Finalizado'},'Estado: Finalizado'),
+        h('option',{value:'Sin definir'},'Estado: Sin definir')
+      ),
+      h('select',{className:'mant-select',value:sortBy,onChange:function(e){setSortBy(e.target.value);}},
+        h('option',{value:'fecha-desc'},'Ordenar: más nuevas'),
+        h('option',{value:'fecha-asc'},'Ordenar: más viejas'),
+        h('option',{value:'prioridad'},'Ordenar: por prioridad'),
+        h('option',{value:'estado'},'Ordenar: pendientes primero')
+      )
+    ),
+    visible.length===0
+      ? h('div',{className:'mant-empty'},
+          h('div',{style:{fontSize:40,marginBottom:12}},'🔧'),
+          h('div',{style:{fontSize:16,fontWeight:600}},'No hay solicitudes que coincidan'),
+          h('div',{style:{fontSize:13,marginTop:6}},'Probá limpiar los filtros o cargá una nueva solicitud'))
+      : h('div',{className:'mant-scroll'},
+          h('table',{className:'mant-table'},
+            h('thead',null,h('tr',null,
+              ['Fecha','Nivel de prioridad','Título','Descripción','Comentarios','N° Ticket','Observaciones','Finalizado','Imagen',''].map(function(l,i){
+                return h('th',{key:i},l);
+              })
+            )),
+            h('tbody',null,visible.map(function(r){
+              var p=MANT_PRIO_MAP[r.prioridad]||MANT_PRIOS[1];
+              var isUp=!!uploading[r.id];
+              return h('tr',{key:r.id},
+                h('td',{className:p.cls,style:{whiteSpace:'nowrap'}},
+                  h('input',{type:'date',className:'mant-date',value:r.fecha||'',onChange:function(e){upd(r.id,'fecha',e.target.value);}})),
+                h('td',{style:{textAlign:'center'}},prioSelect(r)),
+                h('td',null,h('textarea',{className:'mant-txt',rows:2,style:{fontWeight:600,minWidth:130},value:r.titulo||'',
+                  onChange:function(e){upd(r.id,'titulo',e.target.value);}})),
+                h('td',null,h('textarea',{className:'mant-txt',rows:2,style:{minWidth:170},value:r.descripcion||'',
+                  onChange:function(e){upd(r.id,'descripcion',e.target.value);}})),
+                h('td',null,h('textarea',{className:'mant-txt',rows:2,style:{minWidth:170},value:r.comentarios||'',
+                  onChange:function(e){upd(r.id,'comentarios',e.target.value);}})),
+                h('td',{style:{textAlign:'center'}},h('input',{className:'mant-ticket',placeholder:'—',value:r.ticket||'',
+                  onChange:function(e){upd(r.id,'ticket',e.target.value);}})),
+                h('td',{style:{textAlign:'center'}},h('input',{className:'mant-txt',
+                  style:{minWidth:88,textAlign:'center',fontWeight:(r.observaciones||'').trim()?700:400,color:(r.observaciones||'').trim()?'#0F766E':'var(--text)'},
+                  placeholder:'—',value:r.observaciones||'',onChange:function(e){upd(r.id,'observaciones',e.target.value);}})),
+                h('td',{style:{textAlign:'center'}},estadoSelect(r)),
+                h('td',null,
+                  h('div',{className:'mant-fotos'},
+                    (r.fotos||[]).map(function(f){
+                      return h('div',{key:f.path,className:'mant-thumb'},
+                        h('img',{src:f.dataUrl||f.path,alt:'foto',title:'Ver grande',
+                          onClick:function(){setLightbox(f.dataUrl||f.path);},
+                          onError:function(ev){ev.target.style.display='none';ev.target.parentNode.classList.add('mant-thumb-wait');ev.target.parentNode.setAttribute('title','La foto se está publicando (puede tardar ~1 min)');}}),
+                        h('button',{className:'mant-thumb-del',title:'Quitar foto',
+                          onClick:function(){delFoto(r.id,f.path);}},'✕')
+                      );
+                    }),
+                    h('button',{className:'mant-up',disabled:isUp,title:'Agregar foto',
+                      onClick:function(){pickFoto(r.id);}},isUp?'⋯':'+')
+                  )
+                ),
+                h('td',{style:{textAlign:'center'}},h(MantRowMenu,{onDelete:function(){delRow(r.id);},onDuplicate:function(){dupRow(r.id);}}))
+              );
+            }))
+          )
+        ),
+    h('div',{className:'mant-legend'},
+      'Mostrando '+visible.length+' de '+rows.length+' solicitudes. Las fotos se comprimen a ~1200px y se guardan como archivo en '+MANT_IMG_DIR+' del repo, no dentro del data.json. Acordate de tocar Sincronizar para persistir los cambios.'),
+    lightbox&&h('div',{className:'lightbox',onClick:function(){setLightbox(null);}},
+      h('button',{className:'lightbox-close',onClick:function(e){e.stopPropagation();setLightbox(null);}},'✕'),
+      h('img',{src:lightbox,alt:'foto',className:'lightbox-img',onClick:function(e){e.stopPropagation();}})
+    )
+  );
+}
 // ══════════════════════════════════════════════════════
 // APP
 // ══════════════════════════════════════════════════════
@@ -2052,20 +2336,18 @@ function App(props) {
   var invSt=_useState(null);var inventory=invSt[0],setInventory=invSt[1];
   var calcSt=_useState(null);var calcState=calcSt[0],setCalcState=calcSt[1];
   var equipSt=_useState(null);var equipamiento=equipSt[0],setEquipamiento=equipSt[1];
-
+  var mantSt=_useState(null);var mantenimiento=mantSt[0],setMantenimiento=mantSt[1];
   var showToast=_useCallback(function(message,type){var id=genId();setToasts(function(prev){return prev.concat([{id:id,message:message,type:type||'info'}]);});setTimeout(function(){setToasts(function(prev){return prev.filter(function(t){return t.id!==id;});});},3500);},[]);
-
-  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){setCalcState(data.calcState);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setTier1(data.tier1||null);setTier1Hist(data.tier1Hist||[]);setInventory(data.inventory||null);setEquipamiento(data.equipamiento||null);setLoading(false);});},[]);
+  _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){setCalcState(data.calcState);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setTier1(data.tier1||null);setTier1Hist(data.tier1Hist||[]);setInventory(data.inventory||null);setEquipamiento(data.equipamiento||null);setMantenimiento(data.mantenimiento||null);setLoading(false);});},[]);
   _useEffect(function(){document.body.classList.toggle('dark',dark);},[dark]);
   _useEffect(function(){if(bgImage){document.body.style.backgroundImage='url('+bgImage+')';document.body.style.backgroundSize='cover';document.body.style.backgroundPosition='center';document.body.style.backgroundAttachment='fixed';document.body.classList.add('has-bg');}else{document.body.style.backgroundImage='';document.body.classList.remove('has-bg');}},[ bgImage]);
-
   if(loading)return h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',background:'#1a1f2e',color:'#ffe600',fontSize:'18px',gap:'12px'}},h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⟳'),'Cargando...');
-
   function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg,undefined,undefined,undefined,undefined).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
   function saveCalcToGH(cs){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(undefined,undefined,cs,undefined,undefined,undefined).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveTier1ToGH(t1,t1Hist){setTier1(t1);setTier1Hist(t1Hist);return saveState(undefined,undefined,undefined,t1,t1Hist,undefined).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveInvToGH(invData){setInventory(invData);return saveState(undefined,undefined,undefined,undefined,undefined,invData).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveEquipToGH(eq){setEquipamiento(eq);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,eq).then(function(){showToast('✓ Equipamiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveMantToGH(m){setMantenimiento(m);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,undefined,m).then(function(){showToast('✓ Mantenimiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function handleNew(){setEditing(emptyEntry());setIsNew(true);setModal(true);}
   function handleEdit(e){setEditing(Object.assign({},e));setIsNew(false);setModal(true);}
   function handleSave(entry){var updated=isNew?entries.concat([entry]):entries.map(function(e){return e.id===entry.id?entry:e;});persist(updated);setModal(false);showToast(isNew?'Accion creada':'Accion actualizada','success');}
@@ -2073,11 +2355,9 @@ function App(props) {
   function confirmDel(){persist(entries.filter(function(e){return e.id!==delTarget.id;}));setDelTarget(null);showToast('Accion eliminada','info');}
   function handleBgUpload(e){var file=e.target.files[0];if(!file)return;if(file.size>8*1024*1024){showToast('La imagen supera 8MB','error');return;}var reader=new FileReader();reader.onload=function(ev){var dataUrl=ev.target.result;setBgImage(dataUrl);try{localStorage.setItem('al_bg',dataUrl);}catch(e){}saveState(entries,dataUrl).then(function(){showToast('✓ Fondo guardado','success');}).catch(function(){showToast('✓ Fondo guardado (local)','success');});};reader.readAsDataURL(file);e.target.value='';}
   function handleRemoveBg(){setBgImage('');try{localStorage.removeItem('al_bg');}catch(e){}saveState(entries,'').then(function(){showToast('Fondo eliminado','info');});}
-
   var myEntries=entries.filter(function(e){return isMyTask(e,currentUser);});
   var stats={total:entries.length,resueltas:entries.filter(function(e){return e.resuelto;}).length,pendientes:entries.filter(function(e){return!e.resuelto;}).length,vencidas:entries.filter(function(e){return isOverdue(e.fechaLimite,e.resuelto);}).length};
   var filtered=entries.filter(function(e){if(filterPilar&&e.pilar!==filterPilar)return false;if(filterEstado==='Pendientes'&&e.resuelto)return false;if(filterEstado==='Resueltas'&&!e.resuelto)return false;if(filterMis&&!isMyTask(e,currentUser))return false;if(search){var q=search.toLowerCase();if(!e.tarea.toLowerCase().includes(q)&&!e.accion.toLowerCase().includes(q)&&!e.responsables.toLowerCase().includes(q))return false;}return true;});
-
   return h(React.Fragment,null,
     h('header',{className:'header'},
       h('div',{className:'header-left'},h('div',{className:'header-logo'},'AL'),h('div',null,h('div',{className:'header-title'},'Action Log'),h('div',{className:'header-subtitle'},'SCZ1 · Escobar'))),
@@ -2092,11 +2372,13 @@ function App(props) {
       h('button',{className:'nav-tab'+(page==='acciones'?' active':''),onClick:function(){setPage('acciones');}},'📋 Acciones'),
       h('button',{className:'nav-tab'+(page==='dotacion'?' active':''),onClick:function(){setPage('dotacion');}},'📦 Dotación'),
       h('button',{className:'nav-tab'+(page==='tier1'?' active':''),onClick:function(){setPage('tier1');}},'📈 TIER 1'),
-      h('button',{className:'nav-tab'+(page==='inventario'?' active':''),onClick:function(){setPage('inventario');}},'📦 Inventario')
+      h('button',{className:'nav-tab'+(page==='inventario'?' active':''),onClick:function(){setPage('inventario');}},'📦 Inventario'),
+      h('button',{className:'nav-tab'+(page==='mantenimiento'?' active':''),onClick:function(){setPage('mantenimiento');}},'🔧 Mantenimiento')
     ),
     page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH,calcState:calcState}):
     page==='tier1'?h(Tier1View,{tier1:tier1,tier1Hist:tier1Hist,onSaveTier1:saveTier1ToGH}):
     page==='inventario'?h(InventarioView,{inventory:inventory,onSaveInv:saveInvToGH,equipamiento:equipamiento,onSaveEquip:saveEquipToGH}):
+    page==='mantenimiento'?h(MantenimientoView,{mantenimiento:mantenimiento,onSaveMant:saveMantToGH,showToast:showToast}):
     h('main',{className:'main'},
       h('div',{style:{display:'flex',gap:0,marginBottom:16,borderBottom:'2px solid var(--border)'}},
         [['registro','📋 Registro de Acciones'],['analytics','📊 Analytics']].map(function(t){
@@ -2123,7 +2405,6 @@ function App(props) {
     h(Toast,{toasts:toasts})
   );
 }
-
 function Root(){var us=_useState(null);var currentUser=us[0],setCurrentUser=us[1];if(!currentUser)return h(LoginScreen,{onLogin:setCurrentUser});return h(App,{currentUser:currentUser,onLogout:function(){setCurrentUser(null);}});}
 var container=document.getElementById('root');
 var root=ReactDOM.createRoot(container);

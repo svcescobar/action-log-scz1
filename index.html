@@ -439,8 +439,15 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     var json=await resp.json();
     _ghSha=json.sha;
     var srv=JSON.parse(b64dec(json.content));
+    // Safety: if server data looks corrupted/empty, abort instead of overwriting good data
+    if(!srv||typeof srv!=='object'){throw new Error('data.json corrompido en el servidor - guardado cancelado');}
+    // If server has entries but we'd overwrite with empty, protect them
+    var safeEntries=entries;
+    if((entries===undefined||entries===null)&&Array.isArray(srv.entries)&&srv.entries.length>0){
+      safeEntries=srv.entries; // always preserve server entries when not explicitly changing them
+    }
     var merged={
-      entries:       pick(entries,       srv.entries,       []),
+      entries:       pick(safeEntries,   srv.entries,       []),
       bgImage:       pick(bgImage,       srv.bgImage,       ''),
       calcState:     pick(calcState,     srv.calcState,     {}),
       tier1:         pick(tier1,         srv.tier1,         _lastTier1||null),
@@ -466,6 +473,8 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
       }
       var result=await resp.json();
       _ghSha=result.content.sha;
+      // Verify the write succeeded with valid content
+      if(!result.content||!result.content.sha){throw new Error('Respuesta inesperada de GitHub');}
       return;
     }catch(e){
       lastErr=e;

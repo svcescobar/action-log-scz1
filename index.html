@@ -731,10 +731,12 @@ function DotacionView(props) {
   var rfamS=_useState(_saved.rfAm!==undefined?_saved.rfAm:22);        var rfAm=rfamS[0],setRfAm=rfamS[1];
   var vacamS=_useState(_saved.vacAm||0);     var vacAm=vacamS[0],setVacAm=vacamS[1];
   var ausAmS=_useState(_saved.ausAm!==undefined?_saved.ausAm:1);      var ausAm=ausAmS[0],setAusAm=ausAmS[1];
+  var ausAmRealS=_useState(_saved.ausAmReal!==undefined?_saved.ausAmReal:1); var ausAmReal=ausAmRealS[0],setAusAmReal=ausAmRealS[1];
   var presAmS=_useState(_saved.presAm||0);   var presAm=presAmS[0],setPresAm=presAmS[1];
   var rfpmS=_useState(_saved.rfPm!==undefined?_saved.rfPm:2);         var rfPm=rfpmS[0],setRfPm=rfpmS[1];
   var vacpmS=_useState(_saved.vacPm||0);     var vacPm=vacpmS[0],setVacPm=vacpmS[1];
   var auspmS=_useState(_saved.ausPm||0);     var ausPm=auspmS[0],setAusPm=auspmS[1];
+  var ausPmRealS=_useState(_saved.ausPmReal||0); var ausPmReal=ausPmRealS[0],setAusPmReal=ausPmRealS[1];
   var prespmS=_useState(_saved.presPm||0);   var presPm=prespmS[0],setPresPm=prespmS[1];
   var horaAmS=_useState(_saved.horaAm||'8:30hs');   var horaAm=horaAmS[0],setHoraAm=horaAmS[1];
   var horaPmS=_useState(_saved.horaPm||'15:45hs');   var horaPm=horaPmS[0],setHoraPm=horaPmS[1];
@@ -763,10 +765,12 @@ function DotacionView(props) {
     if(s.rfAm!==undefined)setRfAm(s.rfAm);
     if(s.vacAm!==undefined)setVacAm(s.vacAm);
     if(s.ausAm!==undefined)setAusAm(s.ausAm);
+    if(s.ausAmReal!==undefined)setAusAmReal(s.ausAmReal);
     if(s.presAm!==undefined)setPresAm(s.presAm);
     if(s.rfPm!==undefined)setRfPm(s.rfPm);
     if(s.vacPm!==undefined)setVacPm(s.vacPm);
     if(s.ausPm!==undefined)setAusPm(s.ausPm);
+    if(s.ausPmReal!==undefined)setAusPmReal(s.ausPmReal);
     if(s.presPm!==undefined)setPresPm(s.presPm);
     if(s.horaAm!==undefined)setHoraAm(s.horaAm);
     if(s.horaPm!==undefined)setHoraPm(s.horaPm);
@@ -780,9 +784,9 @@ function DotacionView(props) {
       localStorage.setItem(CALC_KEY, JSON.stringify({
         scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,
         volRealAm:volRealAm,volRealPm:volRealPm,share:share,
-        rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,presAm:presAm,
-        rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,presPm:presPm,
-        horaAm:horaAm,horaPm:horaPm,
+        rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,ausAmReal:ausAmReal,presAm:presAm,
+        rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,ausPmReal:ausPmReal,presPm:presPm,
+        horaAm:horaAm,horaPm:horaPm,ausAmReal:ausAmReal,ausPmReal:ausPmReal,
         tarifFijo:tarifFijo,tarifEv:tarifEv,targetGgp:targetGgp
       }));
     }catch(e){}
@@ -792,10 +796,12 @@ function DotacionView(props) {
     var volFcstAm=scz1+ecz1+ecz2;
     var fijosAm=rfAm-vacAm-ausAm;
     var fijosPm=rfPm-vacPm-ausPm;
+    var fijosAmReal=rfAm-vacAm-ausAmReal;
+    var fijosPmReal=rfPm-vacPm-ausPmReal;
     var evFcstAm=Math.ceil(volFcstAm/gross)-fijosAm;
     var evFcstPm=Math.ceil(scz1Pm/gross)-fijosPm;
-    var evRealAm=volRealAm>0?Math.ceil(volRealAm/gross)-fijosAm:null;
-    var evRealPm=volRealPm>0?Math.ceil(volRealPm/gross)-fijosPm:null;
+    var evRealAm=volRealAm>0?Math.ceil(volRealAm/gross)-fijosAmReal:null;
+    var evRealPm=volRealPm>0?Math.ceil(volRealPm/gross)-fijosPmReal:null;
     var difAm=evRealAm!==null?evRealAm-presAm:null;
     var difPm=evRealPm!==null?evRealPm-presPm:null;
     var totalNec=Math.ceil(volFcstAm/gross)+Math.ceil(scz1Pm/gross);
@@ -808,7 +814,7 @@ function DotacionView(props) {
     var htR=hfR+heR;
     var volRT=volRealAm+volRealPm;
     var ggpR=htR>0&&volRT>0?volRT/htR:0;
-    return{gross:gross,volFcstAm:volFcstAm,fijosAm:fijosAm,fijosPm:fijosPm,evFcstAm:evFcstAm,evFcstPm:evFcstPm,evRealAm:evRealAm,evRealPm:evRealPm,difAm:difAm,difPm:difPm,totalNec:totalNec,hfF:hfF,heF:heF,htF:htF,ggpF:ggpF,hfR:hfR,heR:heR,htR:htR,ggpR:ggpR,volRT:volRT};
+    return{gross:gross,volFcstAm:volFcstAm,fijosAm:fijosAm,fijosPm:fijosPm,fijosAmReal:fijosAmReal,fijosPmReal:fijosPmReal,evFcstAm:evFcstAm,evFcstPm:evFcstPm,evRealAm:evRealAm,evRealPm:evRealPm,difAm:difAm,difPm:difPm,totalNec:totalNec,hfF:hfF,heF:heF,htF:htF,ggpF:ggpF,hfR:hfR,heR:heR,htR:htR,ggpR:ggpR,volRT:volRT};
   },[scz1,ecz1,ecz2,scz1Pm,volRealAm,volRealPm,share,rfAm,vacAm,ausAm,presAm,rfPm,vacPm,ausPm,presPm]);
   function fmtN(n){return Math.round(n).toLocaleString('es-AR');}
   function fmtD(n,d){d=d||1;return(isNaN(n)||!isFinite(n)||n===0)?'—':n.toFixed(d);}
@@ -889,15 +895,15 @@ function DotacionView(props) {
       h('div',{className:'dot-row',style:{background:bg}},
         h('div',{className:'dot-row-label'},'Ausencias'),
         h('div',{className:'dot-row-cell'},numInput(cfg.aus,cfg.setAus,bg,accent)),
-        h('div',{className:'dot-row-cell'},cfg.aus),
-        h('div',{className:'dot-row-cell'},numInput(cfg.aus,cfg.setAus,bg,accent)),
+        h('div',{className:'dot-row-cell'}),
+        h('div',{className:'dot-row-cell'},numInput(cfg.ausReal!==undefined?cfg.ausReal:cfg.aus,cfg.setAusReal||cfg.setAus,bg,accent)),
         h('div',{className:'dot-row-cell'})
       ),
       h('div',{className:'dot-row',style:{background:'#EFEFEB',fontWeight:700}},
         h('div',{className:'dot-row-label',style:{fontWeight:700}},'Fijos presentes'),
         h('div',{className:'dot-row-cell',style:{fontWeight:700}},cfg.fijos),
         h('div',{className:'dot-row-cell',style:{fontWeight:700}},cfg.fijos),
-        h('div',{className:'dot-row-cell',style:{fontWeight:700}},cfg.fijos),
+        h('div',{className:'dot-row-cell',style:{fontWeight:700}},cfg.fijosReal!==undefined?cfg.fijosReal:cfg.fijos),
         h('div',{className:'dot-row-cell'})
       ),
       h('div',{className:'dot-row',style:{background:'#EFEFEB'}},
@@ -959,8 +965,8 @@ function DotacionView(props) {
     ),
     // COL 2
     h('div',null,
-      turnoSection({label:'TURNO AM',rf:rfAm,setRf:setRfAm,vac:vacAm,setVac:setVacAm,aus:ausAm,setAus:setAusAm,fijos:c.fijosAm,evFcst:c.evFcstAm,evReal:c.evRealAm,pres:presAm,setPres:setPresAm,dif:c.difAm}),
-      turnoSection({label:'TURNO PM',rf:rfPm,setRf:setRfPm,vac:vacPm,setVac:setVacPm,aus:ausPm,setAus:setAusPm,fijos:c.fijosPm,evFcst:c.evFcstPm,evReal:c.evRealPm,pres:presPm,setPres:setPresPm,dif:c.difPm}),
+      turnoSection({label:'TURNO AM',rf:rfAm,setRf:setRfAm,vac:vacAm,setVac:setVacAm,aus:ausAm,setAus:setAusAm,ausReal:ausAmReal,setAusReal:setAusAmReal,fijos:c.fijosAm,fijosReal:c.fijosAmReal,evFcst:c.evFcstAm,evReal:c.evRealAm,pres:presAm,setPres:setPresAm,dif:c.difAm}),
+      turnoSection({label:'TURNO PM',rf:rfPm,setRf:setRfPm,vac:vacPm,setVac:setVacPm,aus:ausPm,setAus:setAusPm,ausReal:ausPmReal,setAusReal:setAusPmReal,fijos:c.fijosPm,fijosReal:c.fijosPmReal,evFcst:c.evFcstPm,evReal:c.evRealPm,pres:presPm,setPres:setPresPm,dif:c.difPm}),
       h('div',{style:{padding:'6px 10px',background:'var(--border)',borderRadius:6,fontSize:11,color:'var(--text)',fontStyle:'italic',marginBottom:12}},'DIFERENCIA: positivo = faltan personas · negativo = sobran personas')
     ),
     // COL 3
@@ -1199,7 +1205,7 @@ function DotacionView(props) {
         h('span',{style:{color:'#fff',fontWeight:700,fontSize:11,letterSpacing:'.07em',textTransform:'uppercase'}},'Volumen FCST — actualizá estos valores diariamente'),
         h('button',{
           onClick:function(){
-            var state={scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,volRealAm:volRealAm,volRealPm:volRealPm,share:share,rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,presAm:presAm,rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,presPm:presPm,horaAm:horaAm,horaPm:horaPm,tarifFijo:tarifFijo,tarifEv:tarifEv,targetGgp:targetGgp};
+            var state={scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,volRealAm:volRealAm,volRealPm:volRealPm,share:share,rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,ausAmReal:ausAmReal,presAm:presAm,rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,ausPmReal:ausPmReal,presPm:presPm,horaAm:horaAm,horaPm:horaPm,tarifFijo:tarifFijo,tarifEv:tarifEv,targetGgp:targetGgp};
             onSaveCalc(state);
           },
           style:{background:'#FFE600',color:'#1a1f2e',border:'none',borderRadius:5,padding:'4px 12px',fontWeight:700,fontSize:12,cursor:'pointer',fontFamily:'inherit'}

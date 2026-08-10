@@ -1593,17 +1593,18 @@ var EQUIP_SEED = [];
 function InventarioView(props){
   var onSave=props.onSaveInv||function(){};
   var init=props.inventory||INV_SEED;
+  function ensureEqIds(arr){return arr.map(function(r){return r.id?r:Object.assign({},r,{id:genId()});});}
   var eqInitFn = function(){
     var base = props.equipamiento;
     if(!base) base = EQUIP_SEED;
-    return JSON.parse(JSON.stringify(base));
+    return ensureEqIds(JSON.parse(JSON.stringify(base)));
   };
   var eqSt=_useState(eqInitFn);var equip=eqSt[0],setEquip=eqSt[1];
   var eqSearchS=_useState('');var eqSearch=eqSearchS[0],setEqSearch=eqSearchS[1];
   var eqFilterS=_useState('Todos');var eqFilter=eqFilterS[0],setEqFilter=eqFilterS[1];
   // Re-apply equipamiento from GitHub when it arrives
   _useEffect(function(){
-    if(props.equipamiento)setEquip(JSON.parse(JSON.stringify(props.equipamiento)));
+    if(props.equipamiento)setEquip(ensureEqIds(JSON.parse(JSON.stringify(props.equipamiento))));
   },[props.equipamiento]);
   function updEquip(id,field,val){setEquip(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addEquip(){setEquip(function(prev){return prev.concat([{id:genId(),elemento:'',numero:'',serial:'',operativo:true,observaciones:''}]);});}
@@ -1959,23 +1960,39 @@ function InventarioView(props){
             )),
             h('tbody',null,(function(){
               var q=eqSearch.toLowerCase();
+              // Calcular N° automático por tipo de elemento en el array completo (no en el filtrado)
+              var elemCounter={};
+              equip.forEach(function(r){
+                var key=(r.elemento||'').trim().toLowerCase();
+                elemCounter[r.id]=(elemCounter[key]=(elemCounter[key]||0)+1);
+                elemCounter[key]=elemCounter[r.id];
+              });
+              // Recalcular limpio
+              var elemCount2={};
+              var autoNum={};
+              equip.forEach(function(r){
+                var key=(r.elemento||'').trim().toLowerCase();
+                elemCount2[key]=(elemCount2[key]||0)+1;
+                autoNum[r.id]=elemCount2[key];
+              });
               return equip.filter(function(r){
                 if(eqFilter==='op'&&!r.operativo)return false;
                 if(eqFilter==='nop'&&r.operativo)return false;
                 if(q&&!(r.elemento.toLowerCase().includes(q)||r.serial.toLowerCase().includes(q)||(r.observaciones||'').toLowerCase().includes(q)))return false;
                 return true;
               }).map(function(r){
-                return h('tr',{key:r.id,style:{background:r.operativo?'':'rgba(239,68,68,.04)'}},
-                  h('td',null,h('input',{className:'inv-txt-input',value:r.elemento,onChange:function(e){updEquip(r.id,'elemento',e.target.value);}})),
-                  h('td',{style:{textAlign:'center',width:50}},h('input',{className:'inv-cell-input',value:r.numero,onChange:function(e){updEquip(r.id,'numero',e.target.value);},style:{width:50}})),
-                  h('td',null,h('input',{className:'inv-txt-input',value:r.serial,onChange:function(e){updEquip(r.id,'serial',e.target.value);},style:{fontFamily:'monospace',fontSize:11}})),
+                var rid=r.id;var rop=r.operativo;
+                return h('tr',{key:rid,style:{background:rop?'':'rgba(239,68,68,.04)'}},
+                  h('td',null,h('input',{className:'inv-txt-input',value:r.elemento,onChange:function(e){updEquip(rid,'elemento',e.target.value);}})),
+                  h('td',{style:{textAlign:'center',width:40,fontWeight:700,color:'var(--text-muted)',fontSize:13}},autoNum[rid]||''),
+                  h('td',null,h('input',{className:'inv-txt-input',value:r.serial,onChange:function(e){updEquip(rid,'serial',e.target.value);},style:{fontFamily:'monospace',fontSize:11}})),
                   h('td',{style:{textAlign:'center'}},
-                    h('button',{onClick:function(){updEquip(r.id,'operativo',!r.operativo);},className:'eq-op-badge '+(r.operativo?'eq-op-yes':'eq-op-no')},
-                      r.operativo?'✓ Operativo':'✗ No operativo'
+                    h('button',{onClick:function(){updEquip(rid,'operativo',!rop);},className:'eq-op-badge '+(rop?'eq-op-yes':'eq-op-no')},
+                      rop?'✓ Operativo':'✗ No operativo'
                     )
                   ),
-                  h('td',null,h('input',{className:'inv-txt-input',value:r.observaciones||'',placeholder:'—',onChange:function(e){updEquip(r.id,'observaciones',e.target.value);}})),
-                  h('td',null,h(RowMenu,{onDelete:function(){delEquip(r.id);}}))
+                  h('td',null,h('input',{className:'inv-txt-input',value:r.observaciones||'',placeholder:'—',onChange:function(e){updEquip(rid,'observaciones',e.target.value);}})),
+                  h('td',null,h(RowMenu,{onDelete:function(){delEquip(rid);}}))
                 );
               });
             })())

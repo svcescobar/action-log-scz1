@@ -441,10 +441,10 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     var srv=JSON.parse(b64dec(json.content));
     // Safety: if server data looks corrupted/empty, abort instead of overwriting good data
     if(!srv||typeof srv!=='object'){throw new Error('data.json corrompido en el servidor - guardado cancelado');}
-    // If server has entries but we'd overwrite with empty, protect them
+    // If server has entries but we'd overwrite with empty/null/undefined, protect them
     var safeEntries=entries;
-    if((entries===undefined||entries===null)&&Array.isArray(srv.entries)&&srv.entries.length>0){
-      safeEntries=srv.entries; // always preserve server entries when not explicitly changing them
+    if((!Array.isArray(entries)||entries.length===0)&&Array.isArray(srv.entries)&&srv.entries.length>0){
+      safeEntries=srv.entries; // always preserve server entries when caller isn't explicitly saving entries
     }
     var merged={
       entries:       pick(safeEntries,   srv.entries,       []),

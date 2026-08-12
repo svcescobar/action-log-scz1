@@ -407,7 +407,9 @@ async function loadState(){
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;
-    var data=JSON.parse(b64dec(json.content));
+    var rawContent=json.content?b64dec(json.content):null;
+    if(!rawContent&&json.download_url){rawContent=await fetch(json.download_url+'?t='+Date.now()).then(function(r){return r.text();});}
+    var data=JSON.parse(rawContent);
     _lastTier1=data.tier1||null; _lastTier1Hist=data.tier1Hist||[];
     _lastInv=data.inventory||null; _lastEquip=data.equipamiento||null;
     _lastMant=data.mantenimiento||null;
@@ -438,7 +440,9 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     if(!resp.ok)throw new Error('read HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;
-    var srv=JSON.parse(b64dec(json.content));
+    var rawSrv=json.content?b64dec(json.content):null;
+    if(!rawSrv&&json.download_url){rawSrv=await fetch(json.download_url+'?t='+Date.now()).then(function(r){return r.text();});}
+    var srv=JSON.parse(rawSrv);
     // Safety: if server data looks corrupted/empty, abort instead of overwriting good data
     if(!srv||typeof srv!=='object'){throw new Error('data.json corrompido en el servidor - guardado cancelado');}
     // If server has entries but we'd overwrite with empty/null/undefined, protect them

@@ -2013,6 +2013,13 @@ function InventarioView(props){
 // MANTENIMIENTO VIEW
 // ══════════════════════════════════════════════════════
 var MANT_IMG_DIR='img/mant/';
+var GH_PAGES_BASE='https://svcescobar.github.io/action-log-scz1/';
+function mantFotoUrl(foto){
+  if(!foto)return '';
+  if(foto.dataUrl)return foto.dataUrl; // fotos viejas con base64
+  if(foto.path)return GH_PAGES_BASE+foto.path; // fotos nuevas con path
+  return '';
+}
 var MANT_PRIOS=[
   {id:'Urgente',  bg:'#FDECEA',color:'#A32D2D',cls:'mant-row-urg'},
   {id:'Necesaria',bg:'#FFF8E6',color:'#854F0B',cls:'mant-row-nec'},
@@ -2101,7 +2108,7 @@ async function mantUploadFoto(file){
     var t=await resp.text().catch(function(){return'';});
     throw new Error('HTTP '+resp.status+(t?': '+t.slice(0,100):''));
   }
-  return {path:path,dataUrl:dataUrl};
+  return {path:path}; // dataUrl no se persiste en JSON, se carga desde GitHub Pages
 }
 async function mantDeleteFoto(path){
   try{
@@ -2362,8 +2369,8 @@ function MantenimientoView(props){
                   h('div',{className:'mant-fotos'},
                     (r.fotos||[]).map(function(f,fi){
                       return h('div',{key:f.path,className:'mant-thumb'},
-                        h('img',{src:f.dataUrl||f.path,alt:'foto',title:'Ver grande',
-                          onClick:function(){setLightbox({url:f.dataUrl||f.path,row:r,foto:f,idx:fi});},
+                        h('img',{src:mantFotoUrl(f),alt:'foto',title:'Ver grande',
+                          onClick:function(){setLightbox({url:mantFotoUrl(f),row:r,foto:f,idx:fi});},
                           onError:function(ev){ev.target.style.display='none';ev.target.parentNode.classList.add('mant-thumb-wait');ev.target.parentNode.setAttribute('title','La foto se está publicando (puede tardar ~1 min)');}}),
                         h('button',{className:'mant-thumb-dl',title:'Descargar foto',
                           onClick:function(e){e.stopPropagation();mantDownloadFoto(r,f,fi);}},'\u2B07'),

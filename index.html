@@ -402,14 +402,13 @@ function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
 async function loadState(){
   try{
-    var resp=await fetch(GH_API,{headers:Object.assign({},GH_HDRS,{'Cache-Control':'no-cache'})});
+    var resp=await fetch(GH_API,{headers:GH_HDRS});
     if(resp.status===404)return{entries:makeSeed(),bgImage:''};
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;
     var rawContent=json.content?b64dec(json.content):null;
-    if(!rawContent&&json.download_url){rawContent=await fetch(json.download_url+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.text();});}
-    if(!rawContent)throw new Error('No se pudo leer data.json');
+    if(!rawContent&&json.download_url){rawContent=await fetch(json.download_url+'?t='+Date.now()).then(function(r){return r.text();});}
     var data=JSON.parse(rawContent);
     _lastTier1=data.tier1||null; _lastTier1Hist=data.tier1Hist||[];
     _lastInv=data.inventory||null; _lastEquip=data.equipamiento||null;
@@ -437,14 +436,12 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     return fallback;
   }
   async function buildPayload(){
-    var cacheBust={'Cache-Control':'no-cache','Pragma':'no-cache'};
-    var resp=await fetch(GH_API,{headers:Object.assign({},GH_HDRS,cacheBust)});
+    var resp=await fetch(GH_API,{headers:GH_HDRS});
     if(!resp.ok)throw new Error('read HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;
     var rawSrv=json.content?b64dec(json.content):null;
-    if(!rawSrv&&json.download_url){rawSrv=await fetch(json.download_url+'?nocache='+Date.now(),{cache:'no-store'}).then(function(r){return r.text();});}
-    if(!rawSrv)throw new Error('No se pudo leer data.json del servidor');
+    if(!rawSrv&&json.download_url){rawSrv=await fetch(json.download_url+'?t='+Date.now()).then(function(r){return r.text();});}
     var srv=JSON.parse(rawSrv);
     // Safety: if server data looks corrupted/empty, abort instead of overwriting good data
     if(!srv||typeof srv!=='object'){throw new Error('data.json corrompido en el servidor - guardado cancelado');}
@@ -2201,7 +2198,12 @@ function MantenimientoView(props){
   function upd(id,field,val){setRows(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addRow(){
     var hoy=new Date().toISOString().slice(0,10);
-    setRows(function(prev){return [{id:genId(),fecha:hoy,prioridad:'Necesaria',titulo:'',descripcion:'',comentarios:'',ticket:'',observaciones:'',estado:'Pendiente',fotos:[]}].concat(prev);});
+    var newRow={id:genId(),fecha:hoy,prioridad:'Necesaria',titulo:'',descripcion:'',comentarios:'',ticket:'',observaciones:'',estado:'Pendiente',fotos:[]};
+    setRows(function(prev){
+      var updated=[newRow].concat(prev);
+      onSave(updated);
+      return updated;
+    });
   }
   function dupRow(id){
     setRows(function(prev){
@@ -2232,7 +2234,12 @@ function MantenimientoView(props){
       }catch(e){showToast('⚠ Error al subir "'+file.name+'": '+e.message,'error');}
     }
     setUploading(function(p){var n=Object.assign({},p);delete n[rowId];return n;});
-    showToast('✓ Foto lista — tocá Sincronizar para guardar','info');
+    // Auto-sincronizar después de subir foto para no perder datos
+    setRows(function(currentRows){
+      onSave(currentRows);
+      return currentRows;
+    });
+    showToast('✓ Foto subida y sincronizada','success');
   }
   function delFoto(rowId,fotoPath){
     setRows(function(prev){return prev.map(function(r){

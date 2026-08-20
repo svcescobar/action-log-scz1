@@ -1296,20 +1296,6 @@ function Tier1View(props){
   var tabS=_useState('semana');var tab=tabS[0],setTab=tabS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
   var editWkS=_useState(null);var editWk=editWkS[0],setEditWk=editWkS[1];
-  // Re-sincronizar t1/hist cuando los props llegan después del montaje inicial
-  // (ej: loadState() todavía no había resuelto cuando este componente montó)
-  var hydrated=_useRef(false);
-  _useEffect(function(){
-    if(!hydrated.current&&props.tier1){
-      setT1(JSON.parse(JSON.stringify(props.tier1)));
-      hydrated.current=true;
-    }
-  },[props.tier1]);
-  _useEffect(function(){
-    if(props.tier1Hist&&props.tier1Hist.length&&!hist.length){
-      setHist(JSON.parse(JSON.stringify(props.tier1Hist)));
-    }
-  },[props.tier1Hist]);
   function updCell(turno,metricK,dayK,val){
     setT1(function(prev){
       var next=JSON.parse(JSON.stringify(prev));
@@ -1321,9 +1307,9 @@ function Tier1View(props){
   function updFecha(i,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.fechas[i]=val;return n;});}
   function updTarget(turno,metricK,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));if(!n.targets)n.targets={am:{},pm:{}};if(!n.targets[turno])n.targets[turno]={};n.targets[turno][metricK]=val;return n;});}
   function updSemana(val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.semana=val;return n;});}
-  function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});onSave(n,hist);return n;});}
+  function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});return n;});}
   function updPlan(turno,id,field,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].map(function(p){return p.id===id?Object.assign({},p,{[field]:val}):p;});return n;});}
-  function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});onSave(n,hist);return n;});}
+  function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});return n;});}
   function calcAvg(turno,metricK){
     var m=(t1[turno]&&t1[turno][metricK])||{};
     var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});
@@ -1368,6 +1354,32 @@ function Tier1View(props){
     setHist(function(prev){return prev.map(function(w){if(w.id!==wkId)return w;var nw=JSON.parse(JSON.stringify(w));if(!nw.targets)nw.targets={am:{},pm:{}};if(!nw.targets[turno])nw.targets[turno]={};nw.targets[turno][metricK]=val;return nw;});});
   }
   function saveHistEdits(){ onSave(t1,hist); setEditWk(null); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
+  function renderHistPlanTable(w,turno){
+    var key=turno==='am'?'planAm':'planPm';
+    var rows=w[key]||[];
+    return h('div',{style:{marginTop:14}},
+      h('div',{className:'t1-turno-hdr'+(turno==='pm'?' pm':''),style:{marginBottom:0}},
+        (turno==='am'?'☀ PLAN DE ACCIÓN AM':'☽ PLAN DE ACCIÓN PM')),
+      h('table',{className:'t1-plan-table'},
+        h('thead',null,h('tr',null,
+          ['Oportunidad de mejora / Problema','Fecha','Plan de acción','Detalle','Objetivo','Dirigido a','Responsable'].map(function(lbl){
+            return h('th',{key:lbl},lbl);
+          })
+        )),
+        h('tbody',null,
+          rows.length===0
+            ? h('tr',null,h('td',{colSpan:7,style:{textAlign:'center',color:'var(--text-muted)',padding:14}},'Sin acciones cargadas'))
+            : rows.map(function(p){
+                return h('tr',{key:p.id},
+                  ['oportunidad','fecha','plan','detalle','objetivo','dirigido','responsable'].map(function(f){
+                    return h('td',{key:f,style:{fontSize:12,padding:'6px 8px',whiteSpace:'pre-wrap'}},p[f]||'—');
+                  })
+                );
+              })
+        )
+      )
+    );
+  }
   function renderHistTable(w,turno,metrics){
     return h('div',{className:'t1-scroll'},
       h('table',{className:'t1-table'},
@@ -1517,8 +1529,10 @@ function Tier1View(props){
                   ),
                   h('div',{className:'t1-turno-hdr'},'☀ TURNO AM'),
                   renderHistTable(w,'am',T1_METRICS_AM),
+                  renderHistPlanTable(w,'am'),
                   h('div',{className:'t1-turno-hdr pm',style:{marginTop:16}},'☽ TURNO PM'),
-                  renderHistTable(w,'pm',T1_METRICS_PM)
+                  renderHistTable(w,'pm',T1_METRICS_PM),
+                  renderHistPlanTable(w,'pm')
                 )
               : h('div',{style:{fontSize:12,color:'var(--text-muted)'}},
                   'Volumen AM prom: '+(function(){var m=(w.am&&w.am.volumen)||{};var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});return vals.length?Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length).toLocaleString('es-AR'):'—';})()+

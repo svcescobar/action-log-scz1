@@ -1296,6 +1296,20 @@ function Tier1View(props){
   var tabS=_useState('semana');var tab=tabS[0],setTab=tabS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
   var editWkS=_useState(null);var editWk=editWkS[0],setEditWk=editWkS[1];
+  // Re-sincronizar t1/hist cuando los props llegan después del montaje inicial
+  // (ej: loadState() todavía no había resuelto cuando este componente montó)
+  var hydrated=_useRef(false);
+  _useEffect(function(){
+    if(!hydrated.current&&props.tier1){
+      setT1(JSON.parse(JSON.stringify(props.tier1)));
+      hydrated.current=true;
+    }
+  },[props.tier1]);
+  _useEffect(function(){
+    if(props.tier1Hist&&props.tier1Hist.length&&!hist.length){
+      setHist(JSON.parse(JSON.stringify(props.tier1Hist)));
+    }
+  },[props.tier1Hist]);
   function updCell(turno,metricK,dayK,val){
     setT1(function(prev){
       var next=JSON.parse(JSON.stringify(prev));
@@ -1307,9 +1321,9 @@ function Tier1View(props){
   function updFecha(i,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.fechas[i]=val;return n;});}
   function updTarget(turno,metricK,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));if(!n.targets)n.targets={am:{},pm:{}};if(!n.targets[turno])n.targets[turno]={};n.targets[turno][metricK]=val;return n;});}
   function updSemana(val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.semana=val;return n;});}
-  function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});return n;});}
+  function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});onSave(n,hist);return n;});}
   function updPlan(turno,id,field,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].map(function(p){return p.id===id?Object.assign({},p,{[field]:val}):p;});return n;});}
-  function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});return n;});}
+  function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});onSave(n,hist);return n;});}
   function calcAvg(turno,metricK){
     var m=(t1[turno]&&t1[turno][metricK])||{};
     var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});

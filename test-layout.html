@@ -2236,6 +2236,7 @@ function LayoutView(props){
   }
   _useEffect(function(){
     if(booted.current)return;booted.current=true;
+    if(props.layout)window.__layHydrated=true;
     window._layInitial=props.layout||null;
     console.log('[Layout] mount - props.layout keys:', props.layout?Object.keys(props.layout):null,
       '| PROD count:', props.layout&&props.layout.PROD?Object.keys(props.layout.PROD).length:'-');
@@ -2269,9 +2270,19 @@ function LayoutView(props){
   },[]);
   _useEffect(function(){
     if(!props.layout||!booted.current)return;
+    // Si este cambio de props.layout es el ECO de un guardado que nosotros mismos disparamos
+    // (window.__laySkipNextReload), NO volvemos a cargar: recargar pisaria cualquier edicion
+    // que el usuario haya hecho mientras el guardado anterior todavia estaba en vuelo.
+    // Solo recargamos de verdad la PRIMERA vez que llegan datos reales (antes de que el usuario
+    // pueda haber editado nada), es decir cuando el propio componente aun no habia hidratado.
+    if(window.__laySkipNextReload){
+      window.__laySkipNextReload=false;
+      window._layInitial=props.layout; // referencia informativa, no dispara load()
+      return;
+    }
+    if(window.__layHydrated)return; // ya se hidrato una vez con datos reales; no pisar ediciones en curso
+    window.__layHydrated=true;
     window._layInitial=props.layout;
-    console.log('[Layout] props.layout actualizo (2do efecto) - PROD count:',
-      props.layout.PROD?Object.keys(props.layout.PROD).length:'-');
     setTimeout(function(){try{
       var A=window._layAPI;if(!A)return;
       A.load();A.fillCfg();A.render();A.renderPool();
@@ -2979,6 +2990,7 @@ function save(){collectCfg();
   var _btn=document.getElementById('lay-save-btn');
   if(_btn){_btn.disabled=true;_btn.textContent='\u23f3 Guardando...';}
   window.__laySaving=true;
+  window.__laySkipNextReload=true;
   var _p=window._layOnSave({T:T,turno:turno,PROD:PROD,CRIT:CRIT,NOM_EDIT:NOM_EDIT,NOM_NEW:NOM_NEW,AUSENTES:AUSENTES});
   function _done(_ok){
     window.__laySaving=false;

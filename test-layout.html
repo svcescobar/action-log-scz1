@@ -2241,7 +2241,7 @@ function LayoutView(props){
   },[props.layout]);
   return h('div',{className:'layroot',dangerouslySetInnerHTML:{__html:LAYOUT_HTML}});
 }
-(function(){window.__LP='inicio';try{
+(function(){try{
 var LAY_NOMINA=[{"nombre": "Emiliano Domingo", "pos": "GERENTE", "turno": "", "leg": ""}, {"nombre": "Nicolas Torres", "pos": "TL", "turno": "AM", "leg": "1305"}, {"nombre": "Maximiliano Benitez", "pos": "TL", "turno": "PM", "leg": ""}, {"nombre": "Luciano Torres", "pos": "TL", "turno": "AM", "leg": "1244"}, {"nombre": "Agustin Romero", "pos": "REFERENTE", "turno": "PM", "leg": "1315"}, {"nombre": "Noelia Guzman", "pos": "REFERENTE", "turno": "AM", "leg": "999"}, {"nombre": "Matías Delgado", "pos": "SOLVER", "turno": "AM", "leg": "1238"}, {"nombre": "Leonel Acevedo", "pos": "SOLVER", "turno": "AM", "leg": "1233"}, {"nombre": "Facundo llacuna", "pos": "SOLVER", "turno": "PM", "leg": "1365"}, {"nombre": "Fabian Aguero", "pos": "REPS", "turno": "AM", "leg": "1383"}, {"nombre": "Santiago Bustamante", "pos": "REPS", "turno": "AM", "leg": "1494"}, {"nombre": "Micaela Cassini", "pos": "REPS", "turno": "AM", "leg": "1236"}, {"nombre": "Lautaro Coronel", "pos": "REPS", "turno": "AM", "leg": "1535"}, {"nombre": "Gonzalo Danyluk", "pos": "REPS", "turno": "AM", "leg": "1538"}, {"nombre": "Jorge Diaz", "pos": "REPS", "turno": "AM", "leg": "1436"}, {"nombre": "Fabricio Ferreyra", "pos": "REPS", "turno": "AM", "leg": "1537"}, {"nombre": "Milena Garcia", "pos": "REPS", "turno": "AM", "leg": "1435"}, {"nombre": "Leonel Garcia", "pos": "REPS", "turno": "AM", "leg": "1346"}, {"nombre": "Sofia Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1516"}, {"nombre": "Milagros Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1530"}, {"nombre": "Agustina Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1536"}, {"nombre": "Angel Gutierrez", "pos": "REPS", "turno": "AM", "leg": "1539"}, {"nombre": "Gustavo Navarro", "pos": "REPS", "turno": "AM", "leg": "1540"}, {"nombre": "Ernesto Ortíz", "pos": "REPS", "turno": "AM", "leg": "1242"}, {"nombre": "Angélica Ortíz", "pos": "REPS", "turno": "AM", "leg": "1241"}, {"nombre": "Elias Pereyra", "pos": "REPS", "turno": "AM", "leg": "1428"}, {"nombre": "Christian Pucheta", "pos": "REPS", "turno": "AM", "leg": "1243"}, {"nombre": "Hugo Rodriguez", "pos": "REPS", "turno": "AM", "leg": "1512"}, {"nombre": "Jose Salazar", "pos": "REPS", "turno": "AM", "leg": "1448"}, {"nombre": "Mirco Santillan", "pos": "REPS", "turno": "AM", "leg": "1442"}, {"nombre": "Javier Tornacue", "pos": "REPS", "turno": "PM", "leg": "1474"}, {"nombre": "Dylan Zurita", "pos": "REPS", "turno": "AM", "leg": "1437"}, {"nombre": "Martin Bireni", "pos": "REPS", "turno": "PM", "leg": "1529"}, {"nombre": "Alan Ledesma", "pos": "REPS", "turno": "AM", "leg": ""}];
 
 var NOMINA=LAY_NOMINA;
@@ -2251,7 +2251,6 @@ var T={
   AM:{objs:[],asig:{},eventuales:[],uid:1,cfg:{fecha:new Date().toISOString().slice(0,10),vol:'21000',rutas:'148',dot:'20/25'}},
   PM:{objs:[],asig:{},eventuales:[],uid:1,cfg:{fecha:new Date().toISOString().slice(0,10),vol:'',rutas:'',dot:''}}
 };
-window.__LP='ST';
 function ST(){return T[turno];}
 
 function setTurno(t){
@@ -2290,7 +2289,6 @@ var METRICAS=[
   {k:'sort',lbl:'Sorteo',uni:'paq/min',mayor:true,rol:'sort'},
   {k:'refl',lbl:'Reflujo',uni:'paquetes',mayor:false,rol:'pesc'}
 ];
-window.__LP='rebuild';
 function rebuildNomina(){
   if(!NOM_BASE)NOM_BASE=JSON.parse(JSON.stringify(NOMINA));
   var out=[];
@@ -2308,9 +2306,7 @@ function rebuildNomina(){
   });
   NOMINA=out;
 }
-window.__LP='norm';
 function normNom(s){return (s||'').trim().toLowerCase().replace(/\s+/g,' ');}
-window.__LP='find';
 function findPersona(txt){
   var n=normNom(txt);
   var ex=NOMINA.find(function(p){return normNom(p.nombre)===n;});
@@ -2332,7 +2328,6 @@ function taken(n){return asgs().indexOf(n)!==-1;}
 function snapv(v){return snap?Math.round(v/10)*10:v;}
 function cvEl(){return document.getElementById(tab==='dist'?'cv-d':'cv-e');}
 
-window.__LP='goTab';
 function layGoTab(t){
   tab=t;selId=null;
   var _pd=document.getElementById('p-dist'),_pe=document.getElementById('p-edit'),_pp=document.getElementById('p-prod');
@@ -2348,9 +2343,7 @@ function layGoTab(t){
 }
 
 // paleta drag — se engancha cuando el DOM del layout ya existe
-window.__LP='cve';
 var cve=null;
-window.__LP='bindDnDdef';
 function bindDnD(){
   var pis=document.querySelectorAll('.pi');
   if(!pis.length)return false;
@@ -2372,7 +2365,6 @@ function bindDnD(){
       }
   return true;
 }
-window.__LP='addObj';
 function addObj(k,x,y){
   var d=DEF[k];if(!d)return;
   var o={id:'o'+(ST().uid++),k:k,x:x,y:y};
@@ -2380,7 +2372,6 @@ function addObj(k,x,y){
   ST().objs.push(o);render();
 }
 
-window.__LP='renderdef';
 function render(){
   var cv=cvEl();cv.innerHTML='';
   var isEdit=(tab==='edit');
@@ -2458,9 +2449,7 @@ function render(){
   if(sd)sd.textContent=txt;if(se)se.textContent=txt;
   renderInfo();
 }
-cve.addEventListener('mousedown',function(e){if(e.target===cve){selId=null;render();}});
 
-window.__LP='keydown';
 document.addEventListener('keydown',function(e){
   if(tab!=='edit')return;
   if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='SELECT')return;
@@ -2474,7 +2463,6 @@ document.addEventListener('keydown',function(e){
   if(e.key==='ArrowUp'){e.preventDefault();o.y=Math.max(0,o.y-s);render();}
   if(e.key==='ArrowDown'){e.preventDefault();o.y+=s;render();}
 });
-window.__LP='delSel';
 function delSel(){if(!selId)return;ST().objs=ST().objs.filter(function(o){return o.id!==selId;});delete ST().asig[selId];selId=null;render();renderPool();}
 function dupSel(){if(!selId)return;var o=ST().objs.find(function(x){return x.id===selId;});if(!o)return;
   var c=JSON.parse(JSON.stringify(o));c.id='o'+(ST().uid++);c.x+=20;c.y+=20;ST().objs.push(c);selId=c.id;render();}
@@ -2483,13 +2471,11 @@ function clearAsig(){if(confirm('¿Quitar todas las asignaciones?')){ST().asig={
 function toggleGrid(){showGrid=!showGrid;(function(_e){if(_e)_e.classList.toggle('on',showGrid);})($el('b-grid'));render();}
 function toggleSnap(){snap=!snap;(function(_e){if(_e)_e.classList.toggle('on',snap);})($el('b-snap'));}
 
-window.__LP='addEv';
 function addEv(){var i=document.getElementById('ev-i'),n=i.value.trim();if(!n)return;
   if(ST().eventuales.indexOf(n)===-1)ST().eventuales.push(n);i.value='';renderPool();}
 function rmEv(n){ST().eventuales=ST().eventuales.filter(function(e){return e!==n;});
   Object.keys(ST().asig).forEach(function(k){if(ST().asig[k]===n)delete ST().asig[k];});renderPool();render();}
 
-window.__LP='renderPool';
 function renderPool(){
   var cont=document.getElementById('pool-groups');cont.innerHTML='';
   var ft=$val('f-turno');
@@ -2708,7 +2694,6 @@ function mejorRol(nombre){
 }
 function updAutoInfo(){}
 
-window.__LP='autoAsignar';
 function autoAsignar(preview){
   var respetar=$chk('cr-respetar');
   var slots=ST().objs.filter(function(o){return DEF[o.k]&&DEF[o.k].slot;});
@@ -2851,7 +2836,6 @@ function limpiarProd(){
 }
 
 // ══ GESTOR DE NOMINA ══
-window.__LP='openNom';
 function openNom(){
   (function(_e){if(_e)_e.style.display='flex';})($el('nom-modal'));
   renderNomTable();
@@ -2911,7 +2895,6 @@ function resetNom(){
   if(document.getElementById('prod-table'))renderProdTable();
 }
 
-window.__LP='save';
 function save(){collectCfg();
   if(window._layOnSave)window._layOnSave({T:T,turno:turno,PROD:PROD,CRIT:CRIT,NOM_EDIT:NOM_EDIT,NOM_NEW:NOM_NEW});}
 function load(){try{var r=window._layInitial;if(!r)return false;
@@ -2958,7 +2941,6 @@ function fillCfg(){
   (function(_e){if(_e)_e.value=ST().cfg.dot||'';})($el('c-dot'))
 }
 
-window.__LP='antes-layAPI';
 window._layAPI={load:load,render:render,renderPool:renderPool,fillCfg:fillCfg,
   collectCfg:collectCfg,setCrit:setCrit,getCrit:function(){return CRIT;},bindDnD:bindDnD,
   getTurno:function(){return turno;},initBase:function(){NOM_BASE=JSON.parse(JSON.stringify(NOMINA));},

@@ -423,7 +423,7 @@ function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
 async function loadState(){
   try{
-    var resp=await fetch(GH_API,{headers:GH_HDRS});
+    var resp=await fetch(GH_API+'?_cb='+Date.now(),{headers:GH_HDRS,cache:'no-store'});
     if(resp.status===404)return{entries:makeSeed(),bgImage:''};
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     var json=await resp.json();
@@ -458,7 +458,7 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     return fallback;
   }
   async function buildPayload(){
-    var resp=await fetch(GH_API,{headers:GH_HDRS});
+    var resp=await fetch(GH_API+'?_cb='+Date.now(),{headers:GH_HDRS,cache:'no-store'});
     if(!resp.ok)throw new Error('read HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;
@@ -485,7 +485,6 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     };
     _lastTier1=merged.tier1; _lastTier1Hist=merged.tier1Hist; _lastInv=merged.inventory;
     _lastEquip=merged.equipamiento; _lastMant=merged.mantenimiento; _lastLayout=merged.layout;
-    console.log('[MERGE-DEBUG] merged.layout PM.objs=', merged.layout&&merged.layout.T&&merged.layout.T.PM?merged.layout.T.PM.objs.length:'no-layout');
     return {message:'update',sha:_ghSha,content:b64enc(JSON.stringify(merged))};
   }
   var attempts=0,lastErr=null;
@@ -2239,8 +2238,6 @@ function LayoutView(props){
     if(booted.current)return;booted.current=true;
     if(props.layout)window.__layHydrated=true;
     window._layInitial=props.layout||null;
-    console.log('[Layout] mount - props.layout keys:', props.layout?Object.keys(props.layout):null,
-      '| PROD count:', props.layout&&props.layout.PROD?Object.keys(props.layout.PROD).length:'-');
     window._layOnSave=function(d){return props.onSaveLayout(d);};
     if(!window.__layUnloadGuard){
       window.__layUnloadGuard=true;
@@ -2255,8 +2252,6 @@ function LayoutView(props){
       if(!listo){ if(tries++<40)return setTimeout(boot,60); console.warn('[Layout] no montó'); return; }
       try{
         A.initBase();A.load();
-        console.log('[Layout] boot() ejecuto A.load() con _layInitial PROD count:',
-          window._layInitial&&window._layInitial.PROD?Object.keys(window._layInitial.PROD).length:'-');
         var t=A.getTurno();
         var am=document.getElementById('sw-AM'),pm=document.getElementById('sw-PM');
         if(am)am.classList.toggle('active',t==='AM');
@@ -2992,7 +2987,6 @@ function save(){collectCfg();
   if(_btn){_btn.disabled=true;_btn.textContent='\u23f3 Guardando...';}
   window.__laySaving=true;
   window.__laySkipNextReload=true;
-  console.log('[SAVE-DEBUG] turno='+turno+' AM.objs='+T.AM.objs.length+' PM.objs='+T.PM.objs.length);
   var _p=window._layOnSave({T:T,turno:turno,PROD:PROD,CRIT:CRIT,NOM_EDIT:NOM_EDIT,NOM_NEW:NOM_NEW,AUSENTES:AUSENTES});
   function _done(_ok){
     window.__laySaving=false;

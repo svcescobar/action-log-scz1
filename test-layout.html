@@ -2241,7 +2241,7 @@ function LayoutView(props){
   },[props.layout]);
   return h('div',{className:'layroot',dangerouslySetInnerHTML:{__html:LAYOUT_HTML}});
 }
-(function(){
+(function(){try{
 var LAY_NOMINA=[{"nombre": "Emiliano Domingo", "pos": "GERENTE", "turno": "", "leg": ""}, {"nombre": "Nicolas Torres", "pos": "TL", "turno": "AM", "leg": "1305"}, {"nombre": "Maximiliano Benitez", "pos": "TL", "turno": "PM", "leg": ""}, {"nombre": "Luciano Torres", "pos": "TL", "turno": "AM", "leg": "1244"}, {"nombre": "Agustin Romero", "pos": "REFERENTE", "turno": "PM", "leg": "1315"}, {"nombre": "Noelia Guzman", "pos": "REFERENTE", "turno": "AM", "leg": "999"}, {"nombre": "Matías Delgado", "pos": "SOLVER", "turno": "AM", "leg": "1238"}, {"nombre": "Leonel Acevedo", "pos": "SOLVER", "turno": "AM", "leg": "1233"}, {"nombre": "Facundo llacuna", "pos": "SOLVER", "turno": "PM", "leg": "1365"}, {"nombre": "Fabian Aguero", "pos": "REPS", "turno": "AM", "leg": "1383"}, {"nombre": "Santiago Bustamante", "pos": "REPS", "turno": "AM", "leg": "1494"}, {"nombre": "Micaela Cassini", "pos": "REPS", "turno": "AM", "leg": "1236"}, {"nombre": "Lautaro Coronel", "pos": "REPS", "turno": "AM", "leg": "1535"}, {"nombre": "Gonzalo Danyluk", "pos": "REPS", "turno": "AM", "leg": "1538"}, {"nombre": "Jorge Diaz", "pos": "REPS", "turno": "AM", "leg": "1436"}, {"nombre": "Fabricio Ferreyra", "pos": "REPS", "turno": "AM", "leg": "1537"}, {"nombre": "Milena Garcia", "pos": "REPS", "turno": "AM", "leg": "1435"}, {"nombre": "Leonel Garcia", "pos": "REPS", "turno": "AM", "leg": "1346"}, {"nombre": "Sofia Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1516"}, {"nombre": "Milagros Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1530"}, {"nombre": "Agustina Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1536"}, {"nombre": "Angel Gutierrez", "pos": "REPS", "turno": "AM", "leg": "1539"}, {"nombre": "Gustavo Navarro", "pos": "REPS", "turno": "AM", "leg": "1540"}, {"nombre": "Ernesto Ortíz", "pos": "REPS", "turno": "AM", "leg": "1242"}, {"nombre": "Angélica Ortíz", "pos": "REPS", "turno": "AM", "leg": "1241"}, {"nombre": "Elias Pereyra", "pos": "REPS", "turno": "AM", "leg": "1428"}, {"nombre": "Christian Pucheta", "pos": "REPS", "turno": "AM", "leg": "1243"}, {"nombre": "Hugo Rodriguez", "pos": "REPS", "turno": "AM", "leg": "1512"}, {"nombre": "Jose Salazar", "pos": "REPS", "turno": "AM", "leg": "1448"}, {"nombre": "Mirco Santillan", "pos": "REPS", "turno": "AM", "leg": "1442"}, {"nombre": "Javier Tornacue", "pos": "REPS", "turno": "PM", "leg": "1474"}, {"nombre": "Dylan Zurita", "pos": "REPS", "turno": "AM", "leg": "1437"}, {"nombre": "Martin Bireni", "pos": "REPS", "turno": "PM", "leg": "1529"}, {"nombre": "Alan Ledesma", "pos": "REPS", "turno": "AM", "leg": ""}];
 
 var NOMINA=LAY_NOMINA;
@@ -2941,7 +2941,7 @@ window.plantilla=plantilla;window.limpiarProd=limpiarProd;window.setProd=setProd
 window.openNom=openNom;window.closeNom=closeNom;window.setNom=setNom;
 window.addPersona=addPersona;window.bajaPersona=bajaPersona;window.resetNom=resetNom;
 window.layExport=exportJSON;window.layImport=importJSON;window.laySave=save;
-
+}catch(e){console.error('[LAYOUT-IIFE-ERROR]',e && e.message, e && e.stack);}
 })();
 /* ===== FIN LAYOUT ===== */
 function MantenimientoView(props){

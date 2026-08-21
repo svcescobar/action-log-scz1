@@ -2308,7 +2308,9 @@ function rebuildNomina(){
   });
   NOMINA=out;
 }
+window.__LP='norm';
 function normNom(s){return (s||'').trim().toLowerCase().replace(/\s+/g,' ');}
+window.__LP='find';
 function findPersona(txt){
   var n=normNom(txt);
   var ex=NOMINA.find(function(p){return normNom(p.nombre)===n;});
@@ -2330,6 +2332,7 @@ function taken(n){return asgs().indexOf(n)!==-1;}
 function snapv(v){return snap?Math.round(v/10)*10:v;}
 function cvEl(){return document.getElementById(tab==='dist'?'cv-d':'cv-e');}
 
+window.__LP='goTab';
 function layGoTab(t){
   tab=t;selId=null;
   var _pd=document.getElementById('p-dist'),_pe=document.getElementById('p-edit'),_pp=document.getElementById('p-prod');
@@ -2345,7 +2348,9 @@ function layGoTab(t){
 }
 
 // paleta drag — se engancha cuando el DOM del layout ya existe
+window.__LP='cve';
 var cve=null;
+window.__LP='bindDnDdef';
 function bindDnD(){
   var pis=document.querySelectorAll('.pi');
   if(!pis.length)return false;
@@ -2367,6 +2372,7 @@ function bindDnD(){
       }
   return true;
 }
+window.__LP='addObj';
 function addObj(k,x,y){
   var d=DEF[k];if(!d)return;
   var o={id:'o'+(ST().uid++),k:k,x:x,y:y};
@@ -2374,6 +2380,7 @@ function addObj(k,x,y){
   ST().objs.push(o);render();
 }
 
+window.__LP='renderdef';
 function render(){
   var cv=cvEl();cv.innerHTML='';
   var isEdit=(tab==='edit');
@@ -2453,6 +2460,7 @@ function render(){
 }
 cve.addEventListener('mousedown',function(e){if(e.target===cve){selId=null;render();}});
 
+window.__LP='keydown';
 document.addEventListener('keydown',function(e){
   if(tab!=='edit')return;
   if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='SELECT')return;
@@ -2466,6 +2474,7 @@ document.addEventListener('keydown',function(e){
   if(e.key==='ArrowUp'){e.preventDefault();o.y=Math.max(0,o.y-s);render();}
   if(e.key==='ArrowDown'){e.preventDefault();o.y+=s;render();}
 });
+window.__LP='delSel';
 function delSel(){if(!selId)return;ST().objs=ST().objs.filter(function(o){return o.id!==selId;});delete ST().asig[selId];selId=null;render();renderPool();}
 function dupSel(){if(!selId)return;var o=ST().objs.find(function(x){return x.id===selId;});if(!o)return;
   var c=JSON.parse(JSON.stringify(o));c.id='o'+(ST().uid++);c.x+=20;c.y+=20;ST().objs.push(c);selId=c.id;render();}
@@ -2474,6 +2483,7 @@ function clearAsig(){if(confirm('¿Quitar todas las asignaciones?')){ST().asig={
 function toggleGrid(){showGrid=!showGrid;(function(_e){if(_e)_e.classList.toggle('on',showGrid);})($el('b-grid'));render();}
 function toggleSnap(){snap=!snap;(function(_e){if(_e)_e.classList.toggle('on',snap);})($el('b-snap'));}
 
+window.__LP='addEv';
 function addEv(){var i=document.getElementById('ev-i'),n=i.value.trim();if(!n)return;
   if(ST().eventuales.indexOf(n)===-1)ST().eventuales.push(n);i.value='';renderPool();}
 function rmEv(n){ST().eventuales=ST().eventuales.filter(function(e){return e!==n;});

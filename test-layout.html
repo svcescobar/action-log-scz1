@@ -2553,7 +2553,7 @@ function renderPool(){
     g.appendChild(box);cont.appendChild(g);
   }
   var _nAu=Object.keys(AUSENTES).length;
-  (function(_e){if(_e)_e.textContent='('+libres+' libres'+(_nAu?' · '+_nAu+' ausentes':'')+')';})($el('pc'))
+  (function(_e){if(_e)_e.textContent='('+libres+' libres'+(_nAu?' · '+_nAu+' ausentes':'')+')';})($el('pc'));
 }
 
 function showSel(pid,anchor){
@@ -2699,7 +2699,7 @@ function renderProdTable(){
   t.innerHTML=h;
   var con=Object.keys(PROD).filter(function(n){var p=PROD[n];
     return p&&(p.etiq!==undefined||p.sort!==undefined||p.refl!==undefined);}).length;
-  (function(_e){if(_e)_e.textContent=con+' de '+NOMINA.length+' con métricas cargadas';})($el('prod-count'))
+  (function(_e){if(_e)_e.textContent=con+' de '+NOMINA.length+' con métricas cargadas';})($el('prod-count'));
 }
 function setProd(nombre,k,val){
   if(!PROD[nombre])PROD[nombre]={};
@@ -2854,7 +2854,7 @@ function importCSVProd(ev){
   var f=ev.target.files[0];if(!f)return;
   var rd=new FileReader();
   rd.onload=function(){
-    (function(_e){if(_e)_e.value=rd.result;})($el('bulk-t'))
+    (function(_e){if(_e)_e.value=rd.result;})($el('bulk-t'));
     importBulk();};
   rd.readAsText(f);ev.target.value='';
 }
@@ -2904,7 +2904,7 @@ function renderNomTable(){
   });
   h+='</tbody>';t.innerHTML=h;
   var bajas=Object.keys(NOM_EDIT).filter(function(k){return NOM_EDIT[k].baja;}).length;
-  (function(_e){if(_e)_e.textContent=NOMINA.length+' activos'+(bajas?' \u00b7 '+bajas+' dados de baja':'')+(NOM_NEW.length?' \u00b7 '+NOM_NEW.length+' agregados':'');})($el('nom-stat'))
+  (function(_e){if(_e)_e.textContent=NOMINA.length+' activos'+(bajas?' \u00b7 '+bajas+' dados de baja':'')+(NOM_NEW.length?' \u00b7 '+NOM_NEW.length+' agregados':'');})($el('nom-stat'));
 }
 function setNom(nombre,campo,val){
   if(!NOM_EDIT[nombre])NOM_EDIT[nombre]={};
@@ -2918,7 +2918,7 @@ function addPersona(){
   if(NOMINA.some(function(p){return normNom(p.nombre)===normNom(n);})){alert('Esa persona ya est\u00e1 en la n\u00f3mina');return;}
   NOM_NEW.push({nombre:n,pos:$val('nn-pos'),
     turno:$val('nn-turno'),leg:$val('nn-leg').trim()});
-  (function(_e){if(_e)_e.value='';})($el('nn-nom'))(function(_e){if(_e)_e.value='';})($el('nn-leg'))
+  (function(_e){if(_e)_e.value='';})($el('nn-nom'))(function(_e){if(_e)_e.value='';})($el('nn-leg'));
   rebuildNomina();renderNomTable();renderPool();
   if(document.getElementById('prod-table'))renderProdTable();
 }
@@ -2982,10 +2982,10 @@ function copiarTurno(){
   selId=null;render();renderPool();
 }
 function fillCfg(){
-  (function(_e){if(_e)_e.value=ST().cfg.fecha||'';})($el('c-fecha'))
-  (function(_e){if(_e)_e.value=ST().cfg.vol||'';})($el('c-vol'))
-  (function(_e){if(_e)_e.value=ST().cfg.rutas||'';})($el('c-rutas'))
-  (function(_e){if(_e)_e.value=ST().cfg.dot||'';})($el('c-dot'))
+  (function(_e){if(_e)_e.value=ST().cfg.fecha||'';})($el('c-fecha'));
+  (function(_e){if(_e)_e.value=ST().cfg.vol||'';})($el('c-vol'));
+  (function(_e){if(_e)_e.value=ST().cfg.rutas||'';})($el('c-rutas'));
+  (function(_e){if(_e)_e.value=ST().cfg.dot||'';})($el('c-dot'));
 }
 
 window._layAPI={load:load,render:render,renderPool:renderPool,fillCfg:fillCfg,

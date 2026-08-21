@@ -2223,7 +2223,7 @@ function LayoutView(props){
     var tries=0;
     (function boot(){
       var A=window._layAPI;
-      var listo=A&&document.getElementById('cv-d')&&document.getElementById('pool');
+      var listo=A&&document.getElementById('cv-d')&&document.getElementById('pool-groups');
       if(!listo){ if(tries++<40)return setTimeout(boot,60); console.warn('[Layout] no montó'); return; }
       try{
         A.initBase();A.load();

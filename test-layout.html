@@ -2542,7 +2542,8 @@ function renderPool(){
     });
     g.appendChild(box);cont.appendChild(g);
   }
-  (function(_e){if(_e)_e.textContent='('+libres+' libres)';})($el('pc'))
+  var _nAu=Object.keys(AUSENTES).length;
+  (function(_e){if(_e)_e.textContent='('+libres+' libres'+(_nAu?' · '+_nAu+' ausentes':'')+')';})($el('pc'))
 }
 
 function showSel(pid,anchor){

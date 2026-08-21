@@ -2953,8 +2953,9 @@ function resetNom(){
 }
 
 function save(){collectCfg();
-  try{localStorage.setItem('layout_scz1_v8',JSON.stringify({T:T,turno:turno,PROD:PROD,CRIT:CRIT,NOM_EDIT:NOM_EDIT,NOM_NEW:NOM_NEW,AUSENTES:AUSENTES}));
-    alert('✓ Guardado (AM y PM)');}catch(e){alert('Error: '+e.message);}}
+  if(window._layOnSave)window._layOnSave({T:T,turno:turno,PROD:PROD,CRIT:CRIT,NOM_EDIT:NOM_EDIT,NOM_NEW:NOM_NEW,AUSENTES:AUSENTES});
+  else console.error('[Layout] _layOnSave no esta definido - no se puede sincronizar');
+}
 function load(){try{var r=window._layInitial;if(!r)return false;
   var s=r;
   if(s.T){['AM','PM'].forEach(function(k){if(s.T[k])T[k]=s.T[k];});}

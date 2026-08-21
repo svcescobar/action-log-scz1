@@ -505,7 +505,7 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
   throw lastErr||new Error('saveState: 3 intentos fallidos');
 }
 function isAdmin(user){return ADMIN_USERS.indexOf(user)!==-1;}
-function isMyTask(entry,user){if(!entry.responsables)return false;return entry.responsables.toLowerCase().indexOf(user.toLowerCase())!==-1;}
+function isMyTask(entry,user){if(!entry||!entry.responsables||!user)return false;return entry.responsables.toLowerCase().indexOf(user.toLowerCase())!==-1;}
 function fmtDate(iso){if(!iso)return'';var p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 function fmtDateTime(iso){if(!iso)return'';var dt=new Date(iso);return dt.getDate().toString().padStart(2,'0')+'/'+(dt.getMonth()+1).toString().padStart(2,'0')+'/'+dt.getFullYear()+' '+dt.getHours().toString().padStart(2,'0')+':'+dt.getMinutes().toString().padStart(2,'0');}
 function isOverdue(fl,res){return!res&&!!fl&&fl<TODAY;}
@@ -3859,7 +3859,6 @@ function App(props) {
   var calcSt=_useState(null);var calcState=calcSt[0],setCalcState=calcSt[1];
   var equipSt=_useState(null);var equipamiento=equipSt[0],setEquipamiento=equipSt[1];
   var mantSt=_useState(null);var mantenimiento=mantSt[0],setMantenimiento=mantSt[1];
-  var layS=_useState(null);var layout=layS[0],setLayout=layS[1];
   var layS=_useState(null);var layout=layS[0],setLayout=layS[1];
   var showToast=_useCallback(function(message,type){var id=genId();setToasts(function(prev){return prev.concat([{id:id,message:message,type:type||'info'}]);});setTimeout(function(){setToasts(function(prev){return prev.filter(function(t){return t.id!==id;});});},3500);},[]);
   _useEffect(function(){loadState().then(function(data){setEntries(data.entries);var bg=data.bgImage||'';if(!bg){try{bg=localStorage.getItem('al_bg')||'';}catch(e){}}setBgImage(bg);if(data.calcState){setCalcState(data.calcState);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(data.calcState));}catch(e){}}setTier1(data.tier1||null);setTier1Hist(data.tier1Hist||[]);setInventory(data.inventory||null);setEquipamiento(data.equipamiento||null);setMantenimiento(data.mantenimiento||null);setLayout(data.layout||null);setLoading(false);});},[]);

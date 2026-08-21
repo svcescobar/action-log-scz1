@@ -423,7 +423,7 @@ function b64enc(str){return btoa(unescape(encodeURIComponent(str)));}
 function b64dec(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));}
 async function loadState(){
   try{
-    var resp=await fetch(GH_API,{headers:GH_HDRS});
+    var resp=await fetch(GH_API+'?_cb='+Date.now(),{headers:GH_HDRS,cache:'no-store'});
     if(resp.status===404)return{entries:makeSeed(),bgImage:''};
     if(!resp.ok)throw new Error('HTTP '+resp.status);
     var json=await resp.json();
@@ -458,7 +458,7 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     return fallback;
   }
   async function buildPayload(){
-    var resp=await fetch(GH_API,{headers:GH_HDRS});
+    var resp=await fetch(GH_API+'?_cb='+Date.now(),{headers:GH_HDRS,cache:'no-store'});
     if(!resp.ok)throw new Error('read HTTP '+resp.status);
     var json=await resp.json();
     _ghSha=json.sha;

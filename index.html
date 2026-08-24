@@ -2538,7 +2538,7 @@ function render(){
       });
       el.addEventListener('dblclick',function(ev){
         ev.stopPropagation();
-        if(o.k==='label'){var t=prompt('Letra / texto:',o.text||'A');if(t!==null){o.text=t;render();}}
+        if(o.k==='label'){showRenamePrompt(o.text||'A',function(t){o.text=t;render();});}
       });
       if(selId===o.id&&multiSel.length===0&&!d.slot&&!d.noresize){
         var h=document.createElement('div');h.className='rh';
@@ -2607,8 +2607,29 @@ function pasteClipboard(){if(!_objClipboard)return;
 }
 function rotateSel(){if(!selId)return;var o=ST().objs.find(function(x){return x.id===selId;});if(!o)return;
   o.rot=((o.rot||0)+90)%360;render();}
+function showRenamePrompt(initial,onConfirm){
+  var ov=document.createElement('div');ov.className='confirm-overlay';
+  var box=document.createElement('div');box.className='confirm-box';
+  var title=document.createElement('div');title.className='confirm-title';title.textContent='Renombrar';
+  var lbl=document.createElement('div');lbl.className='confirm-text';lbl.textContent='Letra / texto:';
+  var inp=document.createElement('input');inp.type='text';inp.className='form-control';inp.style.width='100%';inp.style.boxSizing='border-box';inp.style.marginBottom='20px';inp.value=initial;
+  var btns=document.createElement('div');btns.className='confirm-btns';
+  var bCancel=document.createElement('button');bCancel.className='btn btn-cancel';bCancel.textContent='Cancelar';
+  var bOk=document.createElement('button');bOk.className='btn btn-primary';bOk.textContent='Aceptar';
+  btns.appendChild(bCancel);btns.appendChild(bOk);
+  box.appendChild(title);box.appendChild(lbl);box.appendChild(inp);box.appendChild(btns);
+  ov.appendChild(box);document.body.appendChild(ov);
+  function close(){if(ov.parentNode)document.body.removeChild(ov);document.removeEventListener('keydown',onKey,true);}
+  function confirmIt(){var v=inp.value;close();onConfirm(v);}
+  function onKey(e){if(e.key==='Enter'){e.preventDefault();confirmIt();}else if(e.key==='Escape'){e.preventDefault();close();}}
+  bOk.addEventListener('click',confirmIt);
+  bCancel.addEventListener('click',close);
+  ov.addEventListener('mousedown',function(e){if(e.target===ov)close();});
+  document.addEventListener('keydown',onKey,true);
+  setTimeout(function(){inp.focus();inp.select();},0);
+}
 function renameSel(){if(!selId)return;var o=ST().objs.find(function(x){return x.id===selId;});if(!o)return;
-  var t=prompt('Letra / texto:',o.text!==undefined?o.text:'A');if(t!==null){o.text=t;render();}}
+  showRenamePrompt(o.text!==undefined?o.text:'A',function(t){o.text=t;render();});}
 function clearCanvas(){if(confirm('¿Vaciar todo el canvas?')){ST().objs=[];ST().asig={};selId=null;render();renderPool();}}
 function clearAsig(){if(confirm('¿Quitar todas las asignaciones?')){ST().asig={};render();renderPool();}}
 function toggleGrid(){showGrid=!showGrid;(function(_e){if(_e)_e.classList.toggle('on',showGrid);})($el('b-grid'));render();}

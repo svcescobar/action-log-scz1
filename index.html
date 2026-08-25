@@ -1275,11 +1275,11 @@ function DotacionView(props) {
 var T1_METRICS_AM = [
   {k:'volumen',    label:'Volumen Procesado',                         target:'-',      type:'num'},
   {k:'busquedas',  label:'Busquedas',                                 target:'< 7',    type:'num', lowGood:true, limit:7},
-  {k:'prodEtiq',   label:'Productividad Etiquetado',                  target:'890,00', type:'num', link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/TestingLMSXD/SVCPRODFACILITY?:iid=1'},
-  {k:'prodSort',   label:'Productividad Sorting',                     target:'330,00', type:'num', link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/TestingLMSXD/SVCPRODFACILITY?:iid=1'},
+  {k:'prodEtiq',   label:'Productividad Etiquetado',                  target:'890,00', type:'num', highGood:true, limit:890, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/TestingLMSXD/SVCPRODFACILITY?:iid=1'},
+  {k:'prodSort',   label:'Productividad Sorting',                     target:'330,00', type:'num', highGood:true, limit:330, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/TestingLMSXD/SVCPRODFACILITY?:iid=1'},
   {k:'opsClocks',  label:'% OPS CLOCKS (OOT)',                        target:'85,00%', type:'pct', highGood:true, limit:85, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/OPSCLOCK/2_2OOT-Adherencia?:iid=1'},
   {k:'tmec',       label:'TMEC (Adherencia Carga)',                   target:'85,00%', type:'pct', highGood:true, limit:85, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/YMSTMEC-TMED_17722134649840/TMEC2_02?:iid=1'},
-  {k:'perdidas',   label:'Perdidas Operativas (BPP) - Ratio',         target:'0,04%',  type:'pct', link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/LP_TRS_PEL_17490817987760/PEL?:iid=1'},
+  {k:'perdidas',   label:'Perdidas Operativas (BPP) - Ratio',         target:'0,04%',  type:'pct', lowGood:true, limit:0.04, link:'https://us-east-1.online.tableau.com/#/site/melishipping/views/LP_TRS_PEL_17490817987760/PEL?:iid=1'},
   {k:'divAduana',  label:'Divergencias en Aduana (despacho)',         target:'3,00%',  type:'pct', lowGood:true, limit:3, link:'https://lookerstudio.google.com/u/0/reporting/923e35e8-8ff6-4fa3-8b2c-f38fc087f8f1/page/tEnnC?pli=1'},
   {k:'divAudit',   label:'Divergencias de auditorias (contenedores)', target:'10,00%', type:'pct', lowGood:true, limit:10, link:'https://lookerstudio.google.com/u/0/reporting/923e35e8-8ff6-4fa3-8b2c-f38fc087f8f1/page/tEnnC?pli=1'},
   {k:'bipeos',     label:'Bipeos OK (Poka Yoke)',                     target:'99,09%', type:'pct', highGood:true, limit:99.09, link:'https://lookerstudio.google.com/reporting/55effec5-1147-4182-87e6-c27cef9dcdfa/page/fkcIE?pli=1'},
@@ -1320,6 +1320,21 @@ function isoWeekNow(){
 function emptyTier1(){
   return { semana:isoWeekNow(), fechas:['','','','','',''], am:{}, pm:{}, planAm:[], planPm:[] };
 }
+function weekMonthKey(w){
+  var year=w.cerradaEl?new Date(w.cerradaEl).getFullYear():new Date().getFullYear();
+  var week=parseInt(w.semana)||1;
+  var simple=new Date(year,0,1+(week-1)*7);
+  var dow=simple.getDay();
+  var monday=new Date(simple);
+  if(dow<=4){monday.setDate(simple.getDate()-simple.getDay()+1);}
+  else{monday.setDate(simple.getDate()+8-simple.getDay());}
+  return monday.getFullYear()+'-'+('0'+(monday.getMonth()+1)).slice(-2);
+}
+function weekMonthLabel(key){
+  var MESES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var parts=key.split('-');
+  return MESES[parseInt(parts[1],10)-1]+' '+parts[0];
+}
 function Tier1View(props){
   var onSave=props.onSaveTier1||function(){};
   var initT1=props.tier1||emptyTier1();
@@ -1344,12 +1359,14 @@ function Tier1View(props){
   function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});return n;});}
   function updPlan(turno,id,field,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].map(function(p){return p.id===id?Object.assign({},p,{[field]:val}):p;});return n;});}
   function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});return n;});}
-  function calcAvg(turno,metricK){
+  function calcAvg(turno,metric){
+    var metricK=metric.k;
     var m=(t1[turno]&&t1[turno][metricK])||{};
     var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(m[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});
     if(!vals.length)return '';
     var avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
-    return avg.toFixed(avg%1===0?0:1).replace('.',',');
+    var s=avg.toFixed(avg%1===0?0:1).replace('.',',');
+    return metric.type==='pct'?s+'%':s;
   }
   function cellClass(metric,val){
     if(val===undefined||val===''||val===null)return '';
@@ -1430,7 +1447,7 @@ function Tier1View(props){
           var mData=(w[turno]&&w[turno][metric.k])||{};
           var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(mData[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});
           var avg=vals.length?(vals.reduce(function(a,b){return a+b;},0)/vals.length):null;
-          var avgStr=avg!==null?avg.toFixed(avg%1===0?0:1).replace('.',','):'';
+          var avgStr=avg!==null?(avg.toFixed(avg%1===0?0:1).replace('.',',')+(metric.type==='pct'?'%':'')):'';
           return h('tr',{key:metric.k},
             h('td',{className:'metric-name'},metric.label,metric.link?h('a',{href:metric.link,target:'_blank',rel:'noopener',title:'Ver dashboard',style:{marginLeft:6,textDecoration:'none',fontSize:12,cursor:'pointer'}},'🔗'):null),
             h('td',{className:'target-cell'},h('input',{type:'text',value:(w.targets&&w.targets[turno]&&w.targets[turno][metric.k]!==undefined)?w.targets[turno][metric.k]:metric.target,onChange:function(e){updHistTarget(w.id,turno,metric.k,e.target.value);},style:{width:'100%',border:'1px solid transparent',background:'transparent',textAlign:'center',fontSize:12,fontFamily:'inherit',fontWeight:700,color:'#854F0B',outline:'none',padding:'2px'}})),
@@ -1480,7 +1497,7 @@ function Tier1View(props){
                 var val=(t1[turno]&&t1[turno][metric.k]&&t1[turno][metric.k][dk])||'';
                 return h('td',{key:dk},h('input',{type:'text',value:val,className:'t1-cell-input '+cellClass(metric,val),onChange:function(e){updCell(turno,metric.k,dk,e.target.value);}}));
               }),
-              (function(){var av=calcAvg(turno,metric.k);var col=avgColor(metric,av);var bg=avgBg(metric,av);return h('td',{className:'avg-cell',style:col?{background:bg,color:col,fontWeight:800,borderLeft:'3px solid '+col}:{} },av||'');})()
+              (function(){var av=calcAvg(turno,metric);var col=avgColor(metric,av);var bg=avgBg(metric,av);return h('td',{className:'avg-cell',style:col?{background:bg,color:col,fontWeight:800,borderLeft:'3px solid '+col}:{} },av||'');})()
             );
           })
         )
@@ -1575,14 +1592,59 @@ function Tier1View(props){
           );
         })
       );
+  var mensualView=(function(){
+    if(!hist.length)return h('div',{style:{padding:24,textAlign:'center',color:'var(--text-muted)',fontSize:13}},'Todavía no hay semanas cerradas en el histórico para mostrar la evolución mensual.');
+    var porMes={};
+    hist.forEach(function(w){var key=weekMonthKey(w);(porMes[key]=porMes[key]||[]).push(w);});
+    var meses=Object.keys(porMes).sort();
+    function avgMensual(turno,metric,semanas){
+      var avgs=semanas.map(function(w){
+        var mData=(w[turno]&&w[turno][metric.k])||{};
+        var vals=T1_DAY_KEYS.map(function(dk){return parseFloat(String(mData[dk]).replace(',','.'));}).filter(function(v){return !isNaN(v);});
+        return vals.length?(vals.reduce(function(a,b){return a+b;},0)/vals.length):null;
+      }).filter(function(v){return v!==null;});
+      if(!avgs.length)return '';
+      var avg=avgs.reduce(function(a,b){return a+b;},0)/avgs.length;
+      var s=avg.toFixed(avg%1===0?0:1).replace('.',',');
+      return metric.type==='pct'?s+'%':s;
+    }
+    function renderMensualTable(turno,metrics){
+      return h('div',{className:'t1-scroll'},
+        h('table',{className:'t1-table'},
+          h('thead',null,h('tr',null,
+            h('th',{className:'metric-col'},turno==='am'?'OBLIGATORIOS / OPCIONALES':'OBLIGATORIOS'),
+            h('th',null,'TARGET'),
+            meses.map(function(mk){return h('th',{key:mk},weekMonthLabel(mk));})
+          )),
+          h('tbody',null,metrics.map(function(metric){
+            return h('tr',{key:metric.k},
+              h('td',{className:'metric-name'},metric.label,metric.link?h('a',{href:metric.link,target:'_blank',rel:'noopener',title:'Ver dashboard',style:{marginLeft:6,textDecoration:'none',fontSize:12,cursor:'pointer'}},'🔗'):null),
+              h('td',{className:'target-cell',style:{textAlign:'center',fontWeight:700,color:'#854F0B',fontSize:12,padding:'2px'}},metric.target),
+              meses.map(function(mk){
+                var val=avgMensual(turno,metric,porMes[mk]);
+                var col=avgColor(metric,val);var bg=avgBg(metric,val);
+                return h('td',{key:mk,className:'avg-cell',style:col?{background:bg,color:col,fontWeight:800}:{}},val||'—');
+              })
+            );
+          }))
+        )
+      );
+    }
+    return h('div',null,
+      h('div',{className:'t1-turno-hdr'},'☀ TURNO AM'),
+      renderMensualTable('am',T1_METRICS_AM),
+      h('div',{className:'t1-turno-hdr pm',style:{marginTop:16}},'☽ TURNO PM'),
+      renderMensualTable('pm',T1_METRICS_PM)
+    );
+  })();
   return h('div',{className:'t1-wrap'},
     h('div',{className:'t1-subtabs'},
-      [['semana','📊 Semana en curso'],['hist','📁 Historial ('+hist.length+')']].map(function(t){
+      [['semana','📊 Semana en curso'],['mensual','📅 Por Mes'],['hist','📁 Historial ('+hist.length+')']].map(function(t){
         return h('button',{key:t[0],className:'t1-subtab'+(tab===t[0]?' active':''),onClick:function(){setTab(t[0]);}},t[1]);
       })
     ),
     h('div',{style:{background:'var(--surface)',border:'1px solid var(--border)',borderTop:'none',borderRadius:'0 0 8px 8px',padding:16}},
-      tab==='semana'?semanaView:histView
+      tab==='semana'?semanaView:(tab==='mensual'?mensualView:histView)
     )
   );
 }

@@ -2372,7 +2372,7 @@ function LayoutView(props){
 var LAY_NOMINA=[{"nombre": "Emiliano Domingo", "pos": "GERENTE", "turno": "", "leg": ""}, {"nombre": "Nicolas Torres", "pos": "TL", "turno": "AM", "leg": "1305"}, {"nombre": "Maximiliano Benitez", "pos": "TL", "turno": "PM", "leg": ""}, {"nombre": "Luciano Torres", "pos": "TL", "turno": "AM", "leg": "1244"}, {"nombre": "Agustin Romero", "pos": "REFERENTE", "turno": "PM", "leg": "1315"}, {"nombre": "Noelia Guzman", "pos": "REFERENTE", "turno": "AM", "leg": "999"}, {"nombre": "Matías Delgado", "pos": "SOLVER", "turno": "AM", "leg": "1238"}, {"nombre": "Leonel Acevedo", "pos": "SOLVER", "turno": "AM", "leg": "1233"}, {"nombre": "Facundo llacuna", "pos": "SOLVER", "turno": "PM", "leg": "1365"}, {"nombre": "Fabian Aguero", "pos": "REPS", "turno": "AM", "leg": "1383"}, {"nombre": "Santiago Bustamante", "pos": "REPS", "turno": "AM", "leg": "1494"}, {"nombre": "Micaela Cassini", "pos": "REPS", "turno": "AM", "leg": "1236"}, {"nombre": "Lautaro Coronel", "pos": "REPS", "turno": "AM", "leg": "1535"}, {"nombre": "Gonzalo Danyluk", "pos": "REPS", "turno": "AM", "leg": "1538"}, {"nombre": "Jorge Diaz", "pos": "REPS", "turno": "AM", "leg": "1436"}, {"nombre": "Fabricio Ferreyra", "pos": "REPS", "turno": "AM", "leg": "1537"}, {"nombre": "Milena Garcia", "pos": "REPS", "turno": "AM", "leg": "1435"}, {"nombre": "Leonel Garcia", "pos": "REPS", "turno": "AM", "leg": "1346"}, {"nombre": "Sofia Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1516"}, {"nombre": "Milagros Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1530"}, {"nombre": "Agustina Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1536"}, {"nombre": "Angel Gutierrez", "pos": "REPS", "turno": "AM", "leg": "1539"}, {"nombre": "Gustavo Navarro", "pos": "REPS", "turno": "AM", "leg": "1540"}, {"nombre": "Ernesto Ortíz", "pos": "REPS", "turno": "AM", "leg": "1242"}, {"nombre": "Angélica Ortíz", "pos": "REPS", "turno": "AM", "leg": "1241"}, {"nombre": "Elias Pereyra", "pos": "REPS", "turno": "AM", "leg": "1428"}, {"nombre": "Christian Pucheta", "pos": "REPS", "turno": "AM", "leg": "1243"}, {"nombre": "Hugo Rodriguez", "pos": "REPS", "turno": "AM", "leg": "1512"}, {"nombre": "Jose Salazar", "pos": "REPS", "turno": "AM", "leg": "1448"}, {"nombre": "Mirco Santillan", "pos": "REPS", "turno": "AM", "leg": "1442"}, {"nombre": "Javier Tornacue", "pos": "REPS", "turno": "PM", "leg": "1474"}, {"nombre": "Dylan Zurita", "pos": "REPS", "turno": "AM", "leg": "1437"}, {"nombre": "Martin Bireni", "pos": "REPS", "turno": "PM", "leg": "1529"}, {"nombre": "Alan Ledesma", "pos": "REPS", "turno": "AM", "leg": ""}];
 
 var NOMINA=LAY_NOMINA;
-var turno='AM',selId=null,multiSel=[],tab='dist',snap=true,showGrid=true,dragName=null;
+var turno='AM',selId=null,multiSel=[],tab='dist',snap=true,showGrid=true,dragName=null,dragFromSlotId=null;
 function isSelected(id){return id===selId||multiSel.indexOf(id)!==-1;}
 function selCount(){return (selId?1:0)+multiSel.length;}
 function selectedIds(){var r=multiSel.slice();if(selId&&r.indexOf(selId)===-1)r.push(selId);return r;}
@@ -2594,13 +2594,25 @@ function render(){
       if(nm){var lb=document.createElement('div');lb.className='nm';lb.textContent=dispName(nm);el.appendChild(lb);}
       el.title=d.n+(nm?': '+nm:' (libre)');
       if(!isEdit){
+        if(nm){
+          el.draggable=true;
+          el.addEventListener('dragstart',function(e){dragName=nm;dragFromSlotId=o.id;e.dataTransfer.effectAllowed='move';});
+        }
         el.addEventListener('dragover',function(e){e.preventDefault();el.classList.add('dragover');});
         el.addEventListener('dragleave',function(){el.classList.remove('dragover');});
         el.addEventListener('drop',function(e){
           e.preventDefault();el.classList.remove('dragover');
           if(!dragName)return;
-          unassignEverywhere(dragName);
-          ST().asig[o.id]=dragName;dragName=null;render();renderPool();
+          if(dragFromSlotId&&dragFromSlotId!==o.id){
+            var otroActual=ST().asig[o.id];
+            if(otroActual){ST().asig[dragFromSlotId]=otroActual;}
+            else{delete ST().asig[dragFromSlotId];}
+            ST().asig[o.id]=dragName;
+          }else{
+            unassignEverywhere(dragName);
+            ST().asig[o.id]=dragName;
+          }
+          dragName=null;dragFromSlotId=null;render();renderPool();
         });
         el.addEventListener('click',function(){showSel(o.id,el);});
       }
@@ -2894,7 +2906,7 @@ function renderPool(){
       c.innerHTML='<div class="av">'+ini(p.nombre)+'</div>'+p.nombre+(p.turno?' <span style="opacity:.5;font-size:9px">'+p.turno+'</span>':'')+
         '<span class="au-btn" title="'+(au?'Marcar presente':'Marcar ausente')+'">'+(au?'✚':'✕')+'</span>';
       c.querySelector('.au-btn').addEventListener('click',function(e){e.stopPropagation();toggleAusente(p.nombre);});
-      if(!tk&&!au){c.draggable=true;c.addEventListener('dragstart',function(e){dragName=p.nombre;e.dataTransfer.effectAllowed='move';});libres++;}
+      if(!tk&&!au){c.draggable=true;c.addEventListener('dragstart',function(e){dragName=p.nombre;dragFromSlotId=null;e.dataTransfer.effectAllowed='move';});libres++;}
       box.appendChild(c);
     });
     g.appendChild(box);cont.appendChild(g);
@@ -2909,7 +2921,7 @@ function renderPool(){
       var c=document.createElement('div');c.className='chip ev'+(tk?' taken':'')+(au?' ausente':'');
       c.innerHTML='<div class="av" style="background:#854d0e;color:#fef9c3">'+ini(n)+'</div>'+n+
         ' <span onclick="event.stopPropagation();rmEv(\''+n+'\')" style="cursor:pointer;color:#dc2626;font-size:11px">×</span>';
-      if(!tk&&!au){c.draggable=true;c.addEventListener('dragstart',function(e){dragName=n;e.dataTransfer.effectAllowed='move';});libres++;}
+      if(!tk&&!au){c.draggable=true;c.addEventListener('dragstart',function(e){dragName=n;dragFromSlotId=null;e.dataTransfer.effectAllowed='move';});libres++;}
       box.appendChild(c);
     });
     g.appendChild(box);cont.appendChild(g);

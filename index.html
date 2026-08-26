@@ -3167,10 +3167,14 @@ function autoAsignar(preview){
 
   // FASE 0b: cubrir minimos de puestos sin representacion fisica (Voluminosos/Oversize)
   var minFaltantesVO=[];
+  console.log('DEBUG FASE0b start, pool.length=',pool.length,'REQMIN=',JSON.stringify(REQMIN));
   VOL_OVER_KEYS.forEach(function(k){
-    var min=REQMIN[k]||0;if(min<=0)return;
+    var min=REQMIN[k]||0;
+    console.log('DEBUG role',k,'min=',min,'poolLen=',pool.length);
+    if(min<=0)return;
     var actuales=(nuevoExtra[k]||[]).length;
     var target=min-actuales;
+    console.log('DEBUG',k,'actuales=',actuales,'target=',target);
     if(target<=0)return;
     var cand=CRIT==='aleatorio'?shuffleArr(pool):pool.slice().sort(function(a,b){
       var sa=score(a,k),sb=score(b,k);

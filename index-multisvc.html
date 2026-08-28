@@ -29,7 +29,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .user-avatar{width:34px;height:34px;border-radius:50%;background:#e2e6ef;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1a1f2e;flex-shrink:0}
 .user-card.selected .user-avatar{background:rgba(255,255,255,.15);color:#fff}
 .user-card.admin-card.selected .user-avatar{background:#ffe600;color:#1a1f2e}
-.user-card-name{font-size:14.5px;font-weight:600;line-height:1.3;white-space:nowrap}
+.user-card-name{font-size:14.5px;font-weight:600;line-height:1.3}
 .user-card-role{font-size:11px;color:#6b7280;margin-top:1px}
 .login-btn{width:100%;padding:12px;background:#ffe600;color:#1a1f2e;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s}
 .login-btn:disabled{opacity:.4;cursor:not-allowed}
@@ -3790,7 +3790,7 @@ function SvcScreen(props){
     h('div',{className:'user-grid'},SVC_LIST.map(function(s){
       return h('div',{key:s.code,className:'user-card'+(svc===s.code?' selected':''),onClick:function(){setSvc(s.code);}},
         h('div',{className:'user-avatar'},s.code.slice(-2)),
-        h('div',null,h('div',{className:'user-card-name'},s.name),h('div',{className:'user-card-role'},s.code)));
+        h('div',{style:{minWidth:0,flex:1}},h('div',{className:'user-card-name'},s.name),h('div',{className:'user-card-role'},s.code)));
     })),
     h('button',{className:'login-btn',disabled:!svc,onClick:function(){if(svc)props.onSelect(svc);}},svc?'Ingresar a '+svc:'Selecciona tu SVC')
   ));

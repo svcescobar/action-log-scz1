@@ -3893,13 +3893,13 @@ function App(props) {
   );
 }
 function Root(){
-  var svcS=_useState(function(){try{return localStorage.getItem('al_svc')||null;}catch(e){return null;}});
+  var svcS=_useState(null);
   var svc=svcS[0],setSvc=svcS[1];
   if(!svc){
-    return h(SvcScreen,{onSelect:function(code){try{localStorage.setItem('al_svc',code);}catch(e){}CURRENT_SVC=code;setSvc(code);}});
+    return h(SvcScreen,{onSelect:function(code){CURRENT_SVC=code;setSvc(code);}});
   }
   CURRENT_SVC=svc;
-  return h(App,{currentUser:'Equipo',onLogout:function(){},svc:svc,onChangeSvc:function(){try{localStorage.removeItem('al_svc');}catch(e){}setSvc(null);}});
+  return h(App,{currentUser:'Equipo',onLogout:function(){},svc:svc,onChangeSvc:function(){setSvc(null);}});
 }
 var container=document.getElementById('root');
 var root=ReactDOM.createRoot(container);

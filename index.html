@@ -469,6 +469,7 @@ async function loadState(){
     return{entries:makeSeed(),bgImage:''};
   }
 }
+function _saveDelay(ms){return new Promise(function(res){setTimeout(res,ms);});}
 async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento,mantenimiento,layout){
   // Cada caller manda solo lo que cambió; el resto se toma del servidor (merge).
   function pick(mine,srv,fallback){
@@ -506,13 +507,17 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     _lastEquip=merged.equipamiento; _lastMant=merged.mantenimiento; _lastLayout=merged.layout;
     return {message:'update',sha:_ghSha,content:b64enc(JSON.stringify(merged))};
   }
-  var attempts=0,lastErr=null;
-  while(attempts<3){
+  var attempts=0,lastErr=null,MAX_ATTEMPTS=6;
+  while(attempts<MAX_ATTEMPTS){
     attempts++;
     try{
       var payload=await buildPayload();
       var resp=await fetch(GH_API,{method:'PUT',headers:GH_HDRS,body:JSON.stringify(payload)});
-      if(resp.status===409){console.warn('[saveState] conflicto 409, reintento '+attempts);continue;}
+      if(resp.status===409){
+        console.warn('[saveState] conflicto 409, reintento '+attempts);
+        await _saveDelay(300*attempts+Math.random()*250);
+        continue;
+      }
       if(!resp.ok){
         var txt=await resp.text().catch(function(){return'';});
         throw new Error('HTTP '+resp.status+(txt?': '+txt.slice(0,120):''));
@@ -524,13 +529,14 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
       return;
     }catch(e){
       lastErr=e;
-      if(attempts>=3)throw e;
+      if(attempts>=MAX_ATTEMPTS)throw e;
       console.warn('[saveState] intento '+attempts+' falló:',e.message);
+      await _saveDelay(300*attempts+Math.random()*250);
     }
   }
-  throw lastErr||new Error('saveState: 3 intentos fallidos');
+  throw lastErr||new Error('saveState: '+MAX_ATTEMPTS+' intentos fallidos');
 }
-function isAdmin(user){return ADMIN_USERS.indexOf(user)!==-1;}
+function isAdmin(user){return true;}
 function isMyTask(entry,user){if(!entry.responsables)return false;return entry.responsables.toLowerCase().indexOf(user.toLowerCase())!==-1;}
 function fmtDate(iso){if(!iso)return'';var p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 function fmtDateTime(iso){if(!iso)return'';var dt=new Date(iso);return dt.getDate().toString().padStart(2,'0')+'/'+(dt.getMonth()+1).toString().padStart(2,'0')+'/'+dt.getFullYear()+' '+dt.getHours().toString().padStart(2,'0')+':'+dt.getMinutes().toString().padStart(2,'0');}
@@ -3809,10 +3815,8 @@ function App(props) {
     h('header',{className:'header'},
       h('div',{className:'header-left'},h('div',{className:'header-logo'},'AL'),h('div',null,h('div',{className:'header-title'},'Action Log'),h('div',{className:'header-subtitle'},'SCZ1 · Escobar'))),
       h('div',{className:'header-right'},
-        h('div',{className:'user-chip'},'👤 '+currentUser.split(' ')[0]),
         h('button',{className:'dark-toggle',onClick:function(){setDark(function(d){return!d;});}},dark?'☀ Claro':'☾ Oscuro'),
-        admin&&h(React.Fragment,null,h('input',{type:'file',accept:'image/*',ref:bgInputRef,style:{display:'none'},onChange:handleBgUpload}),h('button',{className:'dark-toggle',onClick:function(){bgInputRef.current&&bgInputRef.current.click();}},'🖼 Fondo'),bgImage&&h('button',{className:'dark-toggle',onClick:handleRemoveBg,style:{color:'#fca5a5'}},'✕ Fondo')),
-        h('button',{className:'logout-btn',onClick:onLogout},'Salir')
+        admin&&h(React.Fragment,null,h('input',{type:'file',accept:'image/*',ref:bgInputRef,style:{display:'none'},onChange:handleBgUpload}),h('button',{className:'dark-toggle',onClick:function(){bgInputRef.current&&bgInputRef.current.click();}},'🖼 Fondo'),bgImage&&h('button',{className:'dark-toggle',onClick:handleRemoveBg,style:{color:'#fca5a5'}},'✕ Fondo'))
       )
     ),
     h('div',{className:'nav-tabs'},
@@ -3854,7 +3858,7 @@ function App(props) {
     h(Toast,{toasts:toasts})
   );
 }
-function Root(){var us=_useState(null);var currentUser=us[0],setCurrentUser=us[1];if(!currentUser)return h(LoginScreen,{onLogin:setCurrentUser});return h(App,{currentUser:currentUser,onLogout:function(){setCurrentUser(null);}});}
+function Root(){return h(App,{currentUser:'Equipo',onLogout:function(){}});}
 var container=document.getElementById('root');
 var root=ReactDOM.createRoot(container);
 root.render(h(Root,null));

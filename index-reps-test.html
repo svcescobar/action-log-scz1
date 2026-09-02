@@ -3764,36 +3764,55 @@ function MantenimientoView(props){
 // APP
 // ══════════════════════════════════════════════════════
 var REPS_PROCESOS=[
-  {k:'etiq',label:'Paquetes mal etiquetados',color:'#ef4444'},
-  {k:'reflujo',label:'Paquetes sin pescar (Reflujo)',color:'#f59e0b'},
-  {k:'tolva',label:'Paquetes detectados en Tolva',color:'#0ea5e9'}
+  {k:'etiq',label:'Paquetes mal etiquetados',color:'#ef4444',tieneTotal:true,mejorEs:'menor'},
+  {k:'reflujo',label:'Paquetes sin pescar (Reflujo)',color:'#f59e0b',tieneTotal:true,mejorEs:'menor'},
+  {k:'tolva',label:'Paquetes detectados en Tolva',color:'#0ea5e9',tieneTotal:false,mejorEs:'mayor'}
 ];
+function inicioSemanaISO(fechaStr){
+  var d=new Date(fechaStr+'T00:00:00');
+  var day=d.getDay();
+  var diff=(day===0?-6:1-day);
+  d.setDate(d.getDate()+diff);
+  return d.toISOString().slice(0,10);
+}
+function fmtPct(n){return n.toFixed(2).replace('.',',')+'%';}
 var REPS_NOMINA=['Agustin Romero','Agustina Gonzalez','Alan Ledesma','Angel Gutierrez','Angélica Ortíz','Christian Pucheta','Dylan Zurita','Elias Pereyra','Emiliano Domingo','Ernesto Ortíz','Fabian Aguero','Fabricio Ferreyra','Facundo llacuna','Gonzalo Danyluk','Gustavo Navarro','Hugo Rodriguez','Javier Tornacue','Jorge Diaz','Jose Salazar','Lautaro Coronel','Leonel Acevedo','Leonel Garcia','Luciano Torres','Martin Bireni','Matías Delgado','Maximiliano Benitez','Micaela Cassini','Milagros Gonzalez','Milena Garcia','Mirco Santillan','Nicolas Torres','Noelia Guzman','Santiago Bustamante','Sofia Gonzalez'];
 function RepsHistView(props){
   var demoSeed=[
-    {id:'d1',fecha:'2026-08-25',proceso:'etiq',nombre:'Fabricio Ferreyra',cantidad:3},
-    {id:'d2',fecha:'2026-08-25',proceso:'etiq',nombre:'Milena Garcia',cantidad:1},
-    {id:'d3',fecha:'2026-08-26',proceso:'etiq',nombre:'Fabricio Ferreyra',cantidad:2},
-    {id:'d4',fecha:'2026-08-25',proceso:'reflujo',nombre:'Javier Tornacue',cantidad:5},
-    {id:'d5',fecha:'2026-08-26',proceso:'reflujo',nombre:'Martin Bireni',cantidad:2},
-    {id:'d6',fecha:'2026-08-25',proceso:'tolva',nombre:'Facundo llacuna',cantidad:4},
-    {id:'d7',fecha:'2026-08-26',proceso:'tolva',nombre:'Facundo llacuna',cantidad:1}
+    {id:'d1',fecha:'2026-08-31',proceso:'etiq',nombre:'Fabricio Ferreyra',cantidad:3,total:900},
+    {id:'d2',fecha:'2026-08-31',proceso:'etiq',nombre:'Milena Garcia',cantidad:1,total:850},
+    {id:'d3',fecha:'2026-09-01',proceso:'etiq',nombre:'Fabricio Ferreyra',cantidad:2,total:920},
+    {id:'d4',fecha:'2026-08-31',proceso:'reflujo',nombre:'Javier Tornacue',cantidad:5,total:400},
+    {id:'d5',fecha:'2026-09-01',proceso:'reflujo',nombre:'Martin Bireni',cantidad:2,total:380},
+    {id:'d6',fecha:'2026-08-31',proceso:'tolva',nombre:'Facundo llacuna',cantidad:4,total:null},
+    {id:'d7',fecha:'2026-09-01',proceso:'tolva',nombre:'Facundo llacuna',cantidad:1,total:null}
   ];
   var es=_useState(demoSeed);var entries=es[0],setEntries=es[1];
   var fs=_useState(new Date().toISOString().slice(0,10));var fecha=fs[0],setFecha=fs[1];
   var ts=_useState('registro');var subTab=ts[0],setSubTab=ts[1];
-  var sels=_useState({etiq:{nombre:'',cant:''},reflujo:{nombre:'',cant:''},tolva:{nombre:'',cant:''}});
+  var sels=_useState({etiq:{nombre:'',cant:'',total:''},reflujo:{nombre:'',cant:'',total:''},tolva:{nombre:'',cant:''}});
   var picks=sels[0],setPicks=sels[1];
+  var hoy=new Date().toISOString().slice(0,10);
 
   var nombresOrdenados=REPS_NOMINA.slice().sort();
 
   function addEntry(proceso){
+    var conf=REPS_PROCESOS.find(function(p){return p.k===proceso;});
     var p=picks[proceso];
     var cantNum=parseInt(p.cant,10);
-    if(!p.nombre||!p.cant||isNaN(cantNum)||cantNum<=0)return;
-    var nuevo={id:'r'+Date.now()+Math.random().toString(36).slice(2,7),fecha:fecha,proceso:proceso,nombre:p.nombre,cantidad:cantNum};
+    if(!p.nombre||p.cant===''||isNaN(cantNum)||cantNum<0)return;
+    var totalNum=null;
+    if(conf.tieneTotal){
+      totalNum=parseInt(p.total,10);
+      if(p.total===''||isNaN(totalNum)||totalNum<=0||cantNum>totalNum)return;
+    }
+    var nuevo={id:'r'+Date.now()+Math.random().toString(36).slice(2,7),fecha:fecha,proceso:proceso,nombre:p.nombre,cantidad:cantNum,total:totalNum};
     setEntries(function(prev){return prev.concat([nuevo]);});
-    setPicks(function(prev){var np=Object.assign({},prev);np[proceso]={nombre:'',cant:''};return np;});
+    setPicks(function(prev){
+      var np=Object.assign({},prev);
+      np[proceso]=conf.tieneTotal?{nombre:'',cant:'',total:''}:{nombre:'',cant:''};
+      return np;
+    });
   }
   function delEntry(id){
     setEntries(function(prev){return prev.filter(function(e){return e.id!==id;});});
@@ -3801,13 +3820,35 @@ function RepsHistView(props){
   function registroDelDia(proceso){
     return entries.filter(function(e){return e.proceso===proceso&&e.fecha===fecha;});
   }
-  function rankingDe(proceso){
-    var totales={};
-    entries.filter(function(e){return e.proceso===proceso;}).forEach(function(e){
-      totales[e.nombre]=(totales[e.nombre]||0)+e.cantidad;
+  function acumularPorNombre(lista){
+    var acc={};
+    lista.forEach(function(e){
+      if(!acc[e.nombre])acc[e.nombre]={cantidad:0,total:0};
+      acc[e.nombre].cantidad+=e.cantidad;
+      acc[e.nombre].total+=(e.total||0);
     });
-    return Object.keys(totales).map(function(n){return {nombre:n,total:totales[n]};})
-      .sort(function(a,b){return b.total-a.total;});
+    return acc;
+  }
+  function rankingProceso(proceso,soloEstaSemana){
+    var conf=REPS_PROCESOS.find(function(p){return p.k===proceso;});
+    var lista=entries.filter(function(e){return e.proceso===proceso;});
+    if(soloEstaSemana){
+      var inicioHoy=inicioSemanaISO(hoy);
+      lista=lista.filter(function(e){return inicioSemanaISO(e.fecha)===inicioHoy;});
+    }
+    var acc=acumularPorNombre(lista);
+    var arr=Object.keys(acc).map(function(n){
+      var a=acc[n];
+      var pct=conf.tieneTotal&&a.total>0?(a.cantidad/a.total*100):null;
+      return {nombre:n,cantidad:a.cantidad,total:a.total,pct:pct};
+    });
+    if(conf.tieneTotal){
+      arr=arr.filter(function(r){return r.pct!==null;});
+      arr.sort(function(x,y){return conf.mejorEs==='menor'?x.pct-y.pct:y.pct-x.pct;});
+    }else{
+      arr.sort(function(x,y){return y.cantidad-x.cantidad;});
+    }
+    return arr;
   }
 
   function renderRegistro(){
@@ -3825,18 +3866,20 @@ function RepsHistView(props){
             h('div',{style:{maxHeight:220,overflowY:'auto',marginBottom:10}},
               rows.length===0?h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic',padding:'8px 0'}},'Sin registros para esta fecha.'):
               rows.map(function(r){
+                var pctTxt=proc.tieneTotal&&r.total>0?(' — '+r.cantidad+'/'+r.total+' ('+fmtPct(r.cantidad/r.total*100)+')'):(' — '+r.cantidad);
                 return h('div',{key:r.id,style:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'6px 0',borderBottom:'1px solid var(--border)',fontSize:13}},
-                  h('span',null,r.nombre),
-                  h('span',{style:{display:'flex',alignItems:'center',gap:8}},h('b',null,r.cantidad),h('span',{style:{cursor:'pointer',color:'#dc2626'},onClick:function(){delEntry(r.id);}},'✕'))
+                  h('span',null,r.nombre,h('b',null,pctTxt)),
+                  h('span',{style:{cursor:'pointer',color:'#dc2626'},onClick:function(){delEntry(r.id);}},'✕')
                 );
               })
             ),
-            h('div',{style:{display:'flex',gap:6}},
-              h('select',{value:pick.nombre,onChange:function(e){var val=e.target.value;setPicks(function(prev){var np=Object.assign({},prev);np[proc.k]=Object.assign({},np[proc.k],{nombre:val});return np;});},style:{flex:1,padding:'6px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,fontFamily:'inherit'}},
+            h('div',{style:{display:'flex',gap:6,flexWrap:'wrap'}},
+              h('select',{value:pick.nombre,onChange:function(e){var val=e.target.value;setPicks(function(prev){var np=Object.assign({},prev);np[proc.k]=Object.assign({},np[proc.k],{nombre:val});return np;});},style:{flex:'1 1 140px',padding:'6px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,fontFamily:'inherit'}},
                 h('option',{value:''},'Elegir persona...'),
                 nombresOrdenados.map(function(n){return h('option',{key:n,value:n},n);})
               ),
-              h('input',{type:'number',min:1,placeholder:'Cant.',value:pick.cant,onChange:function(e){var val=e.target.value;setPicks(function(prev){var np=Object.assign({},prev);np[proc.k]=Object.assign({},np[proc.k],{cant:val});return np;});},style:{width:60,padding:'6px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,fontFamily:'inherit'}}),
+              h('input',{type:'number',min:0,placeholder:proc.tieneTotal?'Mal':'Cant.',value:pick.cant,onChange:function(e){var val=e.target.value;setPicks(function(prev){var np=Object.assign({},prev);np[proc.k]=Object.assign({},np[proc.k],{cant:val});return np;});},style:{width:60,padding:'6px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,fontFamily:'inherit'}}),
+              proc.tieneTotal&&h('input',{type:'number',min:1,placeholder:'Total',value:pick.total,onChange:function(e){var val=e.target.value;setPicks(function(prev){var np=Object.assign({},prev);np[proc.k]=Object.assign({},np[proc.k],{total:val});return np;});},style:{width:65,padding:'6px 8px',border:'1.5px solid var(--border)',borderRadius:6,fontSize:12,fontFamily:'inherit'}}),
               h('button',{className:'btn btn-primary',style:{padding:'6px 10px',fontSize:12},onClick:function(){addEntry(proc.k);}},'+')
             )
           );
@@ -3845,18 +3888,43 @@ function RepsHistView(props){
     );
   }
 
-  function renderRanking(){
+  function renderPodio(proc,arr){
+    var medallas=['🥇','🥈','🥉'];
+    return h('div',{key:proc.k,style:{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:10,padding:14,borderTop:'4px solid '+proc.color}},
+      h('div',{style:{fontWeight:800,fontSize:14,marginBottom:4,color:proc.color}},proc.label),
+      h('div',{style:{fontSize:11,color:'var(--text-muted)',marginBottom:10}},proc.tieneTotal?'Mejor % de la semana':'Más detectados en la semana'),
+      arr.length===0?h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic'}},'Todavía no hay datos esta semana.'):
+      h('div',null,arr.slice(0,3).map(function(r,i){
+        var valorTxt=proc.tieneTotal?fmtPct(r.pct):(''+r.cantidad);
+        return h('div',{key:r.nombre,style:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'8px 0',borderBottom:i<2?'1px solid var(--border)':'none',fontSize:14}},
+          h('span',null,h('span',{style:{marginRight:8,fontSize:18}},medallas[i]),r.nombre),
+          h('b',null,valorTxt)
+        );
+      }))
+    );
+  }
+  function renderRankingSemanal(){
+    return h('div',null,
+      h('div',{style:{fontSize:12,color:'var(--text-muted)',marginBottom:14}},'📅 Semana actual (lunes a domingo)'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:16}},
+        REPS_PROCESOS.map(function(proc){return renderPodio(proc,rankingProceso(proc.k,true));})
+      )
+    );
+  }
+
+  function renderRankingHistorico(){
     return h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:16}},
       REPS_PROCESOS.map(function(proc){
-        var rank=rankingDe(proc.k);
+        var rank=rankingProceso(proc.k,false);
         return h('div',{key:proc.k,style:{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:10,padding:14,borderTop:'4px solid '+proc.color}},
           h('div',{style:{fontWeight:800,fontSize:14,marginBottom:10,color:proc.color}},proc.label),
           rank.length===0?h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic'}},'Todavía no hay datos.'):
           h('div',null,rank.map(function(r,i){
             var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+            var valorTxt=proc.tieneTotal?(r.cantidad+'/'+r.total+' ('+fmtPct(r.pct)+')'):(''+r.cantidad);
             return h('div',{key:r.nombre,style:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'7px 0',borderBottom:'1px solid var(--border)',fontSize:13}},
               h('span',null,h('span',{style:{marginRight:8,fontWeight:700}},medal),r.nombre),
-              h('b',null,r.total)
+              h('b',null,valorTxt)
             );
           }))
         );
@@ -3867,11 +3935,11 @@ function RepsHistView(props){
   return h('main',{className:'main'},
     h('div',{style:{background:'#fef9c3',border:'1px solid #fde047',borderRadius:8,padding:'10px 14px',marginBottom:16,fontSize:12.5,color:'#854d0e'}},'⚠ Modo de prueba: estos datos son de ejemplo y no se guardan todavía. Es solo para revisar cómo queda el diseño.'),
     h('div',{style:{display:'flex',gap:0,marginBottom:16,borderBottom:'2px solid var(--border)'}},
-      [['registro','📅 Registro diario'],['ranking','🏆 Ranking histórico']].map(function(t){
+      [['registro','📅 Registro diario'],['semanal','🏅 Ranking semanal'],['historico','🏆 Ranking histórico']].map(function(t){
         return h('button',{key:t[0],onClick:function(){setSubTab(t[0]);},style:{padding:'8px 18px',border:'none',background:'none',cursor:'pointer',fontWeight:700,fontSize:13,fontFamily:'inherit',color:subTab===t[0]?'var(--navy)':'var(--text-muted)',borderBottom:subTab===t[0]?'3px solid #ffe600':'3px solid transparent',marginBottom:-2}},t[1]);
       })
     ),
-    subTab==='registro'?renderRegistro():renderRanking()
+    subTab==='registro'?renderRegistro():subTab==='semanal'?renderRankingSemanal():renderRankingHistorico()
   );
 }
 function App(props) {

@@ -3784,7 +3784,7 @@ function RepsHistView(props){
   var sels=_useState({etiq:{nombre:'',cant:''},reflujo:{nombre:'',cant:''},tolva:{nombre:'',cant:''}});
   var picks=sels[0],setPicks=sels[1];
 
-  var nombresOrdenados=NOMINA.map(function(p){return p.nombre;}).slice().sort();
+  var nombresOrdenados=LAY_NOMINA.map(function(p){return p.nombre;}).slice().sort();
 
   function addEntry(proceso){
     var p=picks[proceso];

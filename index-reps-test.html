@@ -3768,6 +3768,7 @@ var REPS_PROCESOS=[
   {k:'reflujo',label:'Paquetes sin pescar (Reflujo)',color:'#f59e0b'},
   {k:'tolva',label:'Paquetes detectados en Tolva',color:'#0ea5e9'}
 ];
+var REPS_NOMINA=['Agustin Romero','Agustina Gonzalez','Alan Ledesma','Angel Gutierrez','Angélica Ortíz','Christian Pucheta','Dylan Zurita','Elias Pereyra','Emiliano Domingo','Ernesto Ortíz','Fabian Aguero','Fabricio Ferreyra','Facundo llacuna','Gonzalo Danyluk','Gustavo Navarro','Hugo Rodriguez','Javier Tornacue','Jorge Diaz','Jose Salazar','Lautaro Coronel','Leonel Acevedo','Leonel Garcia','Luciano Torres','Martin Bireni','Matías Delgado','Maximiliano Benitez','Micaela Cassini','Milagros Gonzalez','Milena Garcia','Mirco Santillan','Nicolas Torres','Noelia Guzman','Santiago Bustamante','Sofia Gonzalez'];
 function RepsHistView(props){
   var demoSeed=[
     {id:'d1',fecha:'2026-08-25',proceso:'etiq',nombre:'Fabricio Ferreyra',cantidad:3},
@@ -3784,7 +3785,7 @@ function RepsHistView(props){
   var sels=_useState({etiq:{nombre:'',cant:''},reflujo:{nombre:'',cant:''},tolva:{nombre:'',cant:''}});
   var picks=sels[0],setPicks=sels[1];
 
-  var nombresOrdenados=LAY_NOMINA.map(function(p){return p.nombre;}).slice().sort();
+  var nombresOrdenados=REPS_NOMINA.slice().sort();
 
   function addEntry(proceso){
     var p=picks[proceso];

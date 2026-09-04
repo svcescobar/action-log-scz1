@@ -1458,9 +1458,11 @@ function Tier1View(props){
     fresh.semana=(parseInt(t1.semana)||isoWeekNow())+1;
     setT1(fresh);
     onSave(fresh,updated,{tier1:t1Baseline.current,tier1Hist:histBaseline.current});
+    t1Baseline.current=JSON.parse(JSON.stringify(fresh));
+    histBaseline.current=JSON.parse(JSON.stringify(updated));
     setSaved(true);setTimeout(function(){setSaved(false);},2500);
   }
-  function sincronizar(){ onSave(t1,hist,{tier1:t1Baseline.current,tier1Hist:histBaseline.current}); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
+  function sincronizar(){ onSave(t1,hist,{tier1:t1Baseline.current,tier1Hist:histBaseline.current}); t1Baseline.current=JSON.parse(JSON.stringify(t1)); histBaseline.current=JSON.parse(JSON.stringify(hist)); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
   var t1FirstRender=_useRef(true);
   var t1AutoTimer=_useRef(null);
   _useEffect(function(){
@@ -1822,7 +1824,7 @@ function InventarioView(props){
   function updEquip(id,field,val){setEquip(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addEquip(){setEquip(function(prev){return prev.concat([{id:genId(),elemento:'',numero:'',serial:'',operativo:true,observaciones:''}]);});}
   function delEquip(id){setEquip(function(prev){return prev.filter(function(r){return r.id!==id;});});}
-  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip,{equipamiento:equipBaseline.current});setSavedEquip(true);setTimeout(function(){setSavedEquip(false);},2500);}
+  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip,{equipamiento:equipBaseline.current});equipBaseline.current=JSON.parse(JSON.stringify(equip));setSavedEquip(true);setTimeout(function(){setSavedEquip(false);},2500);}
   _useEffect(function(){
     if(equipFirstRender.current){equipFirstRender.current=false;return;}
     if(equipSkipAuto.current){equipSkipAuto.current=false;return;}
@@ -1848,7 +1850,7 @@ function InventarioView(props){
   var filterS=_useState('Todos');var filter=filterS[0],setFilter=filterS[1];
   var sortS=_useState('tipo');var sortBy=sortS[0],setSortBy=sortS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
-  function sync(){onSave(inv,{inventory:invBaseline.current});setSaved(true);setTimeout(function(){setSaved(false);},2500);}
+  function sync(){onSave(inv,{inventory:invBaseline.current});invBaseline.current=JSON.parse(JSON.stringify(inv));setSaved(true);setTimeout(function(){setSaved(false);},2500);}
   var invFirstRender=_useRef(true);
   var invAutoTimer=_useRef(null);
   _useEffect(function(){
@@ -3655,6 +3657,7 @@ function MantenimientoView(props){
     setRows(function(prev){
       var updated=[newRow].concat(prev);
       onSave(updated,{mantenimiento:mantBaseline.current});
+      mantBaseline.current=JSON.parse(JSON.stringify(updated));
       return updated;
     });
   }
@@ -3667,7 +3670,7 @@ function MantenimientoView(props){
     });
   }
   function delRow(id){setRows(function(prev){return prev.filter(function(r){return r.id!==id;});});}
-  function sync(){onSave(rows,{mantenimiento:mantBaseline.current});setSaved(true);setTimeout(function(){setSaved(false);},2500);}
+  function sync(){onSave(rows,{mantenimiento:mantBaseline.current});mantBaseline.current=JSON.parse(JSON.stringify(rows));setSaved(true);setTimeout(function(){setSaved(false);},2500);}
   function pickFoto(rowId){targetRow.current=rowId;fileRef.current&&fileRef.current.click();}
   async function handleFiles(files){
     var rowId=targetRow.current;

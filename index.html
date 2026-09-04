@@ -549,7 +549,7 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
     var merged={
       entries:       pick(safeEntries,   srv.entries,       []),
       bgImage:       pick(bgImage,       srv.bgImage,       ''),
-      calcState:     pick(calcState,     srv.calcState,     {}),
+      calcState:     pick3('calcState', calcState,     srv.calcState,     {}),
       tier1:         pick3('tier1',      tier1,         srv.tier1,         _lastTier1||null),
       tier1Hist:     pick3('tier1Hist',  tier1Hist,     srv.tier1Hist,     _lastTier1Hist||[]),
       inventory:     pick3('inventory',  inventory,     srv.inventory,     _lastInv||null),
@@ -854,6 +854,22 @@ function DotacionView(props) {
   var tarifEvS=_useState(_saved.tarifEv||0);       var tarifEv=tarifEvS[0],setTarifEv=tarifEvS[1];
   var histTabS=_useState('tabla'); var histTab=histTabS[0],setHistTab=histTabS[1];
   var targetGgpS=_useState(_saved.targetGgp||0);   var targetGgp=targetGgpS[0],setTargetGgp=targetGgpS[1];
+  function buildCalcState(){
+    return {scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,volRealAm:volRealAm,volRealPm:volRealPm,share:share,rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,ausAmReal:ausAmReal,presAm:presAm,rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,ausPmReal:ausPmReal,presPm:presPm,horaAm:horaAm,horaPm:horaPm,tarifFijo:tarifFijo,tarifEv:tarifEv,targetGgp:targetGgp};
+  }
+  var calcBaseline=_useRef(buildCalcState());
+  var calcFirstRender=_useRef(true);
+  var calcAutoTimer=_useRef(null);
+  _useEffect(function(){
+    if(calcFirstRender.current){calcFirstRender.current=false;return;}
+    if(calcAutoTimer.current)clearTimeout(calcAutoTimer.current);
+    calcAutoTimer.current=setTimeout(function(){
+      var state=buildCalcState();
+      onSaveCalc(state,{calcState:calcBaseline.current});
+      calcBaseline.current=JSON.parse(JSON.stringify(state));
+    },1500);
+    return function(){if(calcAutoTimer.current)clearTimeout(calcAutoTimer.current);};
+  },[scz1,ecz1,ecz2,scz1Pm,volRealAm,volRealPm,share,rfAm,vacAm,ausAm,ausAmReal,presAm,rfPm,vacPm,ausPm,ausPmReal,presPm,horaAm,horaPm,tarifFijo,tarifEv,targetGgp]);
   var copiedS=_useState(false);   var copied=copiedS[0],setCopied=copiedS[1];
   var savedS=_useState(false);    var saved=savedS[0],setSaved=savedS[1];
   _useEffect(function(){
@@ -1313,8 +1329,9 @@ function DotacionView(props) {
         h('span',{style:{color:'#fff',fontWeight:700,fontSize:11,letterSpacing:'.07em',textTransform:'uppercase'}},'Volumen FCST — actualizá estos valores diariamente'),
         h('button',{
           onClick:function(){
-            var state={scz1:scz1,ecz1:ecz1,ecz2:ecz2,scz1Pm:scz1Pm,volRealAm:volRealAm,volRealPm:volRealPm,share:share,rfAm:rfAm,vacAm:vacAm,ausAm:ausAm,ausAmReal:ausAmReal,presAm:presAm,rfPm:rfPm,vacPm:vacPm,ausPm:ausPm,ausPmReal:ausPmReal,presPm:presPm,horaAm:horaAm,horaPm:horaPm,tarifFijo:tarifFijo,tarifEv:tarifEv,targetGgp:targetGgp};
-            onSaveCalc(state);
+            var state=buildCalcState();
+            onSaveCalc(state,{calcState:calcBaseline.current});
+            calcBaseline.current=JSON.parse(JSON.stringify(state));
           },
           style:{background:'#FFE600',color:'#1a1f2e',border:'none',borderRadius:5,padding:'4px 12px',fontWeight:700,fontSize:12,cursor:'pointer',fontFamily:'inherit'}
         },'💾 Sincronizar')
@@ -4077,7 +4094,7 @@ function App(props) {
   _useEffect(function(){if(bgImage){document.body.style.backgroundImage='url('+bgImage+')';document.body.style.backgroundSize='cover';document.body.style.backgroundPosition='center';document.body.style.backgroundAttachment='fixed';document.body.classList.add('has-bg');}else{document.body.style.backgroundImage='';document.body.classList.remove('has-bg');}},[ bgImage]);
   if(loading)return h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',background:'#1a1f2e',color:'#ffe600',fontSize:'18px',gap:'12px'}},h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⟳'),'Cargando...');
   function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg,undefined,undefined,undefined,undefined,undefined,undefined).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
-  function saveCalcToGH(cs){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(undefined,undefined,cs,undefined,undefined,undefined,undefined,undefined).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveCalcToGH(cs,baselines){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(undefined,undefined,cs,undefined,undefined,undefined,undefined,undefined,undefined,undefined,baselines).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveTier1ToGH(t1,t1Hist,baselines){setTier1(t1);setTier1Hist(t1Hist);return saveState(undefined,undefined,undefined,t1,t1Hist,undefined,undefined,undefined,undefined,undefined,baselines).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveInvToGH(invData,baselines){setInventory(invData);return saveState(undefined,undefined,undefined,undefined,undefined,invData,undefined,undefined,undefined,undefined,baselines).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveEquipToGH(eq,baselines){setEquipamiento(eq);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,eq,undefined,undefined,undefined,baselines).then(function(){showToast('✓ Equipamiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}

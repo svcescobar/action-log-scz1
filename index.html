@@ -472,13 +472,64 @@ async function loadState(){
     return{entries:makeSeed(),bgImage:''};
   }
 }
+function _isPlainObj(v){return v!==null&&typeof v==='object'&&!Array.isArray(v);}
+function _deepEq(a,b){try{return JSON.stringify(a)===JSON.stringify(b);}catch(e){return a===b;}}
+function _arrHasIds(arr){return Array.isArray(arr)&&arr.length>0&&arr.every(function(x){return x&&typeof x==='object'&&'id' in x;});}
+function threeWayMerge(base,mine,srv){
+  if(base===undefined)base=null;
+  if(mine===undefined)mine=null;
+  if(srv===undefined)srv=null;
+  if(_deepEq(mine,base)) return srv!==null?srv:mine;
+  if(Array.isArray(mine)&&Array.isArray(srv)){
+    var baseArr=Array.isArray(base)?base:[];
+    if(_arrHasIds(mine)&&_arrHasIds(srv)){
+      var baseById={};baseArr.forEach(function(x){baseById[x.id]=x;});
+      var mineById={};mine.forEach(function(x){mineById[x.id]=x;});
+      var srvById={};srv.forEach(function(x){srvById[x.id]=x;});
+      var seen={};var allIds=[];
+      mine.concat(srv).forEach(function(x){if(!seen[x.id]){seen[x.id]=true;allIds.push(x.id);}});
+      var out=[];
+      allIds.forEach(function(id){
+        var inBase=(id in baseById),inMine=(id in mineById),inSrv=(id in srvById);
+        if(inBase&&!inMine)return;
+        if(inMine&&!inSrv&&inBase)return;
+        if(!inMine&&inSrv){out.push(srvById[id]);return;}
+        if(inMine&&!inSrv){out.push(mineById[id]);return;}
+        out.push(threeWayMerge(inBase?baseById[id]:null,mineById[id],srvById[id]));
+      });
+      return out;
+    }
+    var len=Math.max(mine.length,srv.length,baseArr.length);
+    var out2=[];
+    for(var i=0;i<len;i++)out2.push(threeWayMerge(baseArr[i],mine[i],srv[i]));
+    return out2;
+  }
+  if(_isPlainObj(mine)&&_isPlainObj(srv)){
+    var baseObj=_isPlainObj(base)?base:{};
+    var keys={};
+    Object.keys(baseObj).forEach(function(k){keys[k]=true;});
+    Object.keys(mine).forEach(function(k){keys[k]=true;});
+    Object.keys(srv).forEach(function(k){keys[k]=true;});
+    var out3={};
+    Object.keys(keys).forEach(function(k){out3[k]=threeWayMerge(baseObj[k],mine[k],srv[k]);});
+    return out3;
+  }
+  return mine;
+}
 function _saveDelay(ms){return new Promise(function(res){setTimeout(res,ms);});}
-async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento,mantenimiento,layout,repsHist){
+async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equipamiento,mantenimiento,layout,repsHist,baselines){
   // Cada caller manda solo lo que cambió; el resto se toma del servidor (merge).
   function pick(mine,srv,fallback){
     if(mine!==undefined&&mine!==null)return mine;
     if(srv!==undefined&&srv!==null)return srv;
     return fallback;
+  }
+  function pick3(key,mine,srv,fallback){
+    if(mine===undefined||mine===null)return(srv!==undefined&&srv!==null)?srv:fallback;
+    var baseline=baselines&&baselines[key];
+    if(baseline===undefined||baseline===null)return mine;
+    var srvVal=(srv!==undefined&&srv!==null)?srv:fallback;
+    return threeWayMerge(baseline,mine,srvVal);
   }
   async function buildPayload(){
     var resp=await fetch(GH_API+'?_cb='+Date.now(),{headers:GH_HDRS,cache:'no-store'});
@@ -499,11 +550,11 @@ async function saveState(entries,bgImage,calcState,tier1,tier1Hist,inventory,equ
       entries:       pick(safeEntries,   srv.entries,       []),
       bgImage:       pick(bgImage,       srv.bgImage,       ''),
       calcState:     pick(calcState,     srv.calcState,     {}),
-      tier1:         pick(tier1,         srv.tier1,         _lastTier1||null),
-      tier1Hist:     pick(tier1Hist,     srv.tier1Hist,     _lastTier1Hist||[]),
-      inventory:     pick(inventory,     srv.inventory,     _lastInv||null),
-      equipamiento:  pick(equipamiento,  srv.equipamiento,  _lastEquip||null),
-      mantenimiento: pick(mantenimiento, srv.mantenimiento, _lastMant||null),
+      tier1:         pick3('tier1',      tier1,         srv.tier1,         _lastTier1||null),
+      tier1Hist:     pick3('tier1Hist',  tier1Hist,     srv.tier1Hist,     _lastTier1Hist||[]),
+      inventory:     pick3('inventory',  inventory,     srv.inventory,     _lastInv||null),
+      equipamiento:  pick3('equipamiento',equipamiento, srv.equipamiento,  _lastEquip||null),
+      mantenimiento: pick3('mantenimiento',mantenimiento,srv.mantenimiento,_lastMant||null),
       layout:        pick(layout,        srv.layout,        _lastLayout||null),
       repsHist:      pick(repsHist,      srv.repsHist,      _lastRepsHist||null)
     };
@@ -1361,6 +1412,8 @@ function Tier1View(props){
   var t1S=_useState(function(){return JSON.parse(JSON.stringify(initT1));});
   var t1=t1S[0],setT1=t1S[1];
   var histS=_useState(initHist);var hist=histS[0],setHist=histS[1];
+  var t1Baseline=_useRef(JSON.parse(JSON.stringify(initT1)));
+  var histBaseline=_useRef(JSON.parse(JSON.stringify(initHist)));
   var tabS=_useState('semana');var tab=tabS[0],setTab=tabS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
   var editWkS=_useState(null);var editWk=editWkS[0],setEditWk=editWkS[1];
@@ -1404,10 +1457,10 @@ function Tier1View(props){
     var fresh=emptyTier1();
     fresh.semana=(parseInt(t1.semana)||isoWeekNow())+1;
     setT1(fresh);
-    onSave(fresh,updated);
+    onSave(fresh,updated,{tier1:t1Baseline.current,tier1Hist:histBaseline.current});
     setSaved(true);setTimeout(function(){setSaved(false);},2500);
   }
-  function sincronizar(){ onSave(t1,hist); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
+  function sincronizar(){ onSave(t1,hist,{tier1:t1Baseline.current,tier1Hist:histBaseline.current}); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
   var t1FirstRender=_useRef(true);
   var t1AutoTimer=_useRef(null);
   _useEffect(function(){
@@ -1755,6 +1808,7 @@ function InventarioView(props){
     return ensureEqIds(JSON.parse(JSON.stringify(base)));
   };
   var eqSt=_useState(eqInitFn);var equip=eqSt[0],setEquip=eqSt[1];
+  var equipBaseline=_useRef(JSON.parse(JSON.stringify(equip)));
   var eqSearchS=_useState('');var eqSearch=eqSearchS[0],setEqSearch=eqSearchS[1];
   var eqFilterS=_useState('Todos');var eqFilter=eqFilterS[0],setEqFilter=eqFilterS[1];
   var savedEquipS=_useState(false);var savedEquip=savedEquipS[0],setSavedEquip=savedEquipS[1];
@@ -1763,12 +1817,12 @@ function InventarioView(props){
   var equipAutoTimer=_useRef(null);
   // Re-apply equipamiento from GitHub when it arrives
   _useEffect(function(){
-    if(props.equipamiento){equipSkipAuto.current=true;setEquip(ensureEqIds(JSON.parse(JSON.stringify(props.equipamiento))));}
+    if(props.equipamiento){var _eqFresh=ensureEqIds(JSON.parse(JSON.stringify(props.equipamiento)));equipSkipAuto.current=true;equipBaseline.current=JSON.parse(JSON.stringify(_eqFresh));setEquip(_eqFresh);}
   },[props.equipamiento]);
   function updEquip(id,field,val){setEquip(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addEquip(){setEquip(function(prev){return prev.concat([{id:genId(),elemento:'',numero:'',serial:'',operativo:true,observaciones:''}]);});}
   function delEquip(id){setEquip(function(prev){return prev.filter(function(r){return r.id!==id;});});}
-  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip);setSavedEquip(true);setTimeout(function(){setSavedEquip(false);},2500);}
+  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip,{equipamiento:equipBaseline.current});setSavedEquip(true);setTimeout(function(){setSavedEquip(false);},2500);}
   _useEffect(function(){
     if(equipFirstRender.current){equipFirstRender.current=false;return;}
     if(equipSkipAuto.current){equipSkipAuto.current=false;return;}
@@ -1789,11 +1843,12 @@ function InventarioView(props){
     return base;
   });
   var inv=invS[0],setInv=invS[1];
+  var invBaseline=_useRef(JSON.parse(JSON.stringify(inv)));
   var tabS=_useState('items');var tab=tabS[0],setTab=tabS[1];
   var filterS=_useState('Todos');var filter=filterS[0],setFilter=filterS[1];
   var sortS=_useState('tipo');var sortBy=sortS[0],setSortBy=sortS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
-  function sync(){onSave(inv);setSaved(true);setTimeout(function(){setSaved(false);},2500);}
+  function sync(){onSave(inv,{inventory:invBaseline.current});setSaved(true);setTimeout(function(){setSaved(false);},2500);}
   var invFirstRender=_useRef(true);
   var invAutoTimer=_useRef(null);
   _useEffect(function(){
@@ -3570,6 +3625,7 @@ function MantenimientoView(props){
     return JSON.parse(JSON.stringify(base));
   });
   var rows=rowsS[0],setRows=rowsS[1];
+  var mantBaseline=_useRef(JSON.parse(JSON.stringify(rows)));
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
   var searchS=_useState('');var search=searchS[0],setSearch=searchS[1];
   var fPrioS=_useState('Todos');var fPrio=fPrioS[0],setFPrio=fPrioS[1];
@@ -3583,7 +3639,7 @@ function MantenimientoView(props){
   var mantFirstRender=_useRef(true);
   var mantAutoTimer=_useRef(null);
   _useEffect(function(){
-    if(props.mantenimiento&&props.mantenimiento.length){mantSkipAuto.current=true;setRows(JSON.parse(JSON.stringify(props.mantenimiento)));}
+    if(props.mantenimiento&&props.mantenimiento.length){var _mantFresh=JSON.parse(JSON.stringify(props.mantenimiento));mantSkipAuto.current=true;mantBaseline.current=JSON.parse(JSON.stringify(_mantFresh));setRows(_mantFresh);}
   },[props.mantenimiento]);
   _useEffect(function(){
     if(mantFirstRender.current){mantFirstRender.current=false;return;}
@@ -3598,7 +3654,7 @@ function MantenimientoView(props){
     var newRow={id:genId(),fecha:hoy,prioridad:'Necesaria',titulo:'',descripcion:'',comentarios:'',ticket:'',observaciones:'',estado:'Pendiente',fotos:[]};
     setRows(function(prev){
       var updated=[newRow].concat(prev);
-      onSave(updated);
+      onSave(updated,{mantenimiento:mantBaseline.current});
       return updated;
     });
   }
@@ -3611,7 +3667,7 @@ function MantenimientoView(props){
     });
   }
   function delRow(id){setRows(function(prev){return prev.filter(function(r){return r.id!==id;});});}
-  function sync(){onSave(rows);setSaved(true);setTimeout(function(){setSaved(false);},2500);}
+  function sync(){onSave(rows,{mantenimiento:mantBaseline.current});setSaved(true);setTimeout(function(){setSaved(false);},2500);}
   function pickFoto(rowId){targetRow.current=rowId;fileRef.current&&fileRef.current.click();}
   async function handleFiles(files){
     var rowId=targetRow.current;
@@ -4019,11 +4075,11 @@ function App(props) {
   if(loading)return h('div',{style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',background:'#1a1f2e',color:'#ffe600',fontSize:'18px',gap:'12px'}},h('span',{style:{animation:'spin 1s linear infinite',display:'inline-block'}},'⟳'),'Cargando...');
   function persist(updated,bg){var newBg=bg!==undefined?bg:bgImage;setEntries(updated);saveState(updated,newBg,undefined,undefined,undefined,undefined,undefined,undefined).then(function(){showToast('✓ Guardado','success');}).catch(function(e){showToast('⚠ Error al guardar: '+e.message,'error');})}
   function saveCalcToGH(cs){setCalcState(cs);try{localStorage.setItem('dotacion_calc_state',JSON.stringify(cs));}catch(e){}return saveState(undefined,undefined,cs,undefined,undefined,undefined,undefined,undefined).then(function(){showToast('✓ Configuración sincronizada','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
-  function saveTier1ToGH(t1,t1Hist){setTier1(t1);setTier1Hist(t1Hist);return saveState(undefined,undefined,undefined,t1,t1Hist,undefined,undefined,undefined).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
-  function saveInvToGH(invData){setInventory(invData);return saveState(undefined,undefined,undefined,undefined,undefined,invData,undefined,undefined).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
-  function saveEquipToGH(eq){setEquipamiento(eq);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,eq,undefined).then(function(){showToast('✓ Equipamiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveTier1ToGH(t1,t1Hist,baselines){setTier1(t1);setTier1Hist(t1Hist);return saveState(undefined,undefined,undefined,t1,t1Hist,undefined,undefined,undefined,undefined,undefined,baselines).then(function(){showToast('✓ TIER 1 sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveInvToGH(invData,baselines){setInventory(invData);return saveState(undefined,undefined,undefined,undefined,undefined,invData,undefined,undefined,undefined,undefined,baselines).then(function(){showToast('✓ Inventario sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveEquipToGH(eq,baselines){setEquipamiento(eq);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,eq,undefined,undefined,undefined,baselines).then(function(){showToast('✓ Equipamiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveLayoutToGH(l){setLayout(l);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,l).then(function(){showToast('✓ Layout sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
-  function saveMantToGH(m){setMantenimiento(m);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,undefined,m).then(function(){showToast('✓ Mantenimiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
+  function saveMantToGH(m,baselines){setMantenimiento(m);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,undefined,m,undefined,undefined,baselines).then(function(){showToast('✓ Mantenimiento sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function saveRepsHistToGH(rh){setRepsHist(rh);return saveState(undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,undefined,rh).then(function(){showToast('✓ Histórico Reps sincronizado','success');}).catch(function(e){showToast('⚠ Error al sincronizar: '+e.message,'error');});}
   function handleNew(){setEditing(emptyEntry());setIsNew(true);setModal(true);}
   function handleEdit(e){setEditing(Object.assign({},e));setIsNew(false);setModal(true);}

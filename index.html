@@ -1408,6 +1408,14 @@ function Tier1View(props){
     setSaved(true);setTimeout(function(){setSaved(false);},2500);
   }
   function sincronizar(){ onSave(t1,hist); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
+  var t1FirstRender=_useRef(true);
+  var t1AutoTimer=_useRef(null);
+  _useEffect(function(){
+    if(t1FirstRender.current){t1FirstRender.current=false;return;}
+    if(t1AutoTimer.current)clearTimeout(t1AutoTimer.current);
+    t1AutoTimer.current=setTimeout(function(){sincronizar();},1500);
+    return function(){if(t1AutoTimer.current)clearTimeout(t1AutoTimer.current);};
+  },[t1,hist]);
   function updHistCell(wkId,turno,metricK,dayK,val){
     setHist(function(prev){
       return prev.map(function(w){
@@ -1749,14 +1757,25 @@ function InventarioView(props){
   var eqSt=_useState(eqInitFn);var equip=eqSt[0],setEquip=eqSt[1];
   var eqSearchS=_useState('');var eqSearch=eqSearchS[0],setEqSearch=eqSearchS[1];
   var eqFilterS=_useState('Todos');var eqFilter=eqFilterS[0],setEqFilter=eqFilterS[1];
+  var savedEquipS=_useState(false);var savedEquip=savedEquipS[0],setSavedEquip=savedEquipS[1];
+  var equipSkipAuto=_useRef(false);
+  var equipFirstRender=_useRef(true);
+  var equipAutoTimer=_useRef(null);
   // Re-apply equipamiento from GitHub when it arrives
   _useEffect(function(){
-    if(props.equipamiento)setEquip(ensureEqIds(JSON.parse(JSON.stringify(props.equipamiento))));
+    if(props.equipamiento){equipSkipAuto.current=true;setEquip(ensureEqIds(JSON.parse(JSON.stringify(props.equipamiento))));}
   },[props.equipamiento]);
   function updEquip(id,field,val){setEquip(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addEquip(){setEquip(function(prev){return prev.concat([{id:genId(),elemento:'',numero:'',serial:'',operativo:true,observaciones:''}]);});}
   function delEquip(id){setEquip(function(prev){return prev.filter(function(r){return r.id!==id;});});}
-  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip);}
+  function syncEquip(){props.onSaveEquip&&props.onSaveEquip(equip);setSavedEquip(true);setTimeout(function(){setSavedEquip(false);},2500);}
+  _useEffect(function(){
+    if(equipFirstRender.current){equipFirstRender.current=false;return;}
+    if(equipSkipAuto.current){equipSkipAuto.current=false;return;}
+    if(equipAutoTimer.current)clearTimeout(equipAutoTimer.current);
+    equipAutoTimer.current=setTimeout(function(){syncEquip();},1500);
+    return function(){if(equipAutoTimer.current)clearTimeout(equipAutoTimer.current);};
+  },[equip]);
     var invS=_useState(function(){
     var base=JSON.parse(JSON.stringify(init));
     // migrate old structure {insumos, libreria} -> {items}
@@ -1775,6 +1794,14 @@ function InventarioView(props){
   var sortS=_useState('tipo');var sortBy=sortS[0],setSortBy=sortS[1];
   var savedS=_useState(false);var saved=savedS[0],setSaved=savedS[1];
   function sync(){onSave(inv);setSaved(true);setTimeout(function(){setSaved(false);},2500);}
+  var invFirstRender=_useRef(true);
+  var invAutoTimer=_useRef(null);
+  _useEffect(function(){
+    if(invFirstRender.current){invFirstRender.current=false;return;}
+    if(invAutoTimer.current)clearTimeout(invAutoTimer.current);
+    invAutoTimer.current=setTimeout(function(){sync();},1500);
+    return function(){if(invAutoTimer.current)clearTimeout(invAutoTimer.current);};
+  },[inv]);
   // ── ACTIVOS FIJOS ──
   function updActivo(id,field,val){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos=n.activos.map(function(a){return a.id===id?Object.assign({},a,{[field]:val}):a;});return n;});}
   function addActivo(cat){setInv(function(prev){var n=JSON.parse(JSON.stringify(prev));n.activos.push({id:genId(),categoria:cat,item:'',total:0,danados:0,operativos:0,comentarios:''});return n;});}
@@ -2094,7 +2121,7 @@ function InventarioView(props){
           ),
           h('div',{style:{display:'flex',gap:8,marginLeft:'auto'}},
             h('button',{className:'inv-btn inv-btn-add',onClick:addEquip},'+ Agregar'),
-            h('button',{className:'inv-btn inv-btn-sync',onClick:syncEquip},'💾 Sincronizar')
+            h('button',{className:'inv-btn inv-btn-sync',onClick:syncEquip},savedEquip?'✓ Guardado':'💾 Sincronizar')
           )
         ),
         // Table
@@ -2353,6 +2380,7 @@ function LayoutView(props){
           var el=document.getElementById(id);if(el)el.addEventListener('change',A.collectCfg);});
         A.bootPresets();A.setCrit(A.getCrit());A.render();A.renderPool();A.bindDnD();A.bindZoom();
         refreshVisibleSubtab(A);
+        window.__layAutoSaveReady=true;
       }catch(e){console.error('[Layout] init',e);}
     })();
   },[]);
@@ -2383,7 +2411,7 @@ function LayoutView(props){
 var LAY_NOMINA=[{"nombre": "Emiliano Domingo", "pos": "GERENTE", "turno": "", "leg": ""}, {"nombre": "Nicolas Torres", "pos": "TL", "turno": "AM", "leg": "1305"}, {"nombre": "Maximiliano Benitez", "pos": "TL", "turno": "PM", "leg": ""}, {"nombre": "Luciano Torres", "pos": "TL", "turno": "AM", "leg": "1244"}, {"nombre": "Agustin Romero", "pos": "REFERENTE", "turno": "PM", "leg": "1315"}, {"nombre": "Noelia Guzman", "pos": "REFERENTE", "turno": "AM", "leg": "999"}, {"nombre": "Matías Delgado", "pos": "SOLVER", "turno": "AM", "leg": "1238"}, {"nombre": "Leonel Acevedo", "pos": "SOLVER", "turno": "AM", "leg": "1233"}, {"nombre": "Facundo llacuna", "pos": "SOLVER", "turno": "PM", "leg": "1365"}, {"nombre": "Fabian Aguero", "pos": "REPS", "turno": "AM", "leg": "1383"}, {"nombre": "Santiago Bustamante", "pos": "REPS", "turno": "AM", "leg": "1494"}, {"nombre": "Micaela Cassini", "pos": "REPS", "turno": "AM", "leg": "1236"}, {"nombre": "Lautaro Coronel", "pos": "REPS", "turno": "AM", "leg": "1535"}, {"nombre": "Gonzalo Danyluk", "pos": "REPS", "turno": "AM", "leg": "1538"}, {"nombre": "Jorge Diaz", "pos": "REPS", "turno": "AM", "leg": "1436"}, {"nombre": "Fabricio Ferreyra", "pos": "REPS", "turno": "AM", "leg": "1537"}, {"nombre": "Milena Garcia", "pos": "REPS", "turno": "AM", "leg": "1435"}, {"nombre": "Leonel Garcia", "pos": "REPS", "turno": "AM", "leg": "1346"}, {"nombre": "Sofia Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1516"}, {"nombre": "Milagros Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1530"}, {"nombre": "Agustina Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1536"}, {"nombre": "Angel Gutierrez", "pos": "REPS", "turno": "AM", "leg": "1539"}, {"nombre": "Gustavo Navarro", "pos": "REPS", "turno": "AM", "leg": "1540"}, {"nombre": "Ernesto Ortíz", "pos": "REPS", "turno": "AM", "leg": "1242"}, {"nombre": "Angélica Ortíz", "pos": "REPS", "turno": "AM", "leg": "1241"}, {"nombre": "Elias Pereyra", "pos": "REPS", "turno": "AM", "leg": "1428"}, {"nombre": "Christian Pucheta", "pos": "REPS", "turno": "AM", "leg": "1243"}, {"nombre": "Hugo Rodriguez", "pos": "REPS", "turno": "AM", "leg": "1512"}, {"nombre": "Jose Salazar", "pos": "REPS", "turno": "AM", "leg": "1448"}, {"nombre": "Mirco Santillan", "pos": "REPS", "turno": "AM", "leg": "1442"}, {"nombre": "Javier Tornacue", "pos": "REPS", "turno": "PM", "leg": "1474"}, {"nombre": "Dylan Zurita", "pos": "REPS", "turno": "AM", "leg": "1437"}, {"nombre": "Martin Bireni", "pos": "REPS", "turno": "PM", "leg": "1529"}, {"nombre": "Alan Ledesma", "pos": "REPS", "turno": "AM", "leg": ""}];
 
 var NOMINA=LAY_NOMINA;
-var turno='AM',selId=null,multiSel=[],tab='dist',snap=true,showGrid=true,dragName=null,dragFromSlotId=null;
+var turno='AM',selId=null,multiSel=[],tab='dist',snap=true,showGrid=true,dragName=null,dragFromSlotId=null,_layAutoSaveTimer=null;
 function isSelected(id){return id===selId||multiSel.indexOf(id)!==-1;}
 function selCount(){return (selId?1:0)+multiSel.length;}
 function selectedIds(){var r=multiSel.slice();if(selId&&r.indexOf(selId)===-1)r.push(selId);return r;}
@@ -2698,6 +2726,10 @@ function render(){
   renderInfo();
   renderAsigList();
   renderVolOver();
+  if(window.__layAutoSaveReady){
+    if(_layAutoSaveTimer)clearTimeout(_layAutoSaveTimer);
+    _layAutoSaveTimer=setTimeout(function(){if(typeof save==='function')save();},1500);
+  }
 }
 function renderVolOver(){
   var cont=document.getElementById('vol-over-panel');if(!cont)return;
@@ -3547,9 +3579,19 @@ function MantenimientoView(props){
   var upS=_useState({});var uploading=upS[0],setUploading=upS[1];
   var fileRef=_useRef(null);
   var targetRow=_useRef(null);
+  var mantSkipAuto=_useRef(false);
+  var mantFirstRender=_useRef(true);
+  var mantAutoTimer=_useRef(null);
   _useEffect(function(){
-    if(props.mantenimiento&&props.mantenimiento.length)setRows(JSON.parse(JSON.stringify(props.mantenimiento)));
+    if(props.mantenimiento&&props.mantenimiento.length){mantSkipAuto.current=true;setRows(JSON.parse(JSON.stringify(props.mantenimiento)));}
   },[props.mantenimiento]);
+  _useEffect(function(){
+    if(mantFirstRender.current){mantFirstRender.current=false;return;}
+    if(mantSkipAuto.current){mantSkipAuto.current=false;return;}
+    if(mantAutoTimer.current)clearTimeout(mantAutoTimer.current);
+    mantAutoTimer.current=setTimeout(function(){sync();},1500);
+    return function(){if(mantAutoTimer.current)clearTimeout(mantAutoTimer.current);};
+  },[rows]);
   function upd(id,field,val){setRows(function(prev){return prev.map(function(r){return r.id===id?Object.assign({},r,{[field]:val}):r;});});}
   function addRow(){
     var hoy=new Date().toISOString().slice(0,10);

@@ -2454,6 +2454,7 @@ function LayoutView(props){
           var el=document.getElementById(id);if(el)el.addEventListener('change',A.collectCfg);});
         A.bootPresets();A.setCrit(A.getCrit());A.render();A.renderPool();A.bindDnD();A.bindZoom();
         refreshVisibleSubtab(A);
+        window.__layBootDone=true;
       }catch(e){console.error('[Layout] init',e);}
     })();
   },[]);
@@ -2685,6 +2686,7 @@ function addObj(k,x,y){
 }
 
 function render(){
+  if(window.__layBootDone)window.__layDirty=true;
   var cv=cvEl();if(!cv)return;cv.innerHTML='';
   var isEdit=(tab==='edit');
   cv.classList.toggle('grid',isEdit&&showGrid);
@@ -3526,6 +3528,7 @@ function save(){collectCfg();
   var _p=window._layOnSave({T:T,turno:turno,PROD:PROD,CRIT:CRIT,REQMIN:REQMIN,NOM_EDIT:NOM_EDIT,NOM_NEW:NOM_NEW,AUSENTES:AUSENTES});
   function _done(_ok){
     window.__laySaving=false;
+    if(_ok)window.__layDirty=false;
     if(_btn){_btn.disabled=false;_btn.textContent=_ok?'\u2713 Guardado':'\ud83d\udcbe Guardar';}
     if(_ok)setTimeout(function(){if(_btn)_btn.textContent='\ud83d\udcbe Guardar';},1800);
   }
@@ -4074,6 +4077,17 @@ function App(props) {
   var dtS=_useState(null);var delTarget=dtS[0],setDelTarget=dtS[1];
   var tos=_useState([]);var toasts=tos[0],setToasts=tos[1];
   var pgs=_useState('acciones');var page=pgs[0],setPage=pgs[1];
+  function goToPage(newPage){
+    if(page==='layout'&&window.__layDirty&&newPage!=='layout'){
+      var quiereGuardar=window.confirm('Tenés cambios sin guardar en el Layout. ¿Querés guardarlos antes de salir?');
+      if(quiereGuardar){
+        if(typeof window.laySave==='function')window.laySave();
+        setPage(newPage);
+      }
+      return;
+    }
+    setPage(newPage);
+  }
   var accTabS=_useState('registro');var accTab=accTabS[0],setAccTab=accTabS[1];
   var t1s=_useState(null);var tier1=t1s[0],setTier1=t1s[1];
   var t1hs=_useState([]);var tier1Hist=t1hs[0],setTier1Hist=t1hs[1];
@@ -4115,13 +4129,13 @@ function App(props) {
       )
     ),
     h('div',{className:'nav-tabs'},
-      h('button',{className:'nav-tab'+(page==='acciones'?' active':''),onClick:function(){setPage('acciones');}},'📋 Acciones'),
-      h('button',{className:'nav-tab'+(page==='dotacion'?' active':''),onClick:function(){setPage('dotacion');}},'📦 Dotación'),
-      h('button',{className:'nav-tab'+(page==='tier1'?' active':''),onClick:function(){setPage('tier1');}},'📈 TIER 1'),
-      h('button',{className:'nav-tab'+(page==='inventario'?' active':''),onClick:function(){setPage('inventario');}},'📦 Inventario'),
-      h('button',{className:'nav-tab'+(page==='mantenimiento'?' active':''),onClick:function(){setPage('mantenimiento');}},'🔧 Mantenimiento'),
+      h('button',{className:'nav-tab'+(page==='acciones'?' active':''),onClick:function(){goToPage('acciones');}},'📋 Acciones'),
+      h('button',{className:'nav-tab'+(page==='dotacion'?' active':''),onClick:function(){goToPage('dotacion');}},'📦 Dotación'),
+      h('button',{className:'nav-tab'+(page==='tier1'?' active':''),onClick:function(){goToPage('tier1');}},'📈 TIER 1'),
+      h('button',{className:'nav-tab'+(page==='inventario'?' active':''),onClick:function(){goToPage('inventario');}},'📦 Inventario'),
+      h('button',{className:'nav-tab'+(page==='mantenimiento'?' active':''),onClick:function(){goToPage('mantenimiento');}},'🔧 Mantenimiento'),
       h('button',{className:'nav-tab'+(page==='layout'?' active':''),onClick:function(){setPage('layout');}},'📐 Layout'),
-      h('button',{className:'nav-tab'+(page==='repshist'?' active':''),onClick:function(){setPage('repshist');}},'📊 Histórico Reps')
+      h('button',{className:'nav-tab'+(page==='repshist'?' active':''),onClick:function(){goToPage('repshist');}},'📊 Histórico Reps')
     ),
     page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH,calcState:calcState}):
     page==='tier1'?h(Tier1View,{tier1:tier1,tier1Hist:tier1Hist,onSaveTier1:saveTier1ToGH}):

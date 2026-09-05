@@ -2454,7 +2454,6 @@ function LayoutView(props){
           var el=document.getElementById(id);if(el)el.addEventListener('change',A.collectCfg);});
         A.bootPresets();A.setCrit(A.getCrit());A.render();A.renderPool();A.bindDnD();A.bindZoom();
         refreshVisibleSubtab(A);
-        window.__layAutoSaveReady=true;
       }catch(e){console.error('[Layout] init',e);}
     })();
   },[]);
@@ -2485,7 +2484,7 @@ function LayoutView(props){
 var LAY_NOMINA=[{"nombre": "Emiliano Domingo", "pos": "GERENTE", "turno": "", "leg": ""}, {"nombre": "Nicolas Torres", "pos": "TL", "turno": "AM", "leg": "1305"}, {"nombre": "Maximiliano Benitez", "pos": "TL", "turno": "PM", "leg": ""}, {"nombre": "Luciano Torres", "pos": "TL", "turno": "AM", "leg": "1244"}, {"nombre": "Agustin Romero", "pos": "REFERENTE", "turno": "PM", "leg": "1315"}, {"nombre": "Noelia Guzman", "pos": "REFERENTE", "turno": "AM", "leg": "999"}, {"nombre": "Matías Delgado", "pos": "SOLVER", "turno": "AM", "leg": "1238"}, {"nombre": "Leonel Acevedo", "pos": "SOLVER", "turno": "AM", "leg": "1233"}, {"nombre": "Facundo llacuna", "pos": "SOLVER", "turno": "PM", "leg": "1365"}, {"nombre": "Fabian Aguero", "pos": "REPS", "turno": "AM", "leg": "1383"}, {"nombre": "Santiago Bustamante", "pos": "REPS", "turno": "AM", "leg": "1494"}, {"nombre": "Micaela Cassini", "pos": "REPS", "turno": "AM", "leg": "1236"}, {"nombre": "Lautaro Coronel", "pos": "REPS", "turno": "AM", "leg": "1535"}, {"nombre": "Gonzalo Danyluk", "pos": "REPS", "turno": "AM", "leg": "1538"}, {"nombre": "Jorge Diaz", "pos": "REPS", "turno": "AM", "leg": "1436"}, {"nombre": "Fabricio Ferreyra", "pos": "REPS", "turno": "AM", "leg": "1537"}, {"nombre": "Milena Garcia", "pos": "REPS", "turno": "AM", "leg": "1435"}, {"nombre": "Leonel Garcia", "pos": "REPS", "turno": "AM", "leg": "1346"}, {"nombre": "Sofia Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1516"}, {"nombre": "Milagros Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1530"}, {"nombre": "Agustina Gonzalez", "pos": "REPS", "turno": "AM", "leg": "1536"}, {"nombre": "Angel Gutierrez", "pos": "REPS", "turno": "AM", "leg": "1539"}, {"nombre": "Gustavo Navarro", "pos": "REPS", "turno": "AM", "leg": "1540"}, {"nombre": "Ernesto Ortíz", "pos": "REPS", "turno": "AM", "leg": "1242"}, {"nombre": "Angélica Ortíz", "pos": "REPS", "turno": "AM", "leg": "1241"}, {"nombre": "Elias Pereyra", "pos": "REPS", "turno": "AM", "leg": "1428"}, {"nombre": "Christian Pucheta", "pos": "REPS", "turno": "AM", "leg": "1243"}, {"nombre": "Hugo Rodriguez", "pos": "REPS", "turno": "AM", "leg": "1512"}, {"nombre": "Jose Salazar", "pos": "REPS", "turno": "AM", "leg": "1448"}, {"nombre": "Mirco Santillan", "pos": "REPS", "turno": "AM", "leg": "1442"}, {"nombre": "Javier Tornacue", "pos": "REPS", "turno": "PM", "leg": "1474"}, {"nombre": "Dylan Zurita", "pos": "REPS", "turno": "AM", "leg": "1437"}, {"nombre": "Martin Bireni", "pos": "REPS", "turno": "PM", "leg": "1529"}, {"nombre": "Alan Ledesma", "pos": "REPS", "turno": "AM", "leg": ""}];
 
 var NOMINA=LAY_NOMINA;
-var turno='AM',selId=null,multiSel=[],tab='dist',snap=true,showGrid=true,dragName=null,dragFromSlotId=null,_layAutoSaveTimer=null;
+var turno='AM',selId=null,multiSel=[],tab='dist',snap=true,showGrid=true,dragName=null,dragFromSlotId=null;
 function isSelected(id){return id===selId||multiSel.indexOf(id)!==-1;}
 function selCount(){return (selId?1:0)+multiSel.length;}
 function selectedIds(){var r=multiSel.slice();if(selId&&r.indexOf(selId)===-1)r.push(selId);return r;}
@@ -2800,10 +2799,6 @@ function render(){
   renderInfo();
   renderAsigList();
   renderVolOver();
-  if(window.__layAutoSaveReady){
-    if(_layAutoSaveTimer)clearTimeout(_layAutoSaveTimer);
-    _layAutoSaveTimer=setTimeout(function(){if(typeof save==='function')save();},1500);
-  }
 }
 function renderVolOver(){
   var cont=document.getElementById('vol-over-panel');if(!cont)return;

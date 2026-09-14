@@ -1,6 +1,159 @@
 {
-  "generatedAt": "14/09/2026 12:40",
-  "reps": [],
+  "generatedAt": "14/09/2026 12:53",
+  "reps": [
+    {
+      "curso": "White Belt | Español Transporte",
+      "link": null,
+      "deadlineLabel": "",
+      "deadlineISO": null,
+      "pct": 0,
+      "review": false
+    },
+    {
+      "curso": "Desafío | Buenas prácticas reprocesos (HISP)",
+      "link": "https://learning.mercadolibre.com/programs/view/1784",
+      "deadlineLabel": "",
+      "deadlineISO": null,
+      "pct": 93,
+      "review": false
+    },
+    {
+      "curso": "MLA Reemplazo de cajas por Sacolas - Desafio",
+      "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MLAREEMPLAZODECAJASPORSACOLASDES_UTR_SVC_TLREP+v1/course/",
+      "deadlineLabel": "",
+      "deadlineISO": null,
+      "pct": 86,
+      "review": false
+    },
+    {
+      "curso": "H&B -Reglas de oro Desafio",
+      "link": "https://learning.mercadolibre.com/programs/view/1874",
+      "deadlineLabel": "",
+      "deadlineISO": null,
+      "pct": 71,
+      "review": false
+    },
+    {
+      "curso": "Journey en Last Mile | Monitor de LM [ESP - Reps]",
+      "link": "https://learning.mercadolibre.com/programs/view/1892",
+      "deadlineLabel": "",
+      "deadlineISO": null,
+      "pct": 0,
+      "review": false
+    },
+    {
+      "curso": "MEJORAS SISTEMICAS MULTIBULTOS| DES",
+      "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MEJORASSISTEMICASDES_UTR_SVC_REP_NF_RE+1/course/",
+      "deadlineLabel": "",
+      "deadlineISO": null,
+      "pct": 71,
+      "review": false
+    },
+    {
+      "curso": "Desafío | Criterios de reacondicionamiento (ES)",
+      "link": "https://learning.mercadolibre.com/programs/view/1827",
+      "deadlineLabel": "10/04",
+      "deadlineISO": "2026-04-10",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "[DESAFÍO] Staging Zones em SVC - Reps | ESP",
+      "link": "https://learning.mercadolibre.com/programs/view/1925",
+      "deadlineLabel": "24/04",
+      "deadlineISO": "2026-04-24",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "Desafío EnoE | HISP",
+      "link": "https://learning.mercadolibre.com/programs/view/1955",
+      "deadlineLabel": "MLA 5/6 MLU 8/5",
+      "deadlineISO": null,
+      "pct": 71,
+      "review": false
+    },
+    {
+      "curso": "MANGA PALLET DESAFIO REP SVC | CONO SUR",
+      "link": "https://learning.mercadolibre.com/programs/view/2039",
+      "deadlineLabel": "31/07",
+      "deadlineISO": "2026-07-31",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "[DESAFIO] TTE | Sacas Mellizas | N Sacas | Reps",
+      "link": "https://learning.mercadolibre.com/programs/view/2071",
+      "deadlineLabel": "21/08",
+      "deadlineISO": "2026-08-21",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "DESAFIO NTM",
+      "link": "https://learning.mercadolibre.com/programs/view/1012",
+      "deadlineLabel": "21/08",
+      "deadlineISO": "2026-08-21",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "Desafío - Gestión de insumos reutilizables | Reps | ES",
+      "link": "https://learning.mercadolibre.com/programs/view/2037",
+      "deadlineLabel": "28/08",
+      "deadlineISO": "2026-08-28",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "REVERSA DE INSUMOS| REP DESAFIO",
+      "link": "https://learning.mercadolibre.com/programs/view/2043",
+      "deadlineLabel": "28/08",
+      "deadlineISO": "2026-08-28",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
+      "link": "https://learning.mercadolibre.com/programs/view/1925?tpa_hint=saml-auth0-saml",
+      "deadlineLabel": "04/09",
+      "deadlineISO": "2026-09-04",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
+      "link": "https://learning.mercadolibre.com/programs/view/2080",
+      "deadlineLabel": "04/09",
+      "deadlineISO": "2026-09-04",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "Curso Mandatorio SHE",
+      "link": "https://learning.mercadolibre.com/courses/course-v1:shp_all+Cur_Man_SHE_esp+V1_2026/courseware/36f19a581d464cd6ade264aedc97b21a/55f0ef0d195e4954958b6d32433cc565/",
+      "deadlineLabel": "30/09",
+      "deadlineISO": "2026-09-30",
+      "pct": 0,
+      "review": true
+    },
+    {
+      "curso": "Setup y Aduana desafio - ESP",
+      "link": "https://learning.mercadolibre.com/programs/view/2063",
+      "deadlineLabel": "11/09",
+      "deadlineISO": "2026-09-11",
+      "pct": 100,
+      "review": false
+    },
+    {
+      "curso": "[FOS-Inbound] Migracion de FOS a Lego - Desafio",
+      "link": "https://learning.mercadolibre.com/programs/view/2093",
+      "deadlineLabel": "18/09",
+      "deadlineISO": "2026-09-18",
+      "pct": 36,
+      "review": false
+    }
+  ],
   "lideres": [
     {
       "ldap": "snievas",
@@ -9,9 +162,9 @@
       "cursos": [
         {
           "curso": "DESAFIO NTM",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1013",
+          "deadlineISO": "2026-08-21",
+          "deadlineLabel": "21/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -19,26 +172,26 @@
         {
           "curso": "REVERSA DE INSUMOS| LÍDERES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": true,
           "pct": null
         },
         {
           "curso": "REVERSA DE INSUMOS| REP DESAFIO",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/2043",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 0
         },
         {
           "curso": "PORTAL INFOWOW",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_INFOWOW_UTR_SHIPPING_TRAIN_NF_TR+V1_2026/course/",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -55,8 +208,8 @@
         {
           "curso": "[Audits] Nuevo sistema My Audit",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
@@ -64,17 +217,17 @@
         {
           "curso": "Staging Zones en SVC - Líderes | ESP",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1925?tpa_hint=saml-auth0-saml",
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -82,8 +235,8 @@
         {
           "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -91,8 +244,8 @@
         {
           "curso": "Setup y Aduana · PS y Team Leaders (ES)",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-11",
+          "deadlineLabel": "11/09",
           "review": false,
           "na": false,
           "pct": 100
@@ -116,9 +269,9 @@
       "cursos": [
         {
           "curso": "DESAFIO NTM",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1013",
+          "deadlineISO": "2026-08-21",
+          "deadlineLabel": "21/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -126,26 +279,26 @@
         {
           "curso": "REVERSA DE INSUMOS| LÍDERES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": true,
           "pct": null
         },
         {
           "curso": "REVERSA DE INSUMOS| REP DESAFIO",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/2043",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 0
         },
         {
           "curso": "PORTAL INFOWOW",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_INFOWOW_UTR_SHIPPING_TRAIN_NF_TR+V1_2026/course/",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -162,8 +315,8 @@
         {
           "curso": "[Audits] Nuevo sistema My Audit",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
@@ -171,17 +324,17 @@
         {
           "curso": "Staging Zones en SVC - Líderes | ESP",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1925?tpa_hint=saml-auth0-saml",
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -189,8 +342,8 @@
         {
           "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -198,8 +351,8 @@
         {
           "curso": "Setup y Aduana · PS y Team Leaders (ES)",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-11",
+          "deadlineLabel": "11/09",
           "review": false,
           "na": false,
           "pct": 100
@@ -223,9 +376,9 @@
       "cursos": [
         {
           "curso": "DESAFIO NTM",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1013",
+          "deadlineISO": "2026-08-21",
+          "deadlineLabel": "21/08",
           "review": false,
           "na": true,
           "pct": null
@@ -233,26 +386,26 @@
         {
           "curso": "REVERSA DE INSUMOS| LÍDERES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": true,
           "pct": null
         },
         {
           "curso": "REVERSA DE INSUMOS| REP DESAFIO",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/2043",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 0
         },
         {
           "curso": "PORTAL INFOWOW",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_INFOWOW_UTR_SHIPPING_TRAIN_NF_TR+V1_2026/course/",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -269,8 +422,8 @@
         {
           "curso": "[Audits] Nuevo sistema My Audit",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
@@ -278,17 +431,17 @@
         {
           "curso": "Staging Zones en SVC - Líderes | ESP",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1925?tpa_hint=saml-auth0-saml",
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -296,8 +449,8 @@
         {
           "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -305,8 +458,8 @@
         {
           "curso": "Setup y Aduana · PS y Team Leaders (ES)",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-11",
+          "deadlineLabel": "11/09",
           "review": false,
           "na": false,
           "pct": 100
@@ -330,9 +483,9 @@
       "cursos": [
         {
           "curso": "DESAFIO NTM",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1013",
+          "deadlineISO": "2026-08-21",
+          "deadlineLabel": "21/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -340,26 +493,26 @@
         {
           "curso": "REVERSA DE INSUMOS| LÍDERES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "REVERSA DE INSUMOS| REP DESAFIO",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/2043",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 0
         },
         {
           "curso": "PORTAL INFOWOW",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_INFOWOW_UTR_SHIPPING_TRAIN_NF_TR+V1_2026/course/",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": true,
           "pct": null
@@ -376,8 +529,8 @@
         {
           "curso": "[Audits] Nuevo sistema My Audit",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 0
@@ -385,17 +538,17 @@
         {
           "curso": "Staging Zones en SVC - Líderes | ESP",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1925?tpa_hint=saml-auth0-saml",
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -403,8 +556,8 @@
         {
           "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -412,8 +565,8 @@
         {
           "curso": "Setup y Aduana · PS y Team Leaders (ES)",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-11",
+          "deadlineLabel": "11/09",
           "review": false,
           "na": false,
           "pct": 0
@@ -437,9 +590,9 @@
       "cursos": [
         {
           "curso": "DESAFIO NTM",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1013",
+          "deadlineISO": "2026-08-21",
+          "deadlineLabel": "21/08",
           "review": false,
           "na": false,
           "pct": 100
@@ -447,26 +600,26 @@
         {
           "curso": "REVERSA DE INSUMOS| LÍDERES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "REVERSA DE INSUMOS| REP DESAFIO",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/2043",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": false,
           "pct": 0
         },
         {
           "curso": "PORTAL INFOWOW",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_INFOWOW_UTR_SHIPPING_TRAIN_NF_TR+V1_2026/course/",
+          "deadlineISO": "2026-08-28",
+          "deadlineLabel": "28/08",
           "review": false,
           "na": true,
           "pct": null
@@ -483,8 +636,8 @@
         {
           "curso": "[Audits] Nuevo sistema My Audit",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 0
@@ -492,17 +645,17 @@
         {
           "curso": "Staging Zones en SVC - Líderes | ESP",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": false,
           "pct": 100
         },
         {
           "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
-          "link": null,
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "link": "https://learning.mercadolibre.com/programs/view/1925?tpa_hint=saml-auth0-saml",
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -510,8 +663,8 @@
         {
           "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-04",
+          "deadlineLabel": "04/09",
           "review": false,
           "na": true,
           "pct": null
@@ -519,8 +672,8 @@
         {
           "curso": "Setup y Aduana · PS y Team Leaders (ES)",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
-          "deadlineISO": null,
-          "deadlineLabel": null,
+          "deadlineISO": "2026-09-11",
+          "deadlineLabel": "11/09",
           "review": false,
           "na": false,
           "pct": 0

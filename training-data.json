@@ -1,0 +1,541 @@
+{
+  "generatedAt": "14/09/2026 12:40",
+  "reps": [],
+  "lideres": [
+    {
+      "ldap": "snievas",
+      "name": "Sebastian Nievas",
+      "rol": "Site Líder",
+      "cursos": [
+        {
+          "curso": "DESAFIO NTM",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| LÍDERES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| REP DESAFIO",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "PORTAL INFOWOW",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Rollout de NTM (HSP-TLs)",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[Audits] Nuevo sistema My Audit",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Staging Zones en SVC - Líderes | ESP",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Setup y Aduana · PS y Team Leaders (ES)",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Devoluciones con Colecta",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        }
+      ],
+      "overallPct": 75
+    },
+    {
+      "ldap": "scurino",
+      "name": "Santiago Curino",
+      "rol": "Analista",
+      "cursos": [
+        {
+          "curso": "DESAFIO NTM",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| LÍDERES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| REP DESAFIO",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "PORTAL INFOWOW",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Rollout de NTM (HSP-TLs)",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[Audits] Nuevo sistema My Audit",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Staging Zones en SVC - Líderes | ESP",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Setup y Aduana · PS y Team Leaders (ES)",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Devoluciones con Colecta",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        }
+      ],
+      "overallPct": 75
+    },
+    {
+      "ldap": "dbacaicoa",
+      "name": "Diego Bacaicoa",
+      "rol": "Analista",
+      "cursos": [
+        {
+          "curso": "DESAFIO NTM",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| LÍDERES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| REP DESAFIO",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "PORTAL INFOWOW",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Rollout de NTM (HSP-TLs)",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "[Audits] Nuevo sistema My Audit",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Staging Zones en SVC - Líderes | ESP",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Setup y Aduana · PS y Team Leaders (ES)",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "Devoluciones con Colecta",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        }
+      ],
+      "overallPct": 67
+    },
+    {
+      "ldap": "ext_torresni",
+      "name": "Nicolas Torres",
+      "rol": "Team Leader",
+      "cursos": [
+        {
+          "curso": "DESAFIO NTM",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| LÍDERES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| REP DESAFIO",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "PORTAL INFOWOW",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Rollout de NTM (HSP-TLs)",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[Audits] Nuevo sistema My Audit",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "Staging Zones en SVC - Líderes | ESP",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Setup y Aduana · PS y Team Leaders (ES)",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "Devoluciones con Colecta",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        }
+      ],
+      "overallPct": 50
+    },
+    {
+      "ldap": "ext_tolucian",
+      "name": "Luciano Torres",
+      "rol": "Team Leader",
+      "cursos": [
+        {
+          "curso": "DESAFIO NTM",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| LÍDERES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_REVERSAINSUMOS_UTR_TTES_LID_NF_LI+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "REVERSA DE INSUMOS| REP DESAFIO",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "PORTAL INFOWOW",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Rollout de NTM (HSP-TLs)",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[Audits] Nuevo sistema My Audit",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_MYAUDIT_UTR_REP_NF_RE+1/about",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "Staging Zones en SVC - Líderes | ESP",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_STAGE_ZONES_EN_SVC_UTR_SVC_TL_NF_TL+V1/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 100
+        },
+        {
+          "curso": "[DESAFÍO] Staging Zones en SVC - Reps y PS | ESP",
+          "link": null,
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Nuevas WIs de Inventario para paquetes at_station| DES",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_InventarioparapaquetesatStationDes_PS_NF_PS+V1_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
+        },
+        {
+          "curso": "Setup y Aduana · PS y Team Leaders (ES)",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+Setup01Lideres+2026_07esp/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
+          "curso": "Devoluciones con Colecta",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
+        }
+      ],
+      "overallPct": 50
+    }
+  ]
+}

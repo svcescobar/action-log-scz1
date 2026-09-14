@@ -4086,6 +4086,72 @@ function RepsHistView(props){
   );
 }
 
+function TrainingView(){
+  var dataS=_useState(null);var trData=dataS[0],setTrData=dataS[1];
+  var errS=_useState(null);var trErr=errS[0],setTrErr=errS[1];
+  var loadingS=_useState(true);var trLoading=loadingS[0],setTrLoading=loadingS[1];
+  _useEffect(function(){
+    fetch('https://raw.githubusercontent.com/svcescobar/action-log-scz1/main/training-data.json?_cb='+Date.now())
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(j){ setTrData(j); setTrLoading(false); })
+      .catch(function(e){ setTrErr(e.message); setTrLoading(false); });
+  },[]);
+
+  function trColor(pct){
+    if(pct>=90)return '#16a34a';
+    if(pct>=50)return '#d97706';
+    return '#dc2626';
+  }
+
+  function renderCursoReps(c){
+    return h('div',{key:c.curso,style:{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:10,padding:12,marginBottom:10}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6,gap:10}},
+        h('a',{href:c.link||undefined,target:'_blank',rel:'noreferrer',style:{fontWeight:700,fontSize:13.5,color:'var(--navy)',textDecoration:c.link?'underline':'none'}},c.curso),
+        c.review?h('span',{style:{fontSize:11,fontWeight:800,color:'#7c3aed',background:'#ede9fe',padding:'2px 8px',borderRadius:20,flexShrink:0}},'EN REVISIÓN')
+                :h('span',{style:{fontWeight:800,fontSize:13,color:trColor(c.pct),flexShrink:0}},c.pct+'%')
+      ),
+      !c.review&&h('div',{style:{height:8,background:'#f0f0f0',borderRadius:6,overflow:'hidden'}},
+        h('div',{style:{height:'100%',width:Math.min(100,c.pct)+'%',background:trColor(c.pct)}})
+      ),
+      c.deadlineLabel&&h('div',{style:{fontSize:11,color:'var(--text-muted)',marginTop:6}},'📅 Vence: '+c.deadlineLabel)
+    );
+  }
+
+  function renderLider(p){
+    return h('div',{key:p.ldap,style:{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:10,padding:14,marginBottom:12}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10,gap:10}},
+        h('div',null,
+          h('div',{style:{fontWeight:800,fontSize:14}},p.name),
+          h('div',{style:{fontSize:11.5,color:'var(--text-muted)'}},p.rol)
+        ),
+        h('span',{style:{fontWeight:900,fontSize:16,color:trColor(p.overallPct),flexShrink:0}},p.overallPct+'%')
+      ),
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))',gap:8}},
+        p.cursos.map(function(c,i){
+          var estado=c.na?'N/A':(c.pct==='LICENCIA'?'LICENCIA':c.pct+'%');
+          var color=c.na?'#9ca3af':(c.pct==='LICENCIA'?'#d97706':trColor(c.pct));
+          return h('div',{key:i,style:{fontSize:11.5,padding:'6px 8px',background:'#f7f8fa',borderRadius:6,display:'flex',justifyContent:'space-between',gap:6}},
+            h('span',{style:{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},c.curso),
+            h('b',{style:{color:color,flexShrink:0}},estado)
+          );
+        })
+      )
+    );
+  }
+
+  return h('main',{className:'main'},
+    trData&&h('div',{style:{fontSize:11,color:'var(--text-muted)',marginBottom:14}},'🕐 Actualizado: '+trData.generatedAt),
+    trLoading?h('div',{style:{padding:20,textAlign:'center',color:'var(--text-muted)'}},'Cargando...'):
+    trErr?h('div',{style:{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:8,padding:14,color:'#991b1b',fontSize:13}},'⚠ Todavía no hay datos de entrenamientos publicados, o hubo un error al cargarlos. Verificá que el sync de Apps Script ya haya corrido al menos una vez.'):
+    h('div',null,
+      h('div',{style:{fontWeight:800,fontSize:15,marginBottom:10}},'📊 Reps — Adherencia por curso'),
+      (trData.reps&&trData.reps.length)?trData.reps.map(renderCursoReps):h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic',marginBottom:20}},'Sin cursos cargados.'),
+      h('div',{style:{fontWeight:800,fontSize:15,margin:'20px 0 10px'}},'👤 Líderes'),
+      (trData.lideres&&trData.lideres.length)?trData.lideres.map(renderLider):h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic'}},'Sin líderes cargados.')
+    )
+  );
+}
+
 function App(props) {
   var currentUser=props.currentUser,onLogout=props.onLogout;
   var admin=isAdmin(currentUser);
@@ -4162,7 +4228,8 @@ function App(props) {
       h('button',{className:'nav-tab'+(page==='inventario'?' active':''),onClick:function(){goToPage('inventario');}},'📦 Inventario'),
       h('button',{className:'nav-tab'+(page==='mantenimiento'?' active':''),onClick:function(){goToPage('mantenimiento');}},'🔧 Mantenimiento'),
       h('button',{className:'nav-tab'+(page==='layout'?' active':''),onClick:function(){setPage('layout');}},'📐 Layout'),
-      h('button',{className:'nav-tab'+(page==='repshist'?' active':''),onClick:function(){goToPage('repshist');}},'📊 Histórico Reps')
+      h('button',{className:'nav-tab'+(page==='repshist'?' active':''),onClick:function(){goToPage('repshist');}},'📊 Histórico Reps'),
+      h('button',{className:'nav-tab'+(page==='training'?' active':''),onClick:function(){goToPage('training');}},'🎓 Entrenamientos')
     ),
     page==='dotacion'?h(DotacionView,{onSaveCalc:saveCalcToGH,calcState:calcState}):
     page==='tier1'?h(Tier1View,{tier1:tier1,tier1Hist:tier1Hist,onSaveTier1:saveTier1ToGH}):
@@ -4170,6 +4237,7 @@ function App(props) {
     page==='mantenimiento'?h(MantenimientoView,{mantenimiento:mantenimiento,onSaveMant:saveMantToGH,showToast:showToast}):
     page==='layout'?h(LayoutView,{layout:layout,onSaveLayout:saveLayoutToGH}):
     page==='repshist'?h(RepsHistView,{repsHist:repsHist,onSaveRepsHist:saveRepsHistToGH}):
+    page==='training'?h(TrainingView,null):
     h('main',{className:'main'},
       h('div',{style:{display:'flex',gap:0,marginBottom:16,borderBottom:'2px solid var(--border)'}},
         [['registro','📋 Registro de Acciones'],['analytics','📊 Analytics']].map(function(t){

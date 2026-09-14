@@ -4135,7 +4135,7 @@ function TrainingView(){
           var estado=c.na?'N/A':(c.pct==='LICENCIA'?'LICENCIA':c.pct+'%');
           var color=c.na?'#9ca3af':(c.pct==='LICENCIA'?'#d97706':trColor(c.pct));
           return h('div',{key:i,style:{fontSize:11.5,padding:'6px 8px',background:'#f7f8fa',borderRadius:6,display:'flex',justifyContent:'space-between',gap:6}},
-            h('span',{style:{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},c.curso),
+            c.link?h('a',{href:c.link,target:'_blank',rel:'noreferrer',style:{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',color:'var(--navy)',textDecoration:'underline'}},c.curso):h('span',{style:{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},c.curso),
             h('b',{style:{color:color,flexShrink:0}},estado)
           );
         })

@@ -4090,6 +4090,7 @@ function TrainingView(){
   var dataS=_useState(null);var trData=dataS[0],setTrData=dataS[1];
   var errS=_useState(null);var trErr=errS[0],setTrErr=errS[1];
   var loadingS=_useState(true);var trLoading=loadingS[0],setTrLoading=loadingS[1];
+  var qrS=_useState(null);var qrModal=qrS[0],setQrModal=qrS[1];
   _useEffect(function(){
     fetch('https://raw.githubusercontent.com/svcescobar/action-log-scz1/main/training-data.json?_cb='+Date.now())
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
@@ -4106,7 +4107,10 @@ function TrainingView(){
   function renderCursoReps(c){
     return h('div',{key:c.curso,style:{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:10,padding:12,marginBottom:10}},
       h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6,gap:10}},
-        h('a',{href:c.link||undefined,target:'_blank',rel:'noreferrer',style:{fontWeight:700,fontSize:13.5,color:'var(--navy)',textDecoration:c.link?'underline':'none'}},c.curso),
+        h('div',{style:{display:'flex',alignItems:'center',gap:6,minWidth:0}},
+        h('a',{href:c.link||undefined,target:'_blank',rel:'noreferrer',style:{fontWeight:700,fontSize:13.5,color:'var(--navy)',textDecoration:c.link?'underline':'none',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},c.curso),
+        c.link&&h('button',{onClick:function(){setQrModal({curso:c.curso,link:c.link});},style:{fontSize:10,fontWeight:700,background:'#f0f0f0',border:'1px solid var(--border)',borderRadius:20,padding:'2px 8px',cursor:'pointer',flexShrink:0,fontFamily:'inherit'}},'📱 QR')
+      ),
         c.review?h('span',{style:{fontSize:11,fontWeight:800,color:'#7c3aed',background:'#ede9fe',padding:'2px 8px',borderRadius:20,flexShrink:0}},'EN REVISIÓN')
                 :h('span',{style:{fontWeight:800,fontSize:13,color:trColor(c.pct),flexShrink:0}},c.pct+'%')
       ),
@@ -4148,6 +4152,16 @@ function TrainingView(){
       (trData.reps&&trData.reps.length)?trData.reps.map(renderCursoReps):h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic',marginBottom:20}},'Sin cursos cargados.'),
       h('div',{style:{fontWeight:800,fontSize:15,margin:'20px 0 10px'}},'👤 Líderes'),
       (trData.lideres&&trData.lideres.length)?trData.lideres.map(renderLider):h('div',{style:{fontSize:12,color:'var(--text-muted)',fontStyle:'italic'}},'Sin líderes cargados.')
+    ),
+    qrModal&&h('div',{style:{position:'fixed',inset:0,background:'rgba(0,0,0,.5)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center',padding:20},onClick:function(){setQrModal(null);}},
+      h('div',{style:{background:'#fff',borderRadius:12,padding:24,maxWidth:320,width:'100%',textAlign:'center',boxShadow:'0 20px 60px rgba(0,0,0,.3)'},onClick:function(e){e.stopPropagation();}},
+        h('div',{style:{fontWeight:800,fontSize:14,marginBottom:14}},qrModal.curso),
+        h('img',{src:'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(qrModal.link),style:{width:220,height:220,marginBottom:14,borderRadius:8},alt:'QR del curso'}),
+        h('div',{style:{display:'flex',gap:8,justifyContent:'center'}},
+          h('a',{href:qrModal.link,target:'_blank',rel:'noreferrer',className:'btn btn-primary',style:{textDecoration:'none'}},'Abrir curso'),
+          h('button',{className:'btn btn-cancel',onClick:function(){setQrModal(null);}},'Cerrar')
+        )
+      )
     )
   );
 }

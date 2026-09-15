@@ -1,5 +1,5 @@
 {
-  "generatedAt": "14/09/2026 12:53",
+  "generatedAt": "15/09/2026 06:45",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -135,7 +135,7 @@
       "deadlineLabel": "30/09",
       "deadlineISO": "2026-09-30",
       "pct": 0,
-      "review": true
+      "review": false
     },
     {
       "curso": "Setup y Aduana desafio - ESP",
@@ -257,10 +257,10 @@
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 0
+          "pct": 100
         }
       ],
-      "overallPct": 75
+      "overallPct": 88
     },
     {
       "ldap": "scurino",
@@ -676,7 +676,7 @@
           "deadlineLabel": "11/09",
           "review": false,
           "na": false,
-          "pct": 0
+          "pct": 100
         },
         {
           "curso": "Devoluciones con Colecta",
@@ -688,7 +688,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 50
+      "overallPct": 63
     }
   ]
 }

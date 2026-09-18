@@ -1,5 +1,5 @@
 {
-  "generatedAt": "17/09/2026 06:45",
+  "generatedAt": "18/09/2026 06:45",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -257,10 +257,10 @@
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 86
+          "pct": 100
         }
       ],
-      "overallPct": 86
+      "overallPct": 88
     },
     {
       "ldap": "scurino",
@@ -533,7 +533,7 @@
           "deadlineLabel": "04/09",
           "review": false,
           "na": false,
-          "pct": 0
+          "pct": 100
         },
         {
           "curso": "Staging Zones en SVC - Líderes | ESP",
@@ -581,7 +581,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 63
+      "overallPct": 75
     },
     {
       "ldap": "ext_tolucian",

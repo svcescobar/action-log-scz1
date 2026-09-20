@@ -1,5 +1,5 @@
 {
-  "generatedAt": "19/09/2026 06:45",
+  "generatedAt": "20/09/2026 06:46",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -257,10 +257,10 @@
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 86
+          "pct": 100
         }
       ],
-      "overallPct": 86
+      "overallPct": 88
     },
     {
       "ldap": "scurino",

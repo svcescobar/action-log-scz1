@@ -1506,7 +1506,7 @@ function Tier1View(props){
   function saveHistEdits(){ onSave(t1,hist); setEditWk(null); setSaved(true);setTimeout(function(){setSaved(false);},2500); }
   function renderHistPlanTable(w,turno){
     var key=turno==='am'?'planAm':'planPm';
-    var rows=w[key]||[];
+    var rows=(w[key]||[]).filter(Boolean);
     return h('div',{style:{marginTop:14}},
       h('div',{className:'t1-turno-hdr'+(turno==='pm'?' pm':''),style:{marginBottom:0}},
         (turno==='am'?'☀ PLAN DE ACCIÓN AM':'☽ PLAN DE ACCIÓN PM')),
@@ -1605,7 +1605,7 @@ function Tier1View(props){
   }
   function renderPlan(turno){
     var key=turno==='am'?'planAm':'planPm';
-    var rows=(t1[key]||[]);
+    var rows=(t1[key]||[]).filter(Boolean);
     return h('div',null,
       h('div',{className:'t1-scroll'},
         h('table',{className:'t1-plan-table'},

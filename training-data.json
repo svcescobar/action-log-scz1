@@ -1,5 +1,5 @@
 {
-  "generatedAt": "23/09/2026 06:45",
+  "generatedAt": "24/09/2026 06:46",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -251,16 +251,25 @@
           "pct": 100
         },
         {
+          "curso": "[FOS-Inbound] Migracion de FOS a Lego - Desafio",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_DESMIGRACIONDEFOSALEGO_UTR_SVC_REP_NF_RE+v1/course/",
+          "deadlineISO": "2026-09-18",
+          "deadlineLabel": "18/09",
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
           "curso": "Devoluciones con Colecta",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 100
+          "pct": 86
         }
       ],
-      "overallPct": 88
+      "overallPct": 76
     },
     {
       "ldap": "scurino",
@@ -358,6 +367,15 @@
           "pct": 100
         },
         {
+          "curso": "[FOS-Inbound] Migracion de FOS a Lego - Desafio",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_DESMIGRACIONDEFOSALEGO_UTR_SVC_REP_NF_RE+v1/course/",
+          "deadlineISO": "2026-09-18",
+          "deadlineLabel": "18/09",
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
           "curso": "Devoluciones con Colecta",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
           "deadlineISO": null,
@@ -367,7 +385,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 75
+      "overallPct": 67
     },
     {
       "ldap": "dbacaicoa",
@@ -465,6 +483,15 @@
           "pct": 100
         },
         {
+          "curso": "[FOS-Inbound] Migracion de FOS a Lego - Desafio",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_DESMIGRACIONDEFOSALEGO_UTR_SVC_REP_NF_RE+v1/course/",
+          "deadlineISO": "2026-09-18",
+          "deadlineLabel": "18/09",
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
           "curso": "Devoluciones con Colecta",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
           "deadlineISO": null,
@@ -474,7 +501,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 67
+      "overallPct": 57
     },
     {
       "ldap": "ext_torresni",
@@ -572,16 +599,25 @@
           "pct": 100
         },
         {
+          "curso": "[FOS-Inbound] Migracion de FOS a Lego - Desafio",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_DESMIGRACIONDEFOSALEGO_UTR_SVC_REP_NF_RE+v1/course/",
+          "deadlineISO": "2026-09-18",
+          "deadlineLabel": "18/09",
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
           "curso": "Devoluciones con Colecta",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 0
+          "pct": 100
         }
       ],
-      "overallPct": 75
+      "overallPct": 78
     },
     {
       "ldap": "ext_tolucian",
@@ -679,6 +715,15 @@
           "pct": 100
         },
         {
+          "curso": "[FOS-Inbound] Migracion de FOS a Lego - Desafio",
+          "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_DESMIGRACIONDEFOSALEGO_UTR_SVC_REP_NF_RE+v1/course/",
+          "deadlineISO": "2026-09-18",
+          "deadlineLabel": "18/09",
+          "review": false,
+          "na": false,
+          "pct": 0
+        },
+        {
           "curso": "Devoluciones con Colecta",
           "link": "https://learning.mercadolibre.com/courses/course-v1:transporte+HIS_RTS_DEVOS_COLECTA_UTR_SVC_LIDERES_NF_RE+V2_2026/course/",
           "deadlineISO": null,
@@ -688,7 +733,7 @@
           "pct": 100
         }
       ],
-      "overallPct": 88
+      "overallPct": 78
     }
   ]
 }

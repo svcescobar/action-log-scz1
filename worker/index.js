@@ -48,7 +48,9 @@ export default {
 
     const target = API_ROOT + path + url.search;
     const upstreamHeaders = {
-      Authorization: "Bearer " + env.GITHUB_TOKEN,
+      Authorization: "Bearer " + env.GITHUB_TOKEN,      
+      "User-Agent": "action-log-scz1-worker",
+
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
     };

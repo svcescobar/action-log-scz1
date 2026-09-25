@@ -1,5 +1,5 @@
 {
-  "generatedAt": "24/09/2026 06:46",
+  "generatedAt": "25/09/2026 06:45",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -266,10 +266,19 @@
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 86
+          "pct": 100
+        },
+        {
+          "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
+          "link": "https://learning.mercadolibre.com/programs/view/2106",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
         }
       ],
-      "overallPct": 76
+      "overallPct": 78
     },
     {
       "ldap": "scurino",
@@ -383,6 +392,15 @@
           "review": false,
           "na": false,
           "pct": 0
+        },
+        {
+          "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
+          "link": "https://learning.mercadolibre.com/programs/view/2106",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
         }
       ],
       "overallPct": 67
@@ -499,6 +517,15 @@
           "review": false,
           "na": false,
           "pct": 0
+        },
+        {
+          "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
+          "link": "https://learning.mercadolibre.com/programs/view/2106",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": true,
+          "pct": null
         }
       ],
       "overallPct": 57
@@ -615,9 +642,18 @@
           "review": false,
           "na": false,
           "pct": 100
+        },
+        {
+          "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
+          "link": "https://learning.mercadolibre.com/programs/view/2106",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
         }
       ],
-      "overallPct": 78
+      "overallPct": 70
     },
     {
       "ldap": "ext_tolucian",
@@ -731,9 +767,18 @@
           "review": false,
           "na": false,
           "pct": 100
+        },
+        {
+          "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
+          "link": "https://learning.mercadolibre.com/programs/view/2106",
+          "deadlineISO": null,
+          "deadlineLabel": null,
+          "review": false,
+          "na": false,
+          "pct": 0
         }
       ],
-      "overallPct": 78
+      "overallPct": 70
     }
   ]
 }

@@ -501,7 +501,7 @@ function threeWayMerge(base,mine,srv){
     }
     var len=Math.max(mine.length,srv.length,baseArr.length);
     var out2=[];
-    for(var i=0;i<len;i++)out2.push(threeWayMerge(baseArr[i],mine[i],srv[i]));
+    for(var i=0;i<len;i++){var _mm=threeWayMerge(baseArr[i],mine[i],srv[i]);if(_mm!==null&&_mm!==undefined)out2.push(_mm);}
     return out2;
   }
   if(_isPlainObj(mine)&&_isPlainObj(srv)){
@@ -1446,8 +1446,8 @@ function Tier1View(props){
   function updTarget(turno,metricK,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));if(!n.targets)n.targets={am:{},pm:{}};if(!n.targets[turno])n.targets[turno]={};n.targets[turno][metricK]=val;return n;});}
   function updSemana(val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));n.semana=val;return n;});}
   function addPlan(turno){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';if(!n[key])n[key]=[];n[key].push({id:genId(),oportunidad:'',fecha:'',plan:'',detalle:'',objetivo:'',dirigido:'',responsable:''});return n;});}
-  function updPlan(turno,id,field,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].map(function(p){return p.id===id?Object.assign({},p,{[field]:val}):p;});return n;});}
-  function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=n[key].filter(function(p){return p.id!==id;});return n;});}
+  function updPlan(turno,id,field,val){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=(n[key]||[]).filter(Boolean).map(function(p){return p.id===id?Object.assign({},p,{[field]:val}):p;});return n;});}
+  function delPlan(turno,id){setT1(function(prev){var n=JSON.parse(JSON.stringify(prev));var key=turno==='am'?'planAm':'planPm';n[key]=(n[key]||[]).filter(Boolean).filter(function(p){return p.id!==id;});return n;});}
   function calcAvg(turno,metric){
     var metricK=metric.k;
     var m=(t1[turno]&&t1[turno][metricK])||{};

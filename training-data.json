@@ -1,5 +1,5 @@
 {
-  "generatedAt": "30/09/2026 06:46",
+  "generatedAt": "01/10/2026 06:45",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -282,7 +282,7 @@
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 86
+          "pct": 100
         },
         {
           "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
@@ -321,7 +321,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 57
+      "overallPct": 58
     },
     {
       "ldap": "scurino",

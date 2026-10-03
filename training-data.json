@@ -1,5 +1,5 @@
 {
-  "generatedAt": "02/10/2026 06:45",
+  "generatedAt": "03/10/2026 06:45",
   "reps": [
     {
       "curso": "White Belt | Español Transporte",
@@ -282,7 +282,7 @@
           "deadlineLabel": null,
           "review": false,
           "na": false,
-          "pct": 100
+          "pct": 86
         },
         {
           "curso": "[Desafío REPS ] Actualización gestión de insumos reutilizables",
@@ -299,8 +299,8 @@
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
-          "na": false,
-          "pct": 0
+          "na": true,
+          "pct": null
         },
         {
           "curso": "[YMS] Panel de alertas | Painel de Alertas - Líderes",
@@ -321,7 +321,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 58
+      "overallPct": 62
     },
     {
       "ldap": "scurino",
@@ -451,8 +451,8 @@
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
-          "na": false,
-          "pct": 0
+          "na": true,
+          "pct": null
         },
         {
           "curso": "[YMS] Panel de alertas | Painel de Alertas - Líderes",
@@ -473,7 +473,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 50
+      "overallPct": 55
     },
     {
       "ldap": "dbacaicoa",
@@ -603,8 +603,8 @@
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
-          "na": false,
-          "pct": 0
+          "na": true,
+          "pct": null
         },
         {
           "curso": "[YMS] Panel de alertas | Painel de Alertas - Líderes",
@@ -625,7 +625,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 40
+      "overallPct": 44
     },
     {
       "ldap": "ext_torresni",
@@ -755,8 +755,8 @@
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
-          "na": false,
-          "pct": 0
+          "na": true,
+          "pct": null
         },
         {
           "curso": "[YMS] Panel de alertas | Painel de Alertas - Líderes",
@@ -777,7 +777,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 54
+      "overallPct": 58
     },
     {
       "ldap": "ext_tolucian",
@@ -907,8 +907,8 @@
           "deadlineISO": null,
           "deadlineLabel": null,
           "review": false,
-          "na": false,
-          "pct": 0
+          "na": true,
+          "pct": null
         },
         {
           "curso": "[YMS] Panel de alertas | Painel de Alertas - Líderes",
@@ -929,7 +929,7 @@
           "pct": 0
         }
       ],
-      "overallPct": 54
+      "overallPct": 58
     }
   ]
 }
